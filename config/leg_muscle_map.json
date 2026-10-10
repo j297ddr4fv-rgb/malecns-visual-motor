@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "source": {
+    "dataset": "MaleCNS CSR annotations",
+    "type_field": "annotations.typeIdx -> tables.types",
+    "leg_membership": "superclass:vnc_motor&subclass:<fl|ml|hl>/<L|R>",
+    "exact_type_selector": "superclass:vnc_motor&type:<type_name>&subclass:<subclass>/<side>",
+    "note": "Type names below are exact CSR table entries. Slash-separated labels such as Pleural remotor/abductor MN are one exact neuron type."
+  },
+  "rate_anchor": {
+    "maximum_rate_hz": 30.0,
+    "baseline_rate_hz": 0.0,
+    "status": "engineering_assumption",
+    "confidence": "unknown",
+    "description": "No per-muscle rate calibration is available. Mean population rate divided by 30 Hz is clipped to [0, 1]; the 30 Hz anchor is an explicit engineering assumption."
+  },
+  "mapping_policy": {
+    "aggregation": "Each exact neuron type and leg is decoded independently using its population mean rate.",
+    "unmapped": "Leg motor neurons without one of the exact mapped type names remain in provenance.unmapped_mn; no target is inferred for blank types or MNml*/MNhl* identifier types.",
+    "anatomical_caution": "Groups are functional decoder labels. A label-to-joint assignment is a mapping hypothesis, not a measured muscle insertion or validated mechanical action."
+  },
+  "legs": [
+    {"name": "LF", "subclass": "fl", "side": "L"},
+    {"name": "RF", "subclass": "fl", "side": "R"},
+    {"name": "LM", "subclass": "ml", "side": "L"},
+    {"name": "RM", "subclass": "ml", "side": "R"},
+    {"name": "LH", "subclass": "hl", "side": "L"},
+    {"name": "RH", "subclass": "hl", "side": "R"}
+  ],
+  "muscle_types": [
+    {"type_name": "Ti flexor MN", "slug": "ti_flexor", "group": "tibia_flexor", "mapping_hypothesis": "CSR Ti flexor label is assigned to tibia_flexor; joint mechanics remain unvalidated."},
+    {"type_name": "Ti extensor MN", "slug": "ti_extensor", "group": "tibia_extensor", "mapping_hypothesis": "CSR Ti extensor label is assigned to tibia_extensor; joint mechanics remain unvalidated."},
+    {"type_name": "Tr flexor MN", "slug": "tr_flexor", "group": "trochanter_flexor", "mapping_hypothesis": "CSR Tr abbreviation is interpreted as trochanter and assigned to trochanter_flexor; this expansion is a hypothesis."},
+    {"type_name": "Tr extensor MN", "slug": "tr_extensor", "group": "trochanter_extensor", "mapping_hypothesis": "CSR Tr abbreviation is interpreted as trochanter and assigned to trochanter_extensor; this expansion is a hypothesis."},
+    {"type_name": "Ta levator MN", "slug": "ta_levator", "group": "tarsus_levator", "mapping_hypothesis": "CSR Ta levator label is assigned to tarsus_levator; joint mechanics remain unvalidated."},
+    {"type_name": "Ta depressor MN", "slug": "ta_depressor", "group": "tarsus_depressor", "mapping_hypothesis": "CSR Ta depressor label is assigned to tarsus_depressor; joint mechanics remain unvalidated."},
+    {"type_name": "Sternal anterior rotator MN", "slug": "sternal_anterior_rotator", "group": "sternal_anterior_rotator", "mapping_hypothesis": "The exact annotation is retained as an independent sternal rotation group; its body mechanics are unvalidated."},
+    {"type_name": "Sternal posterior rotator MN", "slug": "sternal_posterior_rotator", "group": "sternal_posterior_rotator", "mapping_hypothesis": "The exact annotation is retained as an independent sternal rotation group; its body mechanics are unvalidated."},
+    {"type_name": "Sternal adductor MN", "slug": "sternal_adductor", "group": "sternal_adductor", "mapping_hypothesis": "The exact annotation is retained as an independent sternal adductor group; the body-joint mapping is unvalidated."},
+    {"type_name": "Pleural remotor/abductor MN", "slug": "pleural_remotor_abductor", "group": "pleural_remotor_abductor", "mapping_hypothesis": "The slash-separated CSR annotation is one exact type and one independently decoded group."},
+    {"type_name": "Tergopleural/Pleural promotor MN", "slug": "tergopleural_pleural_promotor", "group": "tergopleural_promotor", "mapping_hypothesis": "The slash-separated CSR annotation is one exact type assigned to tergopleural_promotor; mechanics remain unvalidated."},
+    {"type_name": "Sternotrochanter MN", "slug": "sternotrochanter", "group": "sternotrochanter", "mapping_hypothesis": "The exact CSR annotation is retained as its own functional group; its body mechanics are unvalidated."},
+    {"type_name": "Fe reductor MN", "slug": "fe_reductor", "group": "femur_reductor", "mapping_hypothesis": "CSR Fe abbreviation is interpreted as femur and assigned to femur_reductor; this expansion is a hypothesis."},
+    {"type_name": "Tergotr. MN", "slug": "tergotr", "group": "tergotrochanter", "mapping_hypothesis": "CSR Tergotr. abbreviation is interpreted as tergotrochanter; this expansion and mechanical mapping are hypotheses."},
+    {"type_name": "Acc. ti flexor MN", "slug": "accessory_ti_flexor", "group": "accessory_tibia_flexor", "mapping_hypothesis": "The exact CSR annotation is retained as an independent accessory tibia flexor group; mechanics remain unvalidated."},
+    {"type_name": "Acc. tr flexor MN", "slug": "accessory_tr_flexor", "group": "accessory_trochanter_flexor", "mapping_hypothesis": "CSR tr abbreviation is interpreted as trochanter and assigned to accessory_trochanter_flexor; this expansion is a hypothesis."},
+    {"type_name": "ltm MN", "slug": "ltm", "group": "long_tendon", "mapping_hypothesis": "The exact CSR ltm label is retained without assigning a more specific insertion or joint action."},
+    {"type_name": "ltm1-tibia MN", "slug": "ltm1_tibia", "group": "long_tendon_tibia", "mapping_hypothesis": "The exact CSR label is assigned to a tibia-specific long tendon group; mechanical action remains unvalidated."},
+    {"type_name": "ltm2-femur MN", "slug": "ltm2_femur", "group": "long_tendon_femur", "mapping_hypothesis": "The exact CSR label is assigned to a femur-specific long tendon group; mechanical action remains unvalidated."}
+  ]
+}

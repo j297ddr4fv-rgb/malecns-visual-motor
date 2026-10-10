@@ -1,0 +1,19 @@
+{
+  "schema_version": "neural-intervention-schedule-1",
+  "name": "walking-positive-control-right-vnc-leg-motor-3hz",
+  "enabled": true,
+  "opt_in_required": true,
+  "intervention_type": "direct_neural_input_stimulation",
+  "classification": "neuron_stimulation_intervention",
+  "counts_as_autonomous_foraging": false,
+  "prohibited_outputs": ["body_command", "motor_command", "target_goal", "autopilot_decision"],
+  "bounds": {
+    "poisson_hz": [0.0, 3.0],
+    "current_mV_per_ms": [0.0, 0.0]
+  },
+  "entries": [
+    {"selector": "superclass:vnc_motor&subclass:fl/R", "expected_match_count": 67, "units": "poisson_hz", "start_s": 0.4, "end_s": 1.0, "value": 3.0},
+    {"selector": "superclass:vnc_motor&subclass:ml/R", "expected_match_count": 58, "units": "poisson_hz", "start_s": 0.4, "end_s": 1.0, "value": 3.0},
+    {"selector": "superclass:vnc_motor&subclass:hl/R", "expected_match_count": 64, "units": "poisson_hz", "start_s": 0.4, "end_s": 1.0, "value": 3.0}
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "units": "SI",
+  "description": "Shared Hill-model engineering hypotheses for the articulated leg-muscle experiment. The body descriptor supplies each muscle's immutable optimal length l0; shortening speed is normalized in optimal lengths per second.",
+  "evidence": {
+    "max_isometric_force_N": {
+      "value": 1e-5,
+      "status": "engineering_hypothesis",
+      "note": "Shared 10 micronewton F_iso placeholder for every group. It is not a muscle-specific measured strength. Use force_scale for bounded sensitivity analysis."
+    },
+    "max_shortening_velocity_optimal_lengths_per_s": {
+      "value": 10.0,
+      "status": "engineering_hypothesis_preserving_existing_pipeline_scale",
+      "note": "At the current body l0 of 180 micrometres this is 1.8 millimetres per second, preserving the pipeline's previous vmax/l0 ratio while allowing vmax to scale with l0."
+    },
+    "biological_context": [
+      {
+        "citation": "Azevedo et al. (2020), eLife 9:e56754",
+        "url": "https://elifesciences.org/articles/56754",
+        "scope": "Reports probe-evoked leg forces below 0.1 to 10 micronewtons per spike in the described setup.",
+        "caveat": "Probe-evoked force per spike is not isolated-muscle isometric force F_iso and is not used to fit these parameters."
+      },
+      {
+        "citation": "Wang et al. (2025), bioRxiv 10.1101/2025.04.29.651225",
+        "url": "https://doi.org/10.1101/2025.04.29.651225",
+        "scope": "Preprint reports approximately linear passive joint torques and that passive mechanics alone are insufficient for the described leg behavior.",
+        "caveat": "No ambiguous stiffness value is converted into a muscle parameter here."
+      }
+    ]
+  },
+  "shared": {
+    "max_isometric_force_N": 1e-5,
+    "max_shortening_velocity_optimal_lengths_per_s": 10.0,
+    "activation_time_constant_s": 0.01,
+    "deactivation_time_constant_s": 0.04,
+    "length_tension_width": 0.45,
+    "force_velocity_shape": 0.25,
+    "eccentric_force_multiplier": 1.5,
+    "eccentric_velocity_scale": 3.0,
+    "passive_slack_length_m": null,
+    "passive_strain_scale": 0.5,
+    "passive_force_multiplier": 1.0,
+    "passive_force_cap_multiplier": 5.0
+  },
+  "groups": {}
+}

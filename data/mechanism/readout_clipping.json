@@ -1,0 +1,92 @@
+{
+  "degree_preserving_target_shuffle/speed_negative60_seed1729": {
+    "clip_fraction": 0.9845833333333334,
+    "mean_DNp15_opponent_hz": 158.08333333333334,
+    "mean_continuous_ema_opponent_hz": 156.16498236469505
+  },
+  "degree_preserving_target_shuffle/speed_negative60_seed1730": {
+    "clip_fraction": 0.9845833333333334,
+    "mean_DNp15_opponent_hz": 156.08333333333334,
+    "mean_continuous_ema_opponent_hz": 154.23576134016366
+  },
+  "degree_preserving_target_shuffle/speed_negative60_seed1731": {
+    "clip_fraction": 0.9858333333333333,
+    "mean_DNp15_opponent_hz": 154.83333333333334,
+    "mean_continuous_ema_opponent_hz": 153.01262905234876
+  },
+  "degree_preserving_target_shuffle/speed_positive60_seed1729": {
+    "clip_fraction": 0.9870833333333333,
+    "mean_DNp15_opponent_hz": 153.83333333333334,
+    "mean_continuous_ema_opponent_hz": 151.88184170946997
+  },
+  "degree_preserving_target_shuffle/speed_positive60_seed1730": {
+    "clip_fraction": 0.98625,
+    "mean_DNp15_opponent_hz": 154.83333333333334,
+    "mean_continuous_ema_opponent_hz": 152.820655510306
+  },
+  "degree_preserving_target_shuffle/speed_positive60_seed1731": {
+    "clip_fraction": 0.98625,
+    "mean_DNp15_opponent_hz": 157.0,
+    "mean_continuous_ema_opponent_hz": 154.92878274701326
+  },
+  "degree_preserving_target_shuffle/speed_static_seed1729": {
+    "clip_fraction": 0.9858333333333333,
+    "mean_DNp15_opponent_hz": 158.91666666666666,
+    "mean_continuous_ema_opponent_hz": 157.03745747574203
+  },
+  "degree_preserving_target_shuffle/speed_static_seed1730": {
+    "clip_fraction": 0.9854166666666667,
+    "mean_DNp15_opponent_hz": 156.16666666666666,
+    "mean_continuous_ema_opponent_hz": 154.2962941395954
+  },
+  "degree_preserving_target_shuffle/speed_static_seed1731": {
+    "clip_fraction": 0.9854166666666667,
+    "mean_DNp15_opponent_hz": 156.33333333333334,
+    "mean_continuous_ema_opponent_hz": 154.33873503847335
+  },
+  "original/speed_negative60_seed1729": {
+    "clip_fraction": 0.0,
+    "mean_DNp15_opponent_hz": -205.0,
+    "mean_continuous_ema_opponent_hz": -202.4951707022861
+  },
+  "original/speed_negative60_seed1730": {
+    "clip_fraction": 0.0,
+    "mean_DNp15_opponent_hz": -205.33333333333334,
+    "mean_continuous_ema_opponent_hz": -202.70381341962667
+  },
+  "original/speed_negative60_seed1731": {
+    "clip_fraction": 0.0,
+    "mean_DNp15_opponent_hz": -205.16666666666666,
+    "mean_continuous_ema_opponent_hz": -202.6983613623695
+  },
+  "original/speed_positive60_seed1729": {
+    "clip_fraction": 0.0375,
+    "mean_DNp15_opponent_hz": -60.166666666666664,
+    "mean_continuous_ema_opponent_hz": -59.754999987057005
+  },
+  "original/speed_positive60_seed1730": {
+    "clip_fraction": 0.04375,
+    "mean_DNp15_opponent_hz": -60.416666666666664,
+    "mean_continuous_ema_opponent_hz": -59.97053598817285
+  },
+  "original/speed_positive60_seed1731": {
+    "clip_fraction": 0.027083333333333334,
+    "mean_DNp15_opponent_hz": -63.25,
+    "mean_continuous_ema_opponent_hz": -62.0969503269355
+  },
+  "original/speed_static_seed1729": {
+    "clip_fraction": 0.0,
+    "mean_DNp15_opponent_hz": -142.66666666666666,
+    "mean_continuous_ema_opponent_hz": -141.2219415577326
+  },
+  "original/speed_static_seed1730": {
+    "clip_fraction": 0.0,
+    "mean_DNp15_opponent_hz": -140.33333333333334,
+    "mean_continuous_ema_opponent_hz": -138.85466950155978
+  },
+  "original/speed_static_seed1731": {
+    "clip_fraction": 0.0,
+    "mean_DNp15_opponent_hz": -138.83333333333334,
+    "mean_continuous_ema_opponent_hz": -136.8536637032355
+  }
+}

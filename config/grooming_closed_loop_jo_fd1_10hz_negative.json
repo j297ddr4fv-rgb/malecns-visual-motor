@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "selectors_by_region": {
+    "antenna": "type:JO-FD1&subclass:grooming"
+  },
+  "rate_hz_by_region": {
+    "antenna": 10.0
+  },
+  "readout_threshold": 0.0,
+  "sweep_extent_mm": 0.12,
+  "sweep_frequency_hz": 1.6
+}

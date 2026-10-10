@@ -1,0 +1,31 @@
+{
+  "design": "common-input replay of recorded intact-body retinal movies",
+  "stimuli": [
+    "static",
+    "positive60",
+    "negative60"
+  ],
+  "initialization_seeds": [
+    1729,
+    1730,
+    1731
+  ],
+  "initial_variants": [
+    "original",
+    "shuffle_20261010"
+  ],
+  "additional_rewiring_seeds": [
+    20261011,
+    20261012
+  ],
+  "frames_per_run": 2600,
+  "dt_s": 0.005,
+  "stimulus_window_s": [
+    1,
+    13
+  ],
+  "pose_reflection": "quaternion (w,x,y,z) -> (w,-x,y,-z); angular-field eye translation does not affect rays",
+  "additional_graph_condition": "intact raw moving-minus-static contrasts have expected signs and first shuffled graph has mean absolute contrast below half intact",
+  "shared_retinal_and_current_hashes_required": true,
+  "no_body_actuation": true
+}

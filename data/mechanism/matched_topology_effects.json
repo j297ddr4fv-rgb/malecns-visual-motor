@@ -1,0 +1,44 @@
+[
+  {
+    "seed": 1729,
+    "condition": "positive60",
+    "original_yaw_residual_deg": 38.18244803891256,
+    "shuffle_yaw_residual_deg": 1.4800268610608924,
+    "shuffle_minus_original_residual_deg": -36.70242117785167
+  },
+  {
+    "seed": 1729,
+    "condition": "negative60",
+    "original_yaw_residual_deg": -26.08424303165228,
+    "shuffle_yaw_residual_deg": -2.9197965871537264,
+    "shuffle_minus_original_residual_deg": 23.164446444498555
+  },
+  {
+    "seed": 1730,
+    "condition": "positive60",
+    "original_yaw_residual_deg": 29.7976042937503,
+    "shuffle_yaw_residual_deg": 1.2010614447900565,
+    "shuffle_minus_original_residual_deg": -28.596542848960244
+  },
+  {
+    "seed": 1730,
+    "condition": "negative60",
+    "original_yaw_residual_deg": -32.546870053792446,
+    "shuffle_yaw_residual_deg": 9.237181984471093,
+    "shuffle_minus_original_residual_deg": 41.78405203826354
+  },
+  {
+    "seed": 1731,
+    "condition": "positive60",
+    "original_yaw_residual_deg": 34.14284396504765,
+    "shuffle_yaw_residual_deg": -1.0037987513709226,
+    "shuffle_minus_original_residual_deg": -35.146642716418576
+  },
+  {
+    "seed": 1731,
+    "condition": "negative60",
+    "original_yaw_residual_deg": -35.27678087199576,
+    "shuffle_yaw_residual_deg": 1.0182241108979895,
+    "shuffle_minus_original_residual_deg": 36.29500498289375
+  }
+]

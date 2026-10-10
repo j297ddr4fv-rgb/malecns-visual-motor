@@ -1,0 +1,58 @@
+{
+  "schema_version": "flygym-cartesian-repair-protocol-1",
+  "evidence_scope": "Engineering mechanical gait repair; no visual-success or reconstructed-muscle claim",
+  "resource_policy": {
+    "gpu": false,
+    "cpu_quota_percent": 100,
+    "memory_max_gib": 4,
+    "per_capture_runtime_max_s": 600
+  },
+  "development": {
+    "duration_s": 1.5,
+    "analysis_window_s": [0.5, 1.5],
+    "seed": 1729,
+    "side_drives": [[0.3, 0.3], [1.0, 1.0], [0.0, 0.0]],
+    "maximum_mechanistically_justified_versions": 3,
+    "third_version_justification": "Recorded unconstrained Cartesian IK commanded more than five hinge revolutions; constrain the commanded angle branch near the source template and add reference-pose regularization, preserving v2 gait geometry and acceptance thresholds.",
+    "maximum_absolute_symmetric_yaw_change_deg": 5.0
+  },
+  "verification": {
+    "duration_s": 3.0,
+    "analysis_window_s": [0.5, 3.0],
+    "seeds": [1729, 0, 42],
+    "priority_side_drive": [0.3, 0.3],
+    "secondary_side_drive": [1.0, 1.0],
+    "maximum_absolute_symmetric_yaw_change_deg": 10.0,
+    "turning_seed": 1729,
+    "turning_side_drives": [[0.25, 0.35], [0.35, 0.25]],
+    "minimum_absolute_turning_yaw_change_deg": 3.0,
+    "turning_expectation": "Opposite yaw signs under swapped side drives, with ongoing six-leg cycles; no yaw feedback or force injection"
+  },
+  "mechanical_acceptance": {
+    "minimum_complete_measured_cycles_on_each_leg": 2,
+    "minimum_tarsus5_rise_above_loaded_stance_median_mm": 0.05,
+    "minimum_unloaded_lift_duration_s": 0.002,
+    "minimum_loaded_touchdown_duration_s": 0.002,
+    "loaded_force_threshold_body_weight_fraction": 0.01,
+    "minimum_fraction_samples_with_at_least_two_loaded_legs": 0.99,
+    "minimum_thorax_collision_clearance_mm_exclusive": 0.0,
+    "maximum_nonleg_ground_contact_samples": 0,
+    "maximum_root_state_writes_after_initialization": 0,
+    "maximum_external_body_wrench": 0.0,
+    "maximum_generalized_applied_force": 0.0,
+    "minimum_symmetric_forward_displacement_mm": 0.5,
+    "maximum_absolute_lateral_to_forward_displacement_ratio": 0.15,
+    "maximum_zero_input_displacement_mm": 0.1,
+    "zero_input_complete_cycles": 0
+  },
+  "controls": {
+    "cpg_frequency_hz": 7.4074074074074066,
+    "native_timestep_s": 0.0001,
+    "control_timestep_s": 0.001,
+    "no_visual_stimulus_used_for_selection": true,
+    "no_body_heading_feedback": true,
+    "persist_full_capture_before_metric_analysis": true,
+    "keep_failed_versions_and_raw_captures": true,
+    "freeze_candidate_parameters_before_verification": true
+  }
+}

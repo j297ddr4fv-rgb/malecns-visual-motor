@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "trajectory_id": "female_courtship_crossing_v1",
+  "interpolation": "linear_shortest_angle",
+  "time_basis": "absolute simulation seconds",
+  "coordinate_frame": "world",
+  "motion_authority": "prescribed_target_trajectory",
+  "male_pose_dependency": false,
+  "keyframes": [
+    {"t_s": 0.0, "position_m": [0.20, -0.040, 0.42], "yaw_rad": 3.141592653589793, "pitch_rad": 0.0, "roll_rad": 0.0},
+    {"t_s": 1.5, "position_m": [0.18, -0.016, 0.42], "yaw_rad": 2.9670597283903604, "pitch_rad": 0.0, "roll_rad": 0.03490658503988659},
+    {"t_s": 3.0, "position_m": [0.18, 0.016, 0.42], "yaw_rad": 2.443460952792061, "pitch_rad": 0.017453292519943295, "roll_rad": 0.0},
+    {"t_s": 4.5, "position_m": [0.20, 0.040, 0.42], "yaw_rad": 1.9198621771937625, "pitch_rad": 0.0, "roll_rad": -0.03490658503988659},
+    {"t_s": 6.0, "position_m": [0.20, 0.008, 0.42], "yaw_rad": 2.6179938779914944, "pitch_rad": 0.0, "roll_rad": 0.0}
+  ]
+}

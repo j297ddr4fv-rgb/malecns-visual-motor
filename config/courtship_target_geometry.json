@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "geometry_id": "adult_female_drosophila_mm_scale",
+  "semantic": {
+    "role": "adult_female_drosophila_visual_target",
+    "species": "Drosophila melanogaster",
+    "sex": "female",
+    "life_stage": "adult"
+  },
+  "dimensions_m": {
+    "body_length_m": 0.0028,
+    "body_width_m": 0.00082,
+    "body_height_m": 0.00078,
+    "wingspan_m": 0.0036
+  },
+  "target_extent_m": [0.0028, 0.0039, 0.00135],
+  "body_parts": [
+    {"name": "abdomen", "primitive": "ellipsoid", "center_m": [-0.00060, 0.0, 0.0], "radii_m": [0.00100, 0.00039, 0.00036]},
+    {"name": "thorax", "primitive": "ellipsoid", "center_m": [0.00010, 0.0, 0.00001], "radii_m": [0.00050, 0.00040, 0.00038]},
+    {"name": "head", "primitive": "ellipsoid", "center_m": [0.00081, 0.0, 0.00004], "radii_m": [0.00039, 0.00035, 0.00033]},
+    {"name": "left_wing", "primitive": "ellipsoid", "center_m": [-0.00002, 0.00066, 0.00036], "radii_m": [0.00068, 0.00089, 0.000035]},
+    {"name": "right_wing", "primitive": "ellipsoid", "center_m": [-0.00002, -0.00066, 0.00036], "radii_m": [0.00068, 0.00089, 0.000035]},
+    {"name": "left_compound_eye", "primitive": "ellipsoid", "center_m": [0.00090, 0.00029, 0.00010], "radii_m": [0.00016, 0.000105, 0.00019]},
+    {"name": "right_compound_eye", "primitive": "ellipsoid", "center_m": [0.00090, -0.00029, 0.00010], "radii_m": [0.00016, 0.000105, 0.00019]}
+  ],
+  "asset": {
+    "object_id": "female_fly_model",
+    "format": "glTF 2.0 / GLB",
+    "units": "metres",
+    "local_origin": "thorax_center",
+    "forward_axis": "+X",
+    "lateral_axis": "+Y",
+    "up_axis": "+Z",
+    "expected_bounds_m": [0.0028, 0.0039, 0.00135],
+    "external_mesh_required_for_anatomical_appearance": true,
+    "visual_material_guidance": {
+      "abdomen": "dark cuticle with lighter posterior banding",
+      "thorax": "brown cuticle",
+      "wings": "translucent neutral gray",
+      "compound_eyes": "dark red-brown"
+    }
+  }
+}

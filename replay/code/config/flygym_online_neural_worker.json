@@ -1,0 +1,60 @@
+{
+  "schema_version": "flygym-online-neural-worker-1",
+  "description": "Synchronous VirtualWorld/FlyVis/MaleCNS neural process for the separate FlyGym body.",
+  "world_config": "optomotor_pilot_experiment.json",
+  "stimulus_config": "optomotor_pilot_stimuli.json",
+  "scene_manifest": "optomotor_panel_scene.json",
+  "renderer_backend": "virtual_world_raycast",
+  "condition_stimulus_names": {
+    "left": "stripe_left",
+    "right": "stripe_right",
+    "static": "stripe_static"
+  },
+  "diagnostic_populations": {
+    "HSE/L": "HSE/L",
+    "HSE/R": "HSE/R",
+    "HSN/L": "HSN/L",
+    "HSN/R": "HSN/R",
+    "HSS/L": "HSS/L",
+    "HSS/R": "HSS/R",
+    "HST/L": "HST/L",
+    "HST/R": "HST/R",
+    "DNa01/L": "DNa01/L",
+    "DNa01/R": "DNa01/R",
+    "DNa02/L": "DNa02/L",
+    "DNa02/R": "DNa02/R",
+    "DNg13/L": "DNg13/L",
+    "DNg13/R": "DNg13/R"
+  },
+  "stimulus_clock": {
+    "body_and_neural_clock": "frame_time_s",
+    "pattern_clock": "max(0, frame_time_s - stimulus_onset_s)",
+    "physical_stimulus_start_time_s": 0.0,
+    "panel_visible_before_motion_onset": true
+  },
+  "camera": {
+    "width": 32,
+    "height": 24,
+    "hfov_rad": 1.7453292519943295,
+    "near_m": 0.0003,
+    "far_m": 0.5
+  },
+  "eye_geometry": {
+    "eye_separation_m": 0.00076,
+    "source": "Pinned FlyGym 2.1.0 NeuroMechFly vision.yaml and BaseFly.add_vision camera centers",
+    "left_camera_center_thorax_local_mm": [0.2297, 0.38, 0.017698],
+    "right_camera_center_thorax_local_mm": [0.2297, -0.38, 0.017698],
+    "midpoint_translation_owner": "separate FlyGym body bridge; worker receives the VirtualWorld-convention eye midpoint",
+    "virtual_world_origin_rule": "renderer offsets each eye by plus/minus half the configured baseline from the supplied midpoint",
+    "ray_orientation_rule": "use the exact fitted FlyVis L/R head-frame direction grids; do not apply FlyGym camera Euler extrinsics a second time"
+  },
+  "static_warmup_s": 1.0,
+  "max_frames": 400,
+  "flyvis": {
+    "view": "flow/0000/000",
+    "n_columns": 721,
+    "baseline_mode": "steady_state",
+    "static_batch_frames": 32,
+    "timing_enabled": true
+  }
+}

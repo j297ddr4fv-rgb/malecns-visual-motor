@@ -1,0 +1,81 @@
+{
+  "schema_version": "flyvis-control-readout-1",
+  "name": "flyvis-target-direction-control-v1",
+  "enabled": true,
+  "source": "fitted",
+  "mapping": {
+    "path": "artifacts/flyvis-eye/t4t5_dirs.npz",
+    "index_field": "idx",
+    "direction_field": "dirs",
+    "subtype_field": "type",
+    "side_field": "side",
+    "side_source": {
+      "path": "/data/cache/malecns-gpu/csr-flyb",
+      "annotations_field": "sideIdx",
+      "table_field": "sides",
+      "authority": "MaleCNS annotations.npz:sideIdx -> tables.json:sides"
+    },
+    "side_inference": "forbidden; use side_source authority",
+    "expected_target_count": 13582,
+    "order": "asset-row-order; response target_indices must match exactly"
+  },
+  "input": {
+    "field": "flyvis_t4t5",
+    "signed": true,
+    "shape": "(target_count,)",
+    "allowed_units": [
+      "current_mV_per_ms",
+      "normalized_cue",
+      "unknown"
+    ]
+  },
+  "readout": {
+    "algorithm": "signed_weighted_direction_projection",
+    "direction_frame": {
+      "x": "forward",
+      "y": "left",
+      "z": "up"
+    },
+    "yaw_component": "direction_y",
+    "pitch_component": "direction_z",
+    "yaw_sign": 1.0,
+    "pitch_sign": 1.0,
+    "yaw_gain": 1.0,
+    "pitch_gain": 1.0,
+    "bounds": [
+      -1.0,
+      1.0
+    ],
+    "side_weights": {
+      "L": 1.0,
+      "R": 1.0
+    },
+    "subtype_weights": {
+      "T4a": 1.0,
+      "T4b": 1.0,
+      "T4c": 1.0,
+      "T4d": 1.0,
+      "T5a": 1.0,
+      "T5b": 1.0,
+      "T5c": 1.0,
+      "T5d": 1.0
+    },
+    "use_asset_weights": false
+  },
+  "confidence": {
+    "definition": "bounded response energy times signed direction coherence",
+    "energy_scale": 1.0,
+    "bounds": [
+      0.0,
+      1.0
+    ]
+  },
+  "provenance": {
+    "mapping": "artifacts/flyvis-eye/t4t5_dirs.npz",
+    "side_authority": "MaleCNS annotations.npz:sideIdx -> tables.json:sides",
+    "side_convention": "CSR sideIdx table labels L/R; direction_y is not an eye-side classifier",
+    "direction_convention": "+y is fly-left and +z is up",
+    "control_boundary": "normalized visual cue only; no motor command emitted",
+    "biological_claim": false
+  }
+}

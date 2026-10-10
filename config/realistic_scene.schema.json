@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://malecns-gpu.local/schemas/realistic-scene-v1.schema.json",
+  "title": "MaleCNS realistic scene asset manifest",
+  "description": "Relocatable manifest for external Blender-exported glTF 2.0 / GLB geometry. Scene distances use metres and scene coordinates are right-handed, +Z up, +X forward.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scene_id", "units", "coordinate_system", "materials", "assets", "replay"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "scene_id": {"type": "string", "minLength": 1},
+    "description": {"type": "string"},
+    "units": {"const": "m", "description": "All manifest transforms and output coordinates are metres."},
+    "coordinate_system": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["handedness", "up_axis", "forward_axis"],
+      "properties": {
+        "handedness": {"const": "right"},
+        "up_axis": {"const": "+Z"},
+        "forward_axis": {"const": "+X"}
+      }
+    },
+    "asset_root": {
+      "oneOf": [
+        {"type": "string", "minLength": 1},
+        {"type": "null"}
+      ],
+      "description": "Optional asset directory. MALECNS_ASSET_ROOT takes precedence; manifest-relative asset paths are the fallback."
+    },
+    "materials": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/material"}
+    },
+    "assets": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/asset"}
+    },
+    "simulation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "stimulus_object_ids": {
+          "type": "object",
+          "propertyNames": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"},
+          "additionalProperties": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"},
+          "description": "Map exact physical stimulus IDs to visual asset object IDs for rigid simulation-time sensor rendering."
+        }
+      }
+    },
+    "replay": {
+      "type": "object",
+      "properties": {
+        "bindings": {
+          "type": "object",
+          "properties": {
+            "fly_object_id": {"oneOf": [{"type": "string"}, {"type": "null"}]},
+            "stimulus_object_ids": {
+              "type": "object",
+              "additionalProperties": {"type": "string"},
+              "description": "Map recorded stimulus IDs, or * fallback, to manifest object IDs."
+            }
+          }
+        },
+        "camera": {"type": "object"},
+        "context_camera": {"type": "object"},
+        "lighting": {"type": "object"}
+      }
+    }
+  },
+  "$defs": {
+    "vec3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"type": "number"}
+    },
+    "quaternion_xyzw": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"type": "number"}
+    },
+    "material": {
+      "type": "object",
+      "properties": {
+        "base_color_rgba": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {"type": "number", "minimum": 0, "maximum": 1}
+        },
+        "metallic_factor": {"type": "number", "minimum": 0, "maximum": 1},
+        "roughness_factor": {"type": "number", "minimum": 0, "maximum": 1},
+        "alpha_mode": {"enum": ["OPAQUE", "MASK", "BLEND"]},
+        "alpha_cutoff": {"type": "number", "minimum": 0, "maximum": 1},
+        "double_sided": {"type": "boolean"},
+        "sensor_texture_mode": {"enum": ["triangle_centroid"]},
+        "source": {"type": "string"},
+        "description": {"type": "string"}
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["object_id", "path", "role", "transform", "provenance"],
+      "properties": {
+        "object_id": {"type": "string", "minLength": 1},
+        "path": {"type": "string", "minLength": 1, "pattern": "^(?!/).+\\.(gltf|glb)$"},
+        "role": {"enum": ["visual", "collision", "visual_collision"]},
+        "semantic_role": {"type": "string", "minLength": 1},
+        "asset_unit_scale_to_m": {"type": "number", "exclusiveMinimum": 0},
+        "transform": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["translation_m", "rotation_xyzw", "scale"],
+          "properties": {
+            "translation_m": {"$ref": "#/$defs/vec3"},
+            "rotation_xyzw": {"$ref": "#/$defs/quaternion_xyzw"},
+            "scale": {
+              "oneOf": [
+                {"type": "number", "not": {"const": 0}},
+                {"$ref": "#/$defs/vec3"}
+              ]
+            }
+          }
+        },
+        "material_refs": {
+          "type": "object",
+          "additionalProperties": {"type": "string"},
+          "description": "Map a glTF material name (or decimal material index) to a manifest material ID."
+        },
+        "integrity": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "sha256": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
+            "files": {
+              "type": "object",
+              "additionalProperties": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
+              "description": "SHA-256 for referenced external buffers and textures, keyed by paths relative to the glTF file."
+            }
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": ["source", "license", "exporter"],
+          "properties": {
+            "source": {"type": "string", "minLength": 1},
+            "source_url": {"type": "string"},
+            "license": {"type": "string", "minLength": 1},
+            "exporter": {"type": "string", "minLength": 1},
+            "export_settings": {"type": "object"},
+            "retrieved_utc": {"type": "string"}
+          }
+        }
+      }
+    }
+  }
+}

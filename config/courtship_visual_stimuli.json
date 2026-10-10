@@ -1,0 +1,19 @@
+{
+  "schema_version": "physical-stimulus-protocol-1",
+  "seed": 1729,
+  "stimuli": {
+    "female_placeholder": {
+      "id": "female_placeholder",
+      "mode": "sham",
+      "start_position_m": [0.025, 0.006, 0.0012],
+      "velocity_mps": [0.0, 0.0, 0.0],
+      "direction_m": [-1.0, 0.0, 0.0],
+      "size_m": [0.003, 0.002, 0.002],
+      "texture": "matte",
+      "renderable": false,
+      "collidable": false,
+      "visual_only": true,
+      "non_interacting": true
+    }
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "schema_version": "flygym-direction-calibration-v1",
+  "status": "engineering_candidate_not_behaviorally_validated",
+  "evidence_class": "digital_simulation",
+  "default_baseline_mode": "zero_gray",
+  "default_readout_mode": "control",
+  "readout_modes": {
+    "control": {
+      "description": "Ungated baseline-corrected raw-EMA diagnostic plus a separate command-EMA output that uses the shared power gate and is clipped after gating.",
+      "equation": "ungated_opponent_signal = ((raw_EMA_L - baseline_L) - (raw_EMA_R - baseline_R)) / normalization_hz; gated_unclipped_control_signal uses command EMA and shared gate",
+      "unclipped_diagnostic_required": true,
+      "natural_direction_semantics": false
+    },
+    "raw_difference": {
+      "description": "Bilateral continuous raw-EMA difference in Hz with no side-specific baseline offset; diagnostic comparison only.",
+      "equation": "raw_opponent_difference_hz = raw_EMA_L - raw_EMA_R",
+      "natural_direction_semantics": false,
+      "behavioral_actuation_authorized": false
+    }
+  },
+  "baseline_policy": {
+    "default_mode": "zero_gray",
+    "fixed_across_cases": true,
+    "stimulus_or_case_selects_mode": false,
+    "modes": {
+      "calibrated_static": {
+        "status": "calibrated_scope_limited",
+        "scope_id": "fixed_head_c1_60deg_angular_stripe_reference",
+        "rates_hz": {
+          "left": 0.0,
+          "right": 142.5
+        },
+        "normalization_hz": 142.5,
+        "diagnostic_only": true,
+        "application_scope": {
+          "visual_family": "sinusoidal_angular_stripe",
+          "pose_mode": "fixed_head",
+          "display_geometry": "fixed_arena_infinite_distance_angular_field",
+          "contrast": 1.0,
+          "wavelength_deg": 60.0
+        },
+        "calibration_source": {
+          "case_id": "stationary-c1",
+          "condition": "stationary",
+          "window_s": [
+            6.0,
+            10.0
+          ],
+          "frame_count": 800,
+          "frame_dt_s": 0.005,
+          "seed": 1729,
+          "spikes": {
+            "left": 0,
+            "right": 570
+          },
+          "source_payload": "/data/artifacts/by-project/malecns-gpu/engineering/flygym-dnp15-template-steering-decoder-20261007-v1/static-baseline-payload.json",
+          "source_payload_sha256": "25543795ad983ba78ee244d9e551ff4a460024a2cf65ebfb004efd63f69f4a39",
+          "source_cohort_id": "static-baseline-payload-25543795ad983ba78ee244d9e551ff4a460024a2cf65ebfb004efd63f69f4a39",
+          "source_cohort_identity": {
+            "seed": 1729,
+            "worker_source_sha256": "543e82ed40c339d000cf38cb179f60e5818ef9de65747d36fb19fdb346adeb3d",
+            "adapter_source_sha256": "993eb7e193c5d8a49f8e88412b6c5378bc9cd1ab026dc9896e2c5ea31bf320e5",
+            "protocol_sha256": "1b217bcdba15b4e0d2681236321b32476f079f4c07356b5e493071bb0f872ec1",
+            "config_sha256": "4fa12d38e16e4d979c54d3e0950a54ca272f5d269c90506c1c6ff9e75d21d1ea",
+            "source_freeze_sha256": "47110765bcac465c1db30e47667c08746e4d68fe7bab7a33f689eed95ef5275e",
+            "fixed_pose_source_sha256": "d2d164bb3fa500339d454cc6ab465d23b16067e8bc029a3c7c802a16bd4091a8"
+          },
+          "source_hashes": {
+            "adapter_source_sha256": "993eb7e193c5d8a49f8e88412b6c5378bc9cd1ab026dc9896e2c5ea31bf320e5",
+            "case_manifest_sha256": "917c26cf7fd65f78b54fc84b041ad2270e47903c35db72c763b707e2be6c1956",
+            "completion_sha256": "ad0abc3b633f8fefa91c77bb273de178f6edb290d1968327cb8249bbadc5f6f2",
+            "config_sha256": "4fa12d38e16e4d979c54d3e0950a54ca272f5d269c90506c1c6ff9e75d21d1ea",
+            "fixed_pose_source_sha256": "d2d164bb3fa500339d454cc6ab465d23b16067e8bc029a3c7c802a16bd4091a8",
+            "neural_state_diagnostic_sha256": "a534372c4cac84e82082bf1730890f7d876044248c357a37599788cc8db57017",
+            "protocol_sha256": "1b217bcdba15b4e0d2681236321b32476f079f4c07356b5e493071bb0f872ec1",
+            "ready_validation_sha256": "36c81993ac1eeef97fb928f668bfd2d28297214ab26feed5759a90b35b866a94",
+            "reference_comparison_sha256": "0ae79fde4f3f719bf496d1a19be11c2e9b23a3a7c4b4437820d05c59f9d14d38",
+            "run_integrity_sha256": "fbd516c4d873f54181d765b46d03095ae108840daad6aeb42532a4433b806d85",
+            "source_freeze_sha256": "47110765bcacded0eb28946040066e0f058741fe096958d0283d5c90c015640d",
+            "stimulus_spec_sha256": "704b51c87f138cb8e6f8e70315c1652dbfa20470931f5cf8073a08ac48ee8cf1",
+            "terminal_audit_sha256": "6cbf9817888f25e46e127c94c40aaded7eafdb632920ca70796491d56d16cea7",
+            "worker_integrity_sha256": "7a41d534e18f6f7dadebc2f30ceb86e8614d379e0a1850a0ff97dbeb5cf1dacf",
+            "worker_provenance_sha256": "dab5f256dbdb754a1fcc085470fbdb25451da968f9004010584da2286bc5bd01",
+            "worker_source_sha256": "543e82ed40c339d000cf38cb179f60e5818ef9de65747d36fb19fdb346adeb3d"
+          },
+          "source_scope": "fixed-head stationary c=1 stripe; not a walking/full-pose or general-background baseline",
+          "moving_case_data_used": false,
+          "observed_yaw_used": false
+        },
+        "known_limitation": "This value is retained only as the historical matched-stripe control. It is not a universal neutral background reference and has not passed held-out contrast/background validation."
+      },
+      "zero_gray": {
+        "status": "candidate_reference",
+        "scope_id": "frozen_gray_prelude_zero_rate_reference",
+        "rates_hz": {
+          "left": 0.0,
+          "right": 0.0
+        },
+        "normalization_hz": 142.5,
+        "diagnostic_only": false,
+        "calibration_source": {
+          "source_bundle": "/data/artifacts/by-project/malecns-gpu/engineering/final-frozen-assays-20261007-v1",
+          "source_summary_csv": "/data/artifacts/by-project/malecns-gpu/engineering/final-frozen-assays-20261007-v1/screening-results.csv",
+          "source_report": "/data/artifacts/by-project/malecns-gpu/engineering/final-frozen-assays-20261007-v1/REPORT.md",
+          "window_s": [
+            0.0,
+            1.0
+          ],
+          "observed_complete_frozen_cases": 17,
+          "left_rate_hz_each_case": 0.0,
+          "right_rate_hz_each_case": 0.0,
+          "scope": "pre-stimulus uniform-gray reference window in the frozen fixed-head assays",
+          "replicate_boundary": "single seed and common setup; these assay captures are not 17 statistical baseline replicates and do not estimate between-seed or background variation",
+          "used_case_labels_or_directional_outcomes": false
+        },
+        "normalization_source": "Historical static-stripe bilateral rate sum (0 + 142.5 Hz); retained as a fixed scale only, not as a zero-gray baseline or biological calibration.",
+        "known_limitation": "The observed zero rate supports this frozen uniform-gray prelude only. It does not establish neutrality across stationary textures, contrast levels, scenes, poses, or natural visual conditions."
+      }
+    },
+    "independent_neutral": {
+      "status": "unsupported",
+      "unsupported_reason": "The frozen evidence covers a uniform-gray prelude and a single fixed-head c=1 static stripe reference, but lacks an independently sampled neutral panel across background/contrast families with a pre-registered equivalence margin and held-out validation.",
+      "future_policy": {
+        "calibration_set": "Collect no-motion neutral captures in a separately frozen calibration run across predeclared background/contrast families; do not reuse moving/target cases or inspect downstream yaw to set the baseline.",
+        "pooling": "Estimate capture rates from side-specific raw event counts and durations; average captures within each predeclared context, then give contexts equal weight. If predeclared neutral strata are not equivalent under a margin fixed from independent noise/sensitivity calibration, keep the domain stratified or mark a shared baseline unsupported.",
+        "required_capture_fields": [
+          "capture_id",
+          "context_id",
+          "role=neutral_calibration",
+          "motion_present=false",
+          "target_present=false",
+          "direction_label=null",
+          "yaw_used=false",
+          "behavior_outcome_used=false",
+          "duration_s",
+          "left_spike_count",
+          "right_spike_count"
+        ],
+        "validation": "Freeze the resulting baseline before evaluating held-out backgrounds and mirrored motion. Keep calibration captures disjoint from all direction-response cases.",
+        "prohibited_selection": "Never choose or alter baseline values per case, stimulus direction, target side, or desired output."
+      }
+    }
+  },
+  "readout": {
+    "frame_dt_s": 0.005,
+    "ema_tau_s": 0.15,
+    "normalization_hz": 142.5,
+    "control_clip": [
+      -1.0,
+      1.0
+    ],
+    "raw_and_unclipped_values_required": true,
+    "clipped_control_signal_semantics": "clip(gated_unclipped_control_signal, -1, +1); therefore zero in the static gate",
+    "baseline_correction_order": "Continuous raw EMA each side, subtract the selected fixed bilateral reference, subtract R from L, normalize by 142.5 Hz to produce ungated diagnostics. Command EMA is maintained separately, reset to the selected reference while inactive, and used only for the gated command. Clipping follows and does not replace unclipped fields.",
+    "direction_interpretation": "A positive or negative value is only the sign of the named opponent-rate coordinate. It does not by itself identify natural DNp15 direction, body yaw, or turning behavior."
+  },
+  "power_gate": {
+    "legacy_diagnostic_threshold_p": 1e-06,
+    "comparison_semantics": "active iff raw P > threshold; inactive iff P <= threshold",
+    "status": "diagnostic_reproduction_only_pending_independent_noise_and_sensitivity_calibration",
+    "gate_transition_fields": [
+      "active",
+      "static",
+      "inactive_to_active",
+      "active_to_static",
+      "remain_active",
+      "remain_inactive"
+    ],
+    "gate_is_recomputable_from_raw_P": true,
+    "raw_P_must_be_preserved": true,
+    "threshold_is_not_biological": true,
+    "threshold_selection_policy": "Derive a future behavior threshold from independent neutral-noise and sensitivity calibration; do not tune it against these frozen directional outcomes."
+  },
+  "diagnostic_fields": [
+    "raw_left_hz",
+    "raw_right_hz",
+    "raw_ema_left_hz",
+    "raw_ema_right_hz",
+    "raw_ema_initialized",
+    "ema_left_hz",
+    "ema_right_hz",
+    "raw_opponent_difference_hz",
+    "continuous_raw_ema_opponent_difference_hz",
+    "command_ema_opponent_difference_hz",
+    "baseline_corrected_opponent_difference_hz",
+    "unclipped_control_signal",
+    "ungated_opponent_signal",
+    "ungated_clipped_control_signal",
+    "command_ema_baseline_corrected_opponent_difference_hz",
+    "command_unclipped_control_signal",
+    "unclipped_raw_difference_signal",
+    "clipped_control_signal",
+    "gated_clipped_raw_difference_signal",
+    "clipped_raw_difference_signal",
+    "selected_unclipped_signal",
+    "selected_clipped_signal",
+    "power_raw",
+    "power_active",
+    "power_static",
+    "power_control",
+    "power_previous_active",
+    "power_state",
+    "power_gate_transition",
+    "gated_unclipped_control_signal",
+    "gated_unclipped_raw_difference_signal",
+    "baseline_scope_validated",
+    "baseline_scope_status",
+    "baseline_diagnostic_only",
+    "control_authorized",
+    "legacy_shadow_gated_unclipped_signal",
+    "legacy_shadow_clipped_signal"
+  ],
+  "claim_boundaries": {
+    "natural_dnp15_direction_established": false,
+    "body_yaw_sign_established": false,
+    "generic_neutral_baseline_supported": false,
+    "mirror_direction_following_established": false,
+    "readout_is_biological": false
+  }
+}

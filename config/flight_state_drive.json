@@ -1,0 +1,236 @@
+{
+  "schema_version": "flight-state-drive-1",
+  "name": "malecns-flight-state-drive-v1",
+  "default_profile": "hover",
+  "input_contract": {
+    "scenario": "text label; takeoff, hover, flight, approach, landing, and grounded are canonical modes",
+    "phase": "normalized progress in [0, 1] within the supplied scenario",
+    "altitude_error_m": "goal altitude minus measured altitude, in m",
+    "heading_error_rad": "desired heading minus measured heading, wrapped by the runner; positive means desired heading is to the right",
+    "vertical_speed_mps": "measured vertical speed, in m/s; no body position is read here",
+    "other_errors": "optional finite precomputed errors accepted for future calibrations"
+  },
+  "population_inputs": [
+    {
+      "name": "dng02-left-flight-state",
+      "population": "prefix:DNg02/L",
+      "units": "poisson_hz",
+      "bounds": [0.0, 80.0],
+      "profiles": {
+        "grounded": 0.0,
+        "hover": 35.0,
+        "flight": 35.0,
+        "takeoff": {
+          "start": 58.0,
+          "end": 35.0,
+          "easing": "smoothstep"
+        },
+        "approach": {
+          "start": 35.0,
+          "end": 24.0,
+          "easing": "smoothstep"
+        },
+        "landing": {
+          "start": 35.0,
+          "end": 18.0,
+          "easing": "smoothstep"
+        }
+      },
+      "coefficients": {
+        "altitude_error_m": 12.0,
+        "vertical_speed_mps": -2.0,
+        "heading_error_rad": 36.0
+      },
+      "source": "handbuilt",
+      "biological_status": "hypothesis",
+      "calibration": "calibration",
+      "description": "Left-side DNg02 external rate; kept disjoint from the right-side selector.",
+      "rationale": "35 Hz is an explicit hover-power trim anchor. The takeoff/landing levels are hand-built calibration hypotheses, not measured firing-rate claims. The 36 Hz/rad heading gain is a bounded turn hypothesis: at a 0.9 rad error it produces 67.4 Hz before the paired side reaches 2.6 Hz, remaining inside the 0-80 Hz external-rate bounds."
+    },
+    {
+      "name": "dng02-right-flight-state",
+      "population": "prefix:DNg02/R",
+      "units": "poisson_hz",
+      "bounds": [0.0, 80.0],
+      "profiles": {
+        "grounded": 0.0,
+        "hover": 35.0,
+        "flight": 35.0,
+        "takeoff": {
+          "start": 58.0,
+          "end": 35.0,
+          "easing": "smoothstep"
+        },
+        "approach": {
+          "start": 35.0,
+          "end": 24.0,
+          "easing": "smoothstep"
+        },
+        "landing": {
+          "start": 35.0,
+          "end": 18.0,
+          "easing": "smoothstep"
+        }
+      },
+      "coefficients": {
+        "altitude_error_m": 12.0,
+        "vertical_speed_mps": -2.0,
+        "heading_error_rad": -36.0
+      },
+      "source": "handbuilt",
+      "biological_status": "hypothesis",
+      "calibration": "calibration",
+      "description": "Right-side DNg02 external rate; kept disjoint from the left-side selector.",
+      "rationale": "35 Hz is an explicit hover-power trim anchor. Positive heading error means a rightward desired heading; DNg02 contralaterality makes the left population stronger for the positive right-wing steering convention. The paired -36 Hz/rad term is a bounded external-rate hypothesis, not a measured firing-rate claim; at +/-0.9 rad both sides remain within [0,80] Hz."
+    },
+    {
+      "name": "dnp11-takeoff-state",
+      "population": "DNp11",
+      "units": "poisson_hz",
+      "bounds": [0.0, 60.0],
+      "profiles": {
+        "grounded": 0.0,
+        "hover": 0.0,
+        "flight": 0.0,
+        "takeoff": {
+          "start": 32.0,
+          "end": 0.0,
+          "easing": "smoothstep"
+        },
+        "approach": 0.0,
+        "landing": 0.0
+      },
+      "source": "handbuilt",
+      "biological_status": "hypothesis",
+      "calibration": "calibration",
+      "description": "Explicit takeoff descending-neuron input from the documented takeoff map.",
+      "rationale": "DNp11 is named as a takeoff population in neuromuscular_map.json and MotorMap.java. This bounded rate is an external calibration hypothesis; no spike train is fabricated."
+    },
+    {
+      "name": "dnp02-takeoff-state",
+      "population": "DNp02",
+      "units": "poisson_hz",
+      "bounds": [0.0, 60.0],
+      "profiles": {
+        "grounded": 0.0,
+        "hover": 0.0,
+        "flight": 0.0,
+        "takeoff": {
+          "start": 24.0,
+          "end": 0.0,
+          "easing": "smoothstep"
+        },
+        "approach": 0.0,
+        "landing": 0.0
+      },
+      "source": "handbuilt",
+      "biological_status": "hypothesis",
+      "calibration": "calibration",
+      "description": "Explicit takeoff descending-neuron input from the documented takeoff map.",
+      "rationale": "DNp02 is named as a takeoff population in neuromuscular_map.json and MotorMap.java. The absolute rate is a bounded calibration hypothesis, not a biological measurement."
+    },
+    {
+      "name": "dnp04-takeoff-state",
+      "population": "DNp04",
+      "units": "poisson_hz",
+      "bounds": [0.0, 60.0],
+      "profiles": {
+        "grounded": 0.0,
+        "hover": 0.0,
+        "flight": 0.0,
+        "takeoff": {
+          "start": 24.0,
+          "end": 0.0,
+          "easing": "smoothstep"
+        },
+        "approach": 0.0,
+        "landing": 0.0
+      },
+      "source": "handbuilt",
+      "biological_status": "hypothesis",
+      "calibration": "calibration",
+      "description": "Explicit takeoff descending-neuron input from the documented takeoff map.",
+      "rationale": "DNp04 is named as a takeoff population in neuromuscular_map.json and MotorMap.java. The absolute rate is a bounded calibration hypothesis, not a biological measurement."
+    },
+    {
+      "name": "dnp07-landing-state",
+      "population": "DNp07",
+      "units": "poisson_hz",
+      "bounds": [0.0, 60.0],
+      "profiles": {
+        "grounded": 0.0,
+        "hover": 0.0,
+        "flight": 0.0,
+        "takeoff": 0.0,
+        "approach": {
+          "start": 0.0,
+          "end": 14.0,
+          "easing": "smoothstep"
+        },
+        "landing": {
+          "start": 0.0,
+          "end": 24.0,
+          "easing": "smoothstep"
+        }
+      },
+      "source": "handbuilt",
+      "biological_status": "hypothesis",
+      "calibration": "calibration",
+      "description": "Explicit landing descending-neuron input from the documented landing map.",
+      "rationale": "DNp07 is named in neuromuscular_map.json as a landing population. Its state-gated rate is a bounded calibration hypothesis; the documented 92 Hz value is retained as a readout anchor, not copied as an input claim."
+    },
+    {
+      "name": "dnp10-landing-state",
+      "population": "DNp10",
+      "units": "poisson_hz",
+      "bounds": [0.0, 60.0],
+      "profiles": {
+        "grounded": 0.0,
+        "hover": 0.0,
+        "flight": 0.0,
+        "takeoff": 0.0,
+        "approach": {
+          "start": 0.0,
+          "end": 14.0,
+          "easing": "smoothstep"
+        },
+        "landing": {
+          "start": 0.0,
+          "end": 24.0,
+          "easing": "smoothstep"
+        }
+      },
+      "source": "handbuilt",
+      "biological_status": "hypothesis",
+      "calibration": "calibration",
+      "description": "Explicit landing descending-neuron input from the documented landing map.",
+      "rationale": "DNp10 is named in neuromuscular_map.json as a landing population. The absolute rate is an external calibration hypothesis, not a published in-vivo firing rate."
+    }
+  ],
+  "provenance": {
+    "source": "handbuilt",
+    "biological_status": "hypothesis",
+    "status": "hypothesis",
+    "calibration": "calibration",
+    "kind": "calibration",
+    "biological_claim": false,
+    "hover_anchor": "35 Hz per DNg02 cell is an explicit hover-power calibration anchor",
+    "population_map": "config/neuromuscular_map.json; selectors resolve against the MaleCNS CSR tables",
+    "takeoff_map": "neuromuscular_map.json takeoff channel: DNp11/DNp02/DNp04",
+    "landing_map": "neuromuscular_map.json landing channel: DNp07/DNp10",
+    "state_sign": "positive heading_error_rad increases DNg02/L and decreases DNg02/R; DNg02 contralaterality yields the positive right-wing steering convention",
+    "turn_task": {
+      "goal_delta_rad": 0.9,
+      "duration_s": 1.0,
+      "heading_gain_hz_per_rad": 36.0,
+      "endpoint_rate_hz_at_abs_error_0.9": {
+        "strong_side": 67.4,
+        "weak_side": 2.6
+      },
+      "external_rate_bounds_hz": [0.0, 80.0],
+      "response_status": "not_proven",
+      "replay_evidence": "The 1000-frame artifact contains only 0.2 s of turn: yaw=0.00758022 rad versus goal=0.08932072 rad at the endpoint. This tunes the external rate differential only; it does not claim body or motor response."
+    },
+    "external_only": "rates/currents are injected at the MaleCNS boundary; no spikes, body coordinates, or motor commands are emitted"
+  }
+}

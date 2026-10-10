@@ -1,0 +1,8 @@
+{
+  "variant": "original",
+  "method": "registered CSR target, weight, sign and offsets loaded unchanged",
+  "neurons": 176422,
+  "edges": 6287749,
+  "persistent_csr_files_modified": false,
+  "no_network_intervention": true
+}

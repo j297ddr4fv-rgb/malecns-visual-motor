@@ -1,0 +1,161 @@
+{
+  "schema_version": "polyhaven-demo-sources-1",
+  "asset_root_default": "/data/models/3d/malecns-gpu/polyhaven",
+  "assets": [
+    {
+      "id": "painted_wooden_table",
+      "source": "https://polyhaven.com/a/painted_wooden_table",
+      "license": "CC0",
+      "files": [
+        {
+          "path": "painted_wooden_table_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/painted_wooden_table/painted_wooden_table_1k.gltf",
+          "md5": "081543cfe302f198aaf2e49f80ab6e31"
+        },
+        {
+          "path": "textures/painted_wooden_table_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_table/painted_wooden_table_nor_gl_1k.jpg",
+          "md5": "d1474ded60a288e50e884eaa2356046f"
+        },
+        {
+          "path": "textures/painted_wooden_table_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_table/painted_wooden_table_diff_1k.jpg",
+          "md5": "3a253099ecc035aa80f3ae633e55e561"
+        },
+        {
+          "path": "painted_wooden_table.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/painted_wooden_table/painted_wooden_table.bin",
+          "md5": "c16d1a074ea0c6c3261b0deceef852f7"
+        },
+        {
+          "path": "textures/painted_wooden_table_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_table/painted_wooden_table_arm_1k.jpg",
+          "md5": "37ccff67b9d7a02199124d784995e89b"
+        }
+      ]
+    },
+    {
+      "id": "food_apple_01",
+      "source": "https://polyhaven.com/a/food_apple_01",
+      "license": "CC0",
+      "files": [
+        {
+          "path": "food_apple_01_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/food_apple_01/food_apple_01_1k.gltf",
+          "md5": "222a8e136b40f36c1acb87a6036c1106"
+        },
+        {
+          "path": "textures/food_apple_01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/food_apple_01/food_apple_01_diff_1k.jpg",
+          "md5": "3ddf2b8313f20c95f3e04fb057b32d7b"
+        },
+        {
+          "path": "food_apple_01.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/food_apple_01/food_apple_01.bin",
+          "md5": "26b23e40de43097b0185a0d93cd72d3b"
+        },
+        {
+          "path": "textures/food_apple_01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/food_apple_01/food_apple_01_nor_gl_1k.jpg",
+          "md5": "e456cb63d6a4c298c826b63be0adfaf7"
+        },
+        {
+          "path": "textures/food_apple_01_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/food_apple_01/food_apple_01_rough_1k.jpg",
+          "md5": "e46e242f52a3c2138a1e8c6ce0d82438"
+        }
+      ]
+    },
+    {
+      "id": "potted_plant_01",
+      "source": "https://polyhaven.com/a/potted_plant_01",
+      "license": "CC0",
+      "files": [
+        {
+          "path": "potted_plant_01_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/potted_plant_01/potted_plant_01_1k.gltf",
+          "md5": "199e9e3d68f5447142db4066d60ae3f0"
+        },
+        {
+          "path": "textures/potted_plant_01_pot_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_pot_rough_1k.jpg",
+          "md5": "8f2e400f94843a9239229bfe99d16688"
+        },
+        {
+          "path": "textures/potted_plant_01_leaves_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_leaves_nor_gl_1k.jpg",
+          "md5": "0a7ea996bb2a4e9e19a5299a5b654406"
+        },
+        {
+          "path": "textures/potted_plant_01_pot_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_pot_diff_1k.jpg",
+          "md5": "67114dcd68232a6da88c627e144e65c4"
+        },
+        {
+          "path": "potted_plant_01.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/potted_plant_01/potted_plant_01.bin",
+          "md5": "18377bd8d99b20a8d5fc5cf03cbf94b2"
+        },
+        {
+          "path": "textures/potted_plant_01_leaves_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_leaves_rough_1k.jpg",
+          "md5": "6251bfd59ced0360c16d9c286adbb131"
+        },
+        {
+          "path": "textures/potted_plant_01_pot_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_pot_nor_gl_1k.jpg",
+          "md5": "7388c8cba421175fd70969df077988a1"
+        },
+        {
+          "path": "textures/potted_plant_01_leaves_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_leaves_diff_1k.jpg",
+          "md5": "8cbaaa24c18c61be4201c473773dbffc"
+        }
+      ]
+    },
+    {
+      "id": "WoodenTable_01",
+      "source": "https://polyhaven.com/a/WoodenTable_01",
+      "license": "CC0",
+      "files": [
+        {
+          "path": "WoodenTable_01_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/WoodenTable_01/WoodenTable_01_1k.gltf",
+          "md5": "585f78ec50d4b57dc239f9a9a2259fea"
+        },
+        {
+          "path": "WoodenTable_01.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/WoodenTable_01/WoodenTable_01.bin",
+          "md5": "b764ee635684db5cc2c06288d51a3c14"
+        },
+        {
+          "path": "textures/WoodenTable_01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/WoodenTable_01/WoodenTable_01_nor_gl_1k.jpg",
+          "md5": "ac08715658eaf47e6df70a6026231fd2"
+        },
+        {
+          "path": "textures/WoodenTable_01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/WoodenTable_01/WoodenTable_01_diff_1k.jpg",
+          "md5": "be2bf3134566e1280412d191bd6657f8"
+        },
+        {
+          "path": "textures/WoodenTable_01_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/WoodenTable_01/WoodenTable_01_arm_1k.jpg",
+          "md5": "266842045283ef1ea475386172e8aa2f"
+        }
+      ]
+    },
+    {
+      "id": "hdri",
+      "source": "https://polyhaven.com/a/small_empty_room_4",
+      "license": "CC0",
+      "files": [
+        {
+          "path": "small_empty_room_4_1k.hdr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/small_empty_room_4_1k.hdr",
+          "md5": "b8fbe3efd4cb8823adde7f71b248804a"
+        }
+      ]
+    }
+  ]
+}

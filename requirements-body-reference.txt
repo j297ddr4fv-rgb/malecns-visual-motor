@@ -1,0 +1,21 @@
+# Recorded versions in the existing FlyGym 2.1.0 body environment.
+# This is an environment record, not a request to recreate the local venv.
+flygym==2.1.0
+mujoco==3.9.0
+numpy==2.5.3
+PyYAML==6.0.3
+mediapy==1.2.7
+imageio==2.38.0
+imageio-ffmpeg==0.6.0
+jaxtyping==0.3.7
+tabulate==0.9.0
+loguru==0.7.3
+Pillow==12.3.0
+matplotlib==3.11.2
+numba==0.68.0
+scipy==1.18.1
+absl-py==2.5.0
+etils==1.14.0
+glfw==2.10.2
+PyOpenGL==3.1.10
+

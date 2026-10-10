@@ -1,0 +1,315 @@
+{
+  "status": "complete",
+  "gate_audits": [
+    {
+      "case_id": "bilateral-forward-translation-100mmps",
+      "frames": 800,
+      "static_frames": 575,
+      "violations": []
+    },
+    {
+      "case_id": "equal_bilateral_illumination",
+      "frames": 800,
+      "static_frames": 800,
+      "violations": []
+    },
+    {
+      "case_id": "flicker_control_left",
+      "frames": 800,
+      "static_frames": 800,
+      "violations": []
+    },
+    {
+      "case_id": "flicker_control_right",
+      "frames": 800,
+      "static_frames": 800,
+      "violations": []
+    },
+    {
+      "case_id": "gray_control",
+      "frames": 800,
+      "static_frames": 800,
+      "violations": []
+    },
+    {
+      "case_id": "landmark_world_left",
+      "frames": 800,
+      "static_frames": 800,
+      "violations": []
+    },
+    {
+      "case_id": "landmark_world_right",
+      "frames": 800,
+      "static_frames": 226,
+      "violations": []
+    },
+    {
+      "case_id": "left_bright_right_dim",
+      "frames": 800,
+      "static_frames": 212,
+      "violations": []
+    },
+    {
+      "case_id": "loom_left",
+      "frames": 800,
+      "static_frames": 657,
+      "violations": []
+    },
+    {
+      "case_id": "loom_right",
+      "frames": 800,
+      "static_frames": 800,
+      "violations": []
+    },
+    {
+      "case_id": "right_bright_left_dim",
+      "frames": 800,
+      "static_frames": 211,
+      "violations": []
+    },
+    {
+      "case_id": "rotation-minus-z-6degps",
+      "frames": 800,
+      "static_frames": 230,
+      "violations": []
+    },
+    {
+      "case_id": "rotation-plus-z-6degps",
+      "frames": 800,
+      "static_frames": 231,
+      "violations": []
+    },
+    {
+      "case_id": "stationary-texture-control",
+      "frames": 800,
+      "static_frames": 543,
+      "violations": []
+    },
+    {
+      "case_id": "stripes_negative60",
+      "frames": 800,
+      "static_frames": 214,
+      "violations": []
+    },
+    {
+      "case_id": "stripes_positive60",
+      "frames": 800,
+      "static_frames": 214,
+      "violations": []
+    },
+    {
+      "case_id": "stripes_static",
+      "frames": 800,
+      "static_frames": 214,
+      "violations": []
+    },
+    {
+      "case_id": "target_head_azimuth_center0deg",
+      "frames": 800,
+      "static_frames": 220,
+      "violations": []
+    },
+    {
+      "case_id": "target_head_azimuth_minus60deg",
+      "frames": 800,
+      "static_frames": 222,
+      "violations": []
+    },
+    {
+      "case_id": "target_head_azimuth_plus60deg",
+      "frames": 800,
+      "static_frames": 800,
+      "violations": []
+    }
+  ],
+  "exact_input_comparisons": [
+    {
+      "case_id": "bilateral-forward-translation-100mmps",
+      "assay": "binocular-flow",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "equal_bilateral_illumination",
+      "assay": "phototaxis",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "flicker_control_left",
+      "assay": "looming",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "flicker_control_right",
+      "assay": "looming",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "gray_control",
+      "assay": "landmark-memory",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "landmark_world_left",
+      "assay": "landmark-memory",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "landmark_world_right",
+      "assay": "landmark-memory",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "left_bright_right_dim",
+      "assay": "phototaxis",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "loom_left",
+      "assay": "looming",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "loom_right",
+      "assay": "looming",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "right_bright_left_dim",
+      "assay": "phototaxis",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "rotation-minus-z-6degps",
+      "assay": "binocular-flow",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "rotation-plus-z-6degps",
+      "assay": "binocular-flow",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "stationary-texture-control",
+      "assay": "binocular-flow",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "target_head_azimuth_center0deg",
+      "assay": "object-fixation",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "target_head_azimuth_minus60deg",
+      "assay": "object-fixation",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    },
+    {
+      "case_id": "target_head_azimuth_plus60deg",
+      "assay": "object-fixation",
+      "exact_input_sha_match": true,
+      "peak_raw_neural_absolute_difference": {
+        "leg_power_P": 0.0,
+        "dn_p15_left_rate_hz": 0.0,
+        "dn_p15_right_rate_hz": 0.0
+      },
+      "raw_neural_identical": true
+    }
+  ],
+  "note": "New four-second stripes are not numerically pooled with old ten-second captures. Ball omega is not body yaw."
+}

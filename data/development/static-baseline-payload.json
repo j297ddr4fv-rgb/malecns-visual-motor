@@ -1,0 +1,89 @@
+{
+  "audit": {
+    "completion_status": "complete",
+    "run_integrity_status": "complete",
+    "selector_count": 18,
+    "shared_14_population_rates_and_counts_exact_to_reference": true,
+    "shared_arrays_exact_to_reference": true,
+    "terminal_status": "pass"
+  },
+  "cells": {
+    "DNp15/L": {
+      "rate_hz": 0.0,
+      "spikes": 0
+    },
+    "DNp15/R": {
+      "rate_hz": 142.5,
+      "spikes": 570
+    }
+  },
+  "interpretation_boundary": "This is a fixed-head, stationary c=1 baseline for the prepared decoder only. It is not a full-pose or walking baseline and does not validate contrast generalization.",
+  "moving_case_data_used": false,
+  "observed_yaw_used": false,
+  "rate_measurement": {
+    "cell_count_per_selector": 1,
+    "method": "sum of per-frame counts for a singleton selector divided by 4.0 s",
+    "source_field": "population_spike_counts"
+  },
+  "schema_version": "dnp15-fixed-head-static-baseline-1",
+  "selectors": {
+    "DNp15/L": {
+      "csr_index": 1935,
+      "neuron_id": 12069,
+      "side": "L"
+    },
+    "DNp15/R": {
+      "csr_index": 1124,
+      "neuron_id": 11215,
+      "side": "R"
+    }
+  },
+  "source": {
+    "body_physics_instantiated": false,
+    "brain_output_fed_back_to_pose": false,
+    "case_id": "stationary-c1",
+    "case_key": "static",
+    "condition": "stationary",
+    "pose_mode": "fixed_head",
+    "seed": 1729,
+    "stimulus": {
+      "contrast": 1.0,
+      "display_geometry": "fixed_arena_infinite_distance_angular_field",
+      "duration_s": 5.0,
+      "onset_s": 5.0,
+      "temporal_frequency_hz": 0.0,
+      "wavelength_deg": 60.0
+    },
+    "stimulus_name": "stationary-c1"
+  },
+  "source_hashes": {
+    "adapter_source_sha256": "993eb7e193c5d8a49f8e88412b6c5378bc9cd1ab026dc9896e2c5ea31bf320e5",
+    "case_manifest_sha256": "917c26cf7fd65f78b54fc84b041ad2270e47903c35db72c763b707e2be6c1956",
+    "completion_sha256": "ad0abc3b633f8fefa91c77bb273de178f6edb290d1968327cb8249bbadc5f6f2",
+    "config_sha256": "4fa12d38e16e4d979c54d3e0950a54ca272f5d269c90506c1c6ff9e75d21d1ea",
+    "fixed_pose_source_sha256": "d2d164bb3fa500339d454cc6ab465d23b16067e8bc029a3c7c802a16bd4091a8",
+    "frames_jsonl_sha256": "fdef482955c8874a4f48cd6b1ac1a700175948b68123e2016ac2d62c268fb52d",
+    "neural_state_diagnostic_sha256": "a534372c4cac84e82082bf1730890f7d876044248c357a37599788cc8db57017",
+    "protocol_sha256": "1b217bcdba15b4e0d2681236321b32476f079f4c07356b5e493071bb0f872ec1",
+    "ready_validation_sha256": "36c81993ac1eeef97fb928f668bfd2d28297214ab26feed5759a90b35b866a94",
+    "reference_comparison_sha256": "0ae79fde4f3f719bf496d1a19be11c2e9b23a3a7c4b4437820d05c59f9d14d38",
+    "run_integrity_sha256": "fbd516c4d873f54181d765b46d03095ae108840daad6aeb42532a4433b806d85",
+    "source_freeze_sha256": "47110765bcacded0eb28946040066e0f058741fe096958d0283d5c90c015640d",
+    "stimulus_spec_sha256": "704b51c87f138cb8e6f8e70315c1652dbfa20470931f5cf8073a08ac48ee8cf1",
+    "terminal_audit_sha256": "6cbf9817888f25e46c127c94c40aaded7eafdb632920ca70796491d56d16cea7",
+    "worker_integrity_sha256": "7a41d534e18f6f7dadebc2f30ceb86e8614d379e0a1850a0ff97dbeb5cf1dacf",
+    "worker_provenance_sha256": "dab5f256dbdb754a1fcc085470fbdb25451da968f9004010584da2286bc5bd01",
+    "worker_source_sha256": "543e82ed40c339d000cf38cb179f60e5818ef9de65747d36fb19fdb346adeb3d"
+  },
+  "status": "complete",
+  "window": {
+    "first_sample_time_s": 6.0,
+    "frame_count": 800,
+    "frame_dt_s": 0.005,
+    "last_sample_time_s": 9.995,
+    "seq_start_inclusive": 1200,
+    "seq_stop_exclusive": 2000,
+    "start_s": 6.0,
+    "stop_s_exclusive": 10.0
+  }
+}

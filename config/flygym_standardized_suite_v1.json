@@ -1,0 +1,212 @@
+{
+  "schema_version": "flygym-standardized-suite-preparation-config-1",
+  "suite_id": "standardized-repair-v1",
+  "bundle_root": "/data/artifacts/by-project/malecns-gpu/engineering/standardized-repair-20261007-v1",
+  "seed": 1729,
+  "standard_neural_clock": {
+    "duration_s": 4.0,
+    "frame_count": 800,
+    "sample_dt_s": 0.005,
+    "gray_window_s": [0.0, 1.0],
+    "stimulus_window_s": [1.0, 4.0],
+    "routing_label": "static",
+    "gray_luminance": 0.5,
+    "normalized_luminance_range": [0.0, 1.0],
+    "eye_columns_per_eye": 721
+  },
+  "retinal_geometry": {
+    "ray_grid_path": "/data/artifacts/by-project/malecns-gpu/engineering/flygym-fixed-pose-dn-incoming-diagnostic-20261007-v2/expected_ray_grid.npz",
+    "ray_grid_sha256": "62c574e5a627a519c3487d9e06abd4b620442da488b99d379b9feee883ce1f1c",
+    "left_directions_sha256": "2f847637ae64bea5a5454aa90e86e440a23d76d5c3b85a866936e502691654f1",
+    "right_directions_sha256": "5037edbec7e4709ddc5f31643de643cdadef4492145756e72634d52727b7b4f6",
+    "column_uv_sha256": "e244a411df2f8fa5bcbc8e1fb14fe68b8d1836116cd35ac98082d294f4a1e5ef",
+    "mirror_index_sha256": "e5fa699ca3ff11b99488a1dd3c18da83f2d906504bc8fb327868d6c31cda446d",
+    "left_eye_parity": -1,
+    "right_eye_parity": 1,
+    "left_uv_mapping": "M(u,v)=(u+v,-v), frozen worker parity reindex",
+    "right_uv_mapping": "identity, frozen worker order",
+    "fixed_pose": {
+      "position_m": [0.0, 0.0, 0.002017698],
+      "quaternion_wxyz": [1.0, 0.0, 0.0, 0.0],
+      "yaw_rad": 0.0,
+      "pitch_rad": 0.0,
+      "roll_rad": 0.0,
+      "velocity_mps": [0.0, 0.0, 0.0],
+      "angular_velocity_radps": [0.0, 0.0, 0.0]
+    },
+    "head_to_world_at_fixed_pose": "(head_x, -head_y, head_z)"
+  },
+  "source_bundle": "/data/artifacts/by-project/malecns-gpu/engineering/final-frozen-assays-20261007-v1",
+  "source_assays": [
+    {
+      "assay": "binocular-flow",
+      "manifest_path": "/data/artifacts/by-project/malecns-gpu/engineering/final-frozen-assays-20261007-v1/binocular-flow/revision-3-full-manifest/assay-input-manifest.json",
+      "source_case_ids": [
+        "rotation-plus-z-6degps",
+        "rotation-minus-z-6degps",
+        "bilateral-forward-translation-100mmps",
+        "stationary-texture-control"
+      ],
+      "classification": "prescribed binocular luminance input; downstream response only",
+      "comparison_note": "Rotation and translation are distinct motion paths and are not pixelwise matched. Their nominal flow scale is descriptive only."
+    },
+    {
+      "assay": "landmark-memory",
+      "manifest_path": "/data/artifacts/by-project/malecns-gpu/engineering/final-frozen-assays-20261007-v1/landmark-memory/input_manifest.json",
+      "source_case_ids": ["gray_control", "landmark_world_left", "landmark_world_right"],
+      "classification": "fixed-head prerecorded landmark input; downstream response only",
+      "comparison_note": "World-left/world-right targets have unequal eye-ray coverage; target bearing is retained as a label and coverage is reported, not balanced."
+    },
+    {
+      "assay": "looming",
+      "manifest_path": "/data/artifacts/by-project/malecns-gpu/engineering/final-frozen-assays-20261007-v1/looming/input-manifest.json",
+      "source_case_ids": ["flicker_control_left", "flicker_control_right", "loom_left", "loom_right"],
+      "classification": "response-only visual input; no escape/freeze behavior claim",
+      "comparison_note": "Preserve source eye-specific rays, dark-disc support, and luminance-matched flicker controls."
+    },
+    {
+      "assay": "object-fixation",
+      "manifest_path": "/data/artifacts/by-project/malecns-gpu/engineering/final-frozen-assays-20261007-v1/object-fixation/input-manifest.json",
+      "source_case_ids": ["target_head_azimuth_minus60deg", "target_head_azimuth_center0deg", "target_head_azimuth_plus60deg"],
+      "classification": "fixed-head target input; downstream response only",
+      "comparison_note": "The three head-centered targets have different per-eye ray coverage; no behavioral fixation equivalence is implied."
+    },
+    {
+      "assay": "phototaxis",
+      "manifest_path": "/data/artifacts/by-project/malecns-gpu/engineering/final-frozen-assays-20261007-v1/phototaxis/input-manifest.json",
+      "source_case_ids": ["left_bright_right_dim", "right_bright_left_dim", "equal_bilateral_illumination"],
+      "classification": "fixed-head luminance input; downstream response only",
+      "comparison_note": "Grayscale normalized luminance only; this is not a physical photometry calibration."
+    }
+  ],
+  "new_stripes_cases": [
+    {
+      "case_id": "stripes_static",
+      "source_case_id": "c1_static",
+      "source_stimulus_spec": "/data/artifacts/by-project/malecns-gpu/engineering/flygym-fixed-head-contrast-ch-diagnostic-20261007-v2-r2/stimulus-specs/c1_static.json",
+      "head_direction_sign": 1,
+      "temporal_frequency_hz": 0.0,
+      "head_angular_speed_deg_s": 0.0,
+      "wavelength_deg": 60.0,
+      "contrast_c": 1.0,
+      "mean_luminance": 0.5,
+      "field_azimuth_deg": [-135.0, 135.0],
+      "field_elevation_deg": [-45.0, 45.0]
+    },
+    {
+      "case_id": "stripes_positive60",
+      "source_case_id": "c1_positive60",
+      "source_stimulus_spec": "/data/artifacts/by-project/malecns-gpu/engineering/flygym-fixed-head-contrast-ch-diagnostic-20261007-v2-r2/stimulus-specs/c1_positive60.json",
+      "head_direction_sign": 1,
+      "temporal_frequency_hz": 1.0,
+      "head_angular_speed_deg_s": 60.0,
+      "wavelength_deg": 60.0,
+      "contrast_c": 1.0,
+      "mean_luminance": 0.5,
+      "field_azimuth_deg": [-135.0, 135.0],
+      "field_elevation_deg": [-45.0, 45.0]
+    },
+    {
+      "case_id": "stripes_negative60",
+      "source_case_id": "c1_negative60",
+      "source_stimulus_spec": "/data/artifacts/by-project/malecns-gpu/engineering/flygym-fixed-head-contrast-ch-diagnostic-20261007-v2-r2/stimulus-specs/c1_negative60.json",
+      "head_direction_sign": -1,
+      "temporal_frequency_hz": 1.0,
+      "head_angular_speed_deg_s": -60.0,
+      "wavelength_deg": 60.0,
+      "contrast_c": 1.0,
+      "mean_luminance": 0.5,
+      "field_azimuth_deg": [-135.0, 135.0],
+      "field_elevation_deg": [-45.0, 45.0]
+    }
+  ],
+  "mechanics_cases": {
+    "protocol_path": "/data/artifacts/by-project/malecns-gpu/engineering/standardized-repair-20261007-v1/mechanics/protocol.json",
+    "source_freeze_path": "/data/artifacts/by-project/malecns-gpu/engineering/standardized-repair-20261007-v1/mechanics/source_freeze.json",
+    "runs_root": "/data/artifacts/by-project/malecns-gpu/engineering/standardized-repair-20261007-v1/mechanics/mechanics_cases",
+    "assay": "free-ground-current-yaw-mechanics",
+    "constant_P": 0.3,
+    "duration_s": 3.0,
+    "seed": 1729,
+    "no_neural": true,
+    "no_visual_input": true,
+    "no_external_force": true,
+    "shared_initial_state_and_phase": true,
+    "cases": [
+      {"case_id": "static_d0", "d": 0.0, "run_output_dir": "/data/artifacts/by-project/malecns-gpu/engineering/standardized-repair-20261007-v1/mechanics/mechanics_cases/static_d0"},
+      {"case_id": "ap_dplus_0p20", "d": 0.2, "run_output_dir": "/data/artifacts/by-project/malecns-gpu/engineering/standardized-repair-20261007-v1/mechanics/mechanics_cases/ap_dplus_0p20"},
+      {"case_id": "ap_dminus_0p20", "d": -0.2, "run_output_dir": "/data/artifacts/by-project/malecns-gpu/engineering/standardized-repair-20261007-v1/mechanics/mechanics_cases/ap_dminus_0p20"}
+    ],
+    "execution_interval_s": [0.0, 3.0],
+    "startup_window_s": [0.0, 0.5],
+    "analysis_window_s": [0.5, 3.0],
+    "gray_or_visual_baseline_window_s": null,
+    "classification": "free-ground mechanics-only constant-P/AP yaw-calibration cohort; not a neural case",
+    "historical_reference": {
+      "manifest_path": "/data/artifacts/by-project/malecns-gpu/engineering/final-frozen-assays-20261007-v1/motor-mechanics/manifest.json",
+      "duration_s": 6.0,
+      "constant_P": 0.3,
+      "d_values": [0.0, 0.2, -0.2],
+      "windows_s": {"baseline": [0.0, 1.0], "response": [1.0, 6.0]},
+      "classification": "tethered-ball historical reference only; excluded from the new 3-case comparison"
+    }
+  },
+  "future_protocol_extensions": {
+    "prepared_only": true,
+    "execute": false,
+    "speed_deg_s": [0.0, -30.0, 30.0, -60.0, 60.0],
+    "contrast_c": [0.25, 1.0],
+    "note": "Future speed/contrast expansions are intentionally excluded from this 20-case neural suite and are not generated or run by this script."
+  },
+  "comparison_groups": [
+    {
+      "assay": "binocular-flow",
+      "baseline_case_ids": ["stationary-texture-control"],
+      "treatment_case_ids": ["rotation-plus-z-6degps", "rotation-minus-z-6degps", "bilateral-forward-translation-100mmps"],
+      "comparison_note": "Preserve each flow path; rotation and translation are not pixelwise or angular-flow matched."
+    },
+    {
+      "assay": "landmark-memory",
+      "baseline_case_ids": ["gray_control"],
+      "treatment_case_ids": ["landmark_world_left", "landmark_world_right"],
+      "comparison_note": "Left/right ray support is asymmetric; report each side separately and do not pool as coverage-matched."
+    },
+    {
+      "assay": "looming",
+      "baseline_case_ids": ["flicker_control_left", "flicker_control_right"],
+      "treatment_case_ids": ["loom_left", "loom_right"],
+      "paired_case_ids": [["flicker_control_left", "loom_left"], ["flicker_control_right", "loom_right"]],
+      "comparison_note": "Response-only visual input; no freeze/escape claim. Preserve the matched side labels."
+    },
+    {
+      "assay": "object-fixation",
+      "baseline_case_ids": ["target_head_azimuth_center0deg"],
+      "treatment_case_ids": ["target_head_azimuth_minus60deg", "target_head_azimuth_plus60deg"],
+      "comparison_note": "Center and off-center targets have unequal per-eye ray support; retain per-position contrasts and do not pool them as matched coverage."
+    },
+    {
+      "assay": "phototaxis",
+      "baseline_case_ids": ["equal_bilateral_illumination"],
+      "treatment_case_ids": ["left_bright_right_dim", "right_bright_left_dim"],
+      "comparison_note": "Normalized grayscale luminance only; no calibrated cd/m^2 claim."
+    },
+    {
+      "assay": "striped-optomotor",
+      "baseline_case_ids": ["stripes_static"],
+      "treatment_case_ids": ["stripes_positive60", "stripes_negative60"],
+      "comparison_note": "Same c=1, wavelength, mean, and field; only the temporal direction differs. Response-only fixed-head inputs."
+    },
+    {
+      "assay": "motor-mechanics",
+      "baseline_case_ids": ["static_d0"],
+      "treatment_case_ids": ["ap_dplus_0p20", "ap_dminus_0p20"],
+      "comparison_note": "Separate free-ground P=.3 mechanics cohort; no neural or visual input."
+    }
+  ],
+  "output_files": {
+    "input_manifest": "input-manifest.json",
+    "suite_manifest": "suite-manifest.json",
+    "preflight_readback": "input-preflight.json",
+    "neural_inputs_dir": "inputs"
+  }
+}

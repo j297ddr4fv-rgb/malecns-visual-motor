@@ -1,0 +1,53 @@
+{
+  "schema_version": "experiment-toolbox-1",
+  "paths": {
+    "protocol": "config/escape_experiment_protocol.json",
+    "runtime": "config/free_escape_experiment.json",
+    "mission": "config/scenarios.json",
+    "launcher": "scripts/run_digital_fly.py",
+    "validator": "scripts/validate_escape_experiment.py"
+  },
+  "artifact_roots": [
+    "artifacts",
+    "/data/artifacts/by-project/malecns-gpu"
+  ],
+  "resource_policy": {
+    "host_ram_gib": 5.0,
+    "max_vram_gib": 15.5,
+    "host_wrapper": [
+      "systemd-run",
+      "--user",
+      "--scope",
+      "--property=MemoryMax=5G",
+      "--"
+    ],
+    "note": "Every generated workload command carries this wrapper and --max-vram-gib 15.5."
+  },
+  "launch": {
+    "output_root": "artifacts",
+    "output_subdir": "experiment-toolbox",
+    "base_args": [
+      "--mode",
+      "strict",
+      "--neural",
+      "malecns",
+      "--vision",
+      "flyvis",
+      "--body",
+      "reduced",
+      "--neural-device",
+      "cuda",
+      "--neural-backend",
+      "torch",
+      "--vision-device",
+      "cuda:0",
+      "--stimulus-config",
+      "config/escape_stimuli.json"
+    ]
+  },
+  "matrix": {
+    "default_replicates": 20,
+    "include_baseline_replays": false,
+    "include_lesions": false
+  }
+}

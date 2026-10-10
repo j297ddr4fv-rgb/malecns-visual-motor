@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "Please cite this repository when using its code or experimental data."
+title: "Connectome organization shapes visual direction responses in a six-legged virtual fly"
+type: software
+authors:
+  - family-names: Liu
+    given-names: Xvhang
+version: "0.1.0"
+license: MIT

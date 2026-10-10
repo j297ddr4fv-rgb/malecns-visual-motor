@@ -1,0 +1,104 @@
+{
+  "schema_version": "visual-drive-calibration-1",
+  "name": "flyvis-to-malecns-bounded-current-v1",
+  "enabled": true,
+  "input": {
+    "field": "flyvis_t4t5",
+    "units": "current_mV_per_ms",
+    "source": "fitted",
+    "expected_target_count": 13582,
+    "max_abs": 1.0
+  },
+  "transform": {
+    "kind": "signed_gain_and_bound",
+    "gain": 1.0,
+    "max_gain": 2.0,
+    "max_abs_output": 1.0,
+    "saturation_policy": "clip"
+  },
+  "tonic_state_inputs": {
+    "enabled": false,
+    "entries": [
+      {
+        "name": "dng02-left-flight-state",
+        "enabled": true,
+        "target": {
+          "population": "prefix:DNg02/L"
+        },
+        "units": "poisson_hz",
+        "value": 35.0,
+        "max_abs": 80.0,
+        "source": "handbuilt",
+        "biological_status": "hypothesis",
+        "state_modulation": {
+          "base": 35.0,
+          "coefficients": {
+            "phase": 10.0,
+            "altitude_error_m": 8.0,
+            "heading_error_rad": 4.0
+          },
+          "scenario_bias": {
+            "takeoff": 15.0,
+            "landing": -18.0
+          }
+        },
+        "rationale": "Optional DNg02/L tonic-rate hypothesis: 35 Hz matches the measured 0.70635 hover-power trim per DNg02 cell; scenario and state terms are explicit engineering calibration, not fitted FlyVis output."
+      },
+      {
+        "name": "dng02-right-flight-state",
+        "enabled": true,
+        "target": {
+          "population": "prefix:DNg02/R"
+        },
+        "units": "poisson_hz",
+        "value": 35.0,
+        "max_abs": 80.0,
+        "source": "handbuilt",
+        "biological_status": "hypothesis",
+        "state_modulation": {
+          "base": 35.0,
+          "coefficients": {
+            "phase": 10.0,
+            "altitude_error_m": 8.0,
+            "heading_error_rad": -4.0
+          },
+          "scenario_bias": {
+            "takeoff": 15.0,
+            "landing": -18.0
+          }
+        },
+        "rationale": "Optional DNg02/R tonic-rate hypothesis paired with DNg02/L; the opposite heading-error sign provides a bilateral steering differential without injecting spikes directly."
+      }
+    ]
+  },
+  "provenance": {
+    "fitted_model": "FlyVis flow/0000/000",
+    "fitted_output": "signed T4/T5 activity deviation from the steady-state grey-screen baseline",
+    "target_mapping": "artifacts/flyvis-eye/t4t5_dirs.npz -> MaleCNS dense neuron indices",
+    "calibration_basis": "50 consecutive raw FlyVis frames, not a one-frame amplitude fit",
+    "evidence_artifact": "artifacts/gpu-flight-smoke-50f-rawvis-20260921",
+    "sustained_response": {
+      "frames": 50,
+      "raw_min": -0.726,
+      "raw_max": 0.860,
+      "raw_rms_max": 0.218,
+      "units": "current_mV_per_ms",
+      "sanity_bound_max_abs": 1.0,
+      "summary": "Rounded extrema from the continuous 50-frame raw FlyVis trace; the bound leaves finite headroom and rejects out-of-contract values."
+    },
+    "gain_basis": "identity gain: the sustained raw response already spans approximately -0.726 to +0.860 mV/ms; the old 4096x one-frame fit would saturate this trace",
+    "operating_reference": "The +/-1.0 mV/ms output bound is an engineering safety envelope with explicit clipping, not a biological measurement",
+    "tonic_state_reference": "neuromuscular_map.json hover trim is 0.70635 wing power; 35 Hz per DNg02 cell is an explicit tonic-rate hypothesis for the real CSR, not a fabricated spike train",
+    "accepted_state_context": [
+      "scenario",
+      "phase in [0,1]",
+      "altitude_m",
+      "altitude_error_m",
+      "heading_error_rad",
+      "speed_mps",
+      "vertical_speed_mps"
+    ],
+    "engineering_calibration": true,
+    "biological_claim": false
+  }
+}

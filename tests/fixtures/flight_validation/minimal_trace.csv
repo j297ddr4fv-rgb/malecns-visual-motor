@@ -1,0 +1,6 @@
+# evidence_class: synthetic_fixture
+# dt: 0.1
+time_s,x_m,y_m,z_m,yaw_rad,yaw_rate_rad_s,source
+0.0,0.0,0.0,0.0,0.0,0.0,fitted
+0.1,0.0,0.0,0.4,0.01,0.2,fitted
+0.2,0.01,0.0,0.4,0.02,0.2,connectome

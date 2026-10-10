@@ -1,0 +1,30 @@
+{
+  "changed_target_edges": 6285728,
+  "changed_target_fraction": 0.9996785813174158,
+  "duplicate_target_entries_within_source_rows": 14370,
+  "edge_count_preserved": true,
+  "edge_weight_array_unchanged": true,
+  "edges": 6287749,
+  "effective_edge_weights_preserved": true,
+  "exact_in_degree_preserved": true,
+  "exact_out_degree_preserved": true,
+  "extra_target_copy_bytes_during_load": 25150996,
+  "incoming_strength_max_abs_error": {
+    "excitatory": 0.0,
+    "inhibitory": 0.0
+  },
+  "method": "CSR target-stub permutation within equal signed-weight and target-Kenyon-gain strata; source rows remain fixed",
+  "neuron_excitatory_incoming_strength_preserved": true,
+  "neuron_inhibitory_incoming_strength_preserved": true,
+  "neurons": 176422,
+  "persistent_csr_files_modified": false,
+  "presynaptic_sign_array_unchanged": true,
+  "rng": "numpy.random.default_rng",
+  "rng_seed": 20261010,
+  "self_loop_edges_after_shuffle": 131,
+  "self_loops_and_parallel_entries_are_retained_as_generated_by_stub_matching": true,
+  "target_array_dtype": "int32",
+  "variant": "degree_preserving_target_stub_shuffle",
+  "weight_gain_strata_count": 1513,
+  "worker_case_out_dir": "runs/degree_preserving_target_shuffle/speed_static_seed1729/worker"
+}

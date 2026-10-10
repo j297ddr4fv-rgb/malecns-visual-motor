@@ -1,0 +1,19 @@
+{
+  "schema_version": "neural-intervention-schedule-1",
+  "name": "walking-leg-tactile-afferents-0p125-current",
+  "enabled": true,
+  "opt_in_required": true,
+  "intervention_type": "direct_neural_input_stimulation",
+  "classification": "neuron_stimulation_intervention",
+  "counts_as_autonomous_foraging": false,
+  "prohibited_outputs": ["body_command", "motor_command", "target_goal", "autopilot_decision"],
+  "bounds": {
+    "poisson_hz": [0.0, 0.0],
+    "current_mV_per_ms": [0.0, 0.125]
+  },
+  "entries": [
+    {"selector": "class:mechanosensory_tactile&nerve:ProLN", "expected_match_count": 266, "units": "current_mV_per_ms", "start_s": 0.4, "end_s": 1.0, "value": 0.125},
+    {"selector": "class:mechanosensory_tactile&nerve:MesoLN", "expected_match_count": 806, "units": "current_mV_per_ms", "start_s": 0.4, "end_s": 1.0, "value": 0.125},
+    {"selector": "class:mechanosensory_tactile&nerve:MetaLN", "expected_match_count": 805, "units": "current_mV_per_ms", "start_s": 0.4, "end_s": 1.0, "value": 0.125}
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "concentration_unit": "dimensionless normalized odor concentration",
+  "provenance": "Hand-authored physical odor field and edible region for the elevated-food pilot; independent of glTF asset identity. Visual asset provenance is recorded in foraging_elevated_scene.json.",
+  "contact_surface_id": "food_support_pad",
+  "field": {
+    "kind": "isotropic_gaussian",
+    "center_m": [
+      0.25,
+      0.0,
+      0.1227
+    ],
+    "amplitude": 1.0,
+    "background": 0.0,
+    "sigma_m": 0.25
+  },
+  "antenna_offsets_m": {
+    "left": [
+      0.0015,
+      0.0007,
+      0.0005
+    ],
+    "right": [
+      0.0015,
+      -0.0007,
+      0.0005
+    ]
+  },
+  "mouth_offset_m": [
+    0.0015,
+    0.0,
+    -0.0005
+  ],
+  "edible_region": {
+    "center_m": [
+      0.25,
+      0.0,
+      0.1227
+    ],
+    "radius_m": 0.05
+  },
+  "odor_selector_weights_hz_per_unit": {
+    "left": {
+      "ORN_DM1/L": 60.0,
+      "ORN_VA2/L": 60.0
+    },
+    "right": {
+      "ORN_DM1/R": 60.0,
+      "ORN_VA2/R": 60.0
+    }
+  },
+  "sugar_selector_rates_hz": {
+    "LB3b,LB3c,PhG1a,PhG1b,PhG1c,LgLG3": 120.0
+  },
+  "selector_expected_counts": {
+    "ORN_DM1/L": 35,
+    "ORN_VA2/L": 33,
+    "ORN_DM1/R": 39,
+    "ORN_VA2/R": 41,
+    "LB3b,LB3c,PhG1a,PhG1b,PhG1c,LgLG3": 204
+  }
+}

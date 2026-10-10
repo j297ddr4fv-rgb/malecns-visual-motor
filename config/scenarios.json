@@ -1,0 +1,138 @@
+{
+  "schema_version": "virtual-world-1",
+  "units": "SI",
+  "seed": 1729,
+  "world": {
+    "ground_z_m": 0.0,
+    "bounds_xy_m": [-2.5, 2.5, -2.5, 2.5],
+    "wall_height_m": 2.0,
+    "target": {
+      "id": "landing_target",
+      "position_m": [0.85, 0.0, 0.02],
+      "size_m": [0.32, 0.32, 0.04],
+      "texture": "concentric_checker"
+    },
+    "obstacles": [
+      {
+        "id": "looming_block",
+        "min_m": [0.38, -0.16, 0.0],
+        "max_m": [0.58, 0.16, 0.34],
+        "texture": "vertical_bars"
+      },
+      {
+        "id": "side_post",
+        "min_m": [-0.25, 0.64, 0.0],
+        "max_m": [-0.08, 0.82, 0.58],
+        "texture": "checker"
+      }
+    ],
+    "light": {
+      "ambient": 0.28,
+      "direction_m": [-0.45, 0.35, 0.82],
+      "intensity": 0.72,
+      "sky_brightness": 0.10
+    },
+    "texture": {
+      "ground_cell_m": 0.16,
+      "wall_cell_m": 0.20,
+      "contrast": 0.42
+    },
+    "wind": {
+      "base_mps": [0.0, 0.0, 0.0],
+      "spatial_amplitude_mps": 0.03,
+      "spatial_wavelength_m": 1.7,
+      "gusts": []
+    }
+  },
+  "scenarios": {
+    "hover": {
+      "duration_s": 3.0,
+      "dt_s": 0.02,
+      "initial_pose": {"position_m": [0.0, 0.0, 0.42], "yaw_rad": 0.0, "pitch_rad": 0.0, "roll_rad": 0.0, "velocity_mps": [0.0, 0.0, 0.0]},
+      "profile": {"kind": "hold", "position_m": [0.0, 0.0, 0.42], "yaw_rad": 0.0},
+      "acceptance": {"max_altitude_error_m": 0.035, "max_horizontal_drift_m": 0.08}
+    },
+    "yaw-step": {
+      "duration_s": 3.0,
+      "dt_s": 0.02,
+      "initial_pose": {"position_m": [0.0, 0.0, 0.42], "yaw_rad": 0.0, "pitch_rad": 0.0, "roll_rad": 0.0, "velocity_mps": [0.0, 0.0, 0.0]},
+      "profile": {"kind": "yaw_step", "step_at_s": 0.55, "yaw_rate_radps": 1.15},
+      "acceptance": {"min_yaw_change_rad": 0.20, "max_collision_count": 0}
+    },
+    "gust-recovery": {
+      "duration_s": 4.0,
+      "dt_s": 0.02,
+      "initial_pose": {"position_m": [0.0, 0.0, 0.42], "yaw_rad": 0.0, "pitch_rad": 0.0, "roll_rad": 0.0, "velocity_mps": [0.0, 0.0, 0.0]},
+      "profile": {"kind": "hold", "position_m": [0.0, 0.0, 0.42], "yaw_rad": 0.0},
+      "wind_override": {"base_mps": [0.0, 0.0, 0.0], "spatial_amplitude_mps": 0.01, "gusts": [{"start_s": 1.00, "duration_s": 0.36, "vector_mps": [0.0, 0.62, 0.0]}]},
+      "acceptance": {"gust_start_s": 1.00, "max_collision_count": 0, "final_speed_mps": 0.35, "max_horizontal_drift_m": 0.18}
+    },
+    "takeoff": {
+      "duration_s": 2.6,
+      "dt_s": 0.02,
+      "initial_pose": {"position_m": [0.0, 0.0, 0.015], "yaw_rad": 0.0, "pitch_rad": 0.0, "roll_rad": 0.0, "velocity_mps": [0.0, 0.0, 0.0]},
+      "profile": {"kind": "vertical_ramp", "start_z_m": 0.015, "end_z_m": 0.42, "duration_s": 1.6, "easing": "smoothstep"},
+      "acceptance": {"min_final_altitude_m": 0.35, "min_altitude_gain_m": 0.30, "max_collision_count": 0}
+    },
+    "forward-target": {
+      "duration_s": 5.2,
+      "dt_s": 0.02,
+      "initial_pose": {"position_m": [0.0, -0.55, 0.42], "yaw_rad": 0.0, "pitch_rad": 0.0, "roll_rad": 0.0, "velocity_mps": [0.0, 0.0, 0.0]},
+      "profile": {
+        "kind": "forward_ramp",
+        "start_position_m": [0.0, -0.55, 0.42],
+        "waypoints_m": [[0.28, -0.55, 0.42], [0.68, -0.42, 0.42]],
+        "end_position_m": [0.85, 0.0, 0.18],
+        "duration_s": 4.2,
+        "easing": "smoothstep",
+        "target_id": "landing_target",
+        "yaw_rad": 0.0
+      },
+      "acceptance": {"min_forward_displacement_m": 0.60, "max_final_target_distance_m": 0.25, "min_target_visibility_fraction": 0.50, "max_collision_count": 0}
+    },
+    "landing": {
+      "duration_s": 2.8,
+      "dt_s": 0.02,
+      "initial_pose": {"position_m": [0.85, 0.0, 0.40], "yaw_rad": 3.141592653589793, "pitch_rad": 0.0, "roll_rad": 0.0, "velocity_mps": [0.0, 0.0, -0.02]},
+      "profile": {"kind": "vertical_ramp", "start_z_m": 0.40, "end_z_m": 0.055, "duration_s": 2.2, "easing": "smoothstep"},
+      "acceptance": {"max_final_target_distance_m": 0.12, "max_collision_count": 0, "final_speed_mps": 0.15}
+    },
+    "flight-demo": {
+      "duration_s": 7.0,
+      "dt_s": 0.02,
+      "initial_pose": {"position_m": [0.0, -0.55, 0.42], "yaw_rad": 0.0, "pitch_rad": 0.0, "roll_rad": 0.0, "velocity_mps": [0.0, 0.0, 0.0]},
+      "profile": {
+        "kind": "forward_ramp",
+        "start_position_m": [0.0, -0.55, 0.42],
+        "waypoints_m": [[0.28, -0.55, 0.42], [0.68, -0.42, 0.42], [0.85, -0.02, 0.28]],
+        "end_position_m": [0.85, 0.0, 0.20],
+        "duration_s": 5.6,
+        "easing": "smoothstep",
+        "target_id": "landing_target",
+        "yaw_rad": 0.0
+      },
+      "wind_override": {"base_mps": [0.0, 0.0, 0.0], "spatial_amplitude_mps": 0.012, "gusts": [{"start_s": 2.50, "duration_s": 0.32, "vector_mps": [0.0, -0.28, 0.0]}]},
+      "acceptance": {"min_forward_displacement_m": 0.60, "max_final_target_distance_m": 0.25, "min_target_visibility_fraction": 0.50, "max_collision_count": 0, "max_speed_mps": 1.0}
+    },
+    "full-mission": {
+      "duration_s": 12.0,
+      "dt_s": 0.02,
+      "initial_pose": {"position_m": [0.0, -0.55, 0.015], "yaw_rad": 0.0, "pitch_rad": 0.0, "roll_rad": 0.0, "velocity_mps": [0.0, 0.0, 0.0]},
+      "profile": {
+        "kind": "mission",
+        "phases": [
+          {"label": "takeoff", "start_s": 0.0, "end_s": 1.8, "kind": "vertical_ramp", "position_m": [0.0, -0.55, 0.0], "start_z_m": 0.015, "end_z_m": 0.42, "easing": "smoothstep"},
+          {"label": "forward", "start_s": 1.8, "end_s": 4.8, "kind": "forward_ramp", "start_position_m": [0.0, -0.55, 0.42], "waypoints_m": [[0.28, -0.55, 0.42], [0.68, -0.42, 0.42]], "end_position_m": [0.85, 0.0, 0.30], "easing": "smoothstep", "yaw_rad": 0.0},
+          {"label": "turn", "start_s": 4.8, "end_s": 5.8, "kind": "yaw_ramp", "position_m": [0.85, 0.0, 0.30], "start_yaw_rad": 0.0, "end_yaw_rad": 0.90, "easing": "smoothstep"},
+          {"label": "hover", "start_s": 5.8, "end_s": 6.8, "kind": "hold", "position_m": [0.85, 0.0, 0.30], "yaw_rad": 0.90},
+          {"label": "gust-recovery", "start_s": 6.8, "end_s": 7.7, "kind": "hold", "position_m": [0.85, 0.0, 0.30], "yaw_rad": 0.90},
+          {"label": "approach", "start_s": 7.7, "end_s": 9.1, "kind": "vertical_ramp", "position_m": [0.85, 0.0, 0.0], "start_z_m": 0.30, "end_z_m": 0.12, "easing": "smoothstep", "yaw_rad": 0.90},
+          {"label": "landing", "start_s": 9.1, "end_s": 10.9, "kind": "vertical_ramp", "position_m": [0.85, 0.0, 0.0], "start_z_m": 0.12, "end_z_m": 0.055, "easing": "smoothstep", "yaw_rad": 0.90},
+          {"label": "settle", "start_s": 10.9, "end_s": 12.0, "kind": "hold", "position_m": [0.85, 0.0, 0.055], "yaw_rad": 0.90}
+        ]
+      },
+      "wind_override": {"base_mps": [0.0, 0.0, 0.0], "spatial_amplitude_mps": 0.012, "gusts": [{"start_s": 6.8, "duration_s": 0.45, "vector_mps": [0.0, -0.34, 0.0]}]},
+      "acceptance": {"min_final_altitude_m": 0.04, "min_altitude_gain_m": 0.30, "min_forward_displacement_m": 0.60, "max_final_target_distance_m": 0.12, "min_target_visibility_fraction": 0.25, "max_collision_count": 0, "final_speed_mps": 0.15, "max_speed_mps": 1.0}
+    }
+  }
+}

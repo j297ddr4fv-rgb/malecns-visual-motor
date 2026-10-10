@@ -1,0 +1,31 @@
+{
+  "variant": "degree_preserving_target_stub_shuffle",
+  "method": "CSR target-stub permutation within equal signed-weight and target-Kenyon-gain strata; source rows remain fixed",
+  "rng": "numpy.random.default_rng",
+  "rng_seed": 20261012,
+  "neurons": 176422,
+  "edges": 6287749,
+  "target_array_dtype": "int32",
+  "exact_in_degree_preserved": true,
+  "exact_out_degree_preserved": true,
+  "edge_count_preserved": true,
+  "edge_weight_array_unchanged": true,
+  "presynaptic_sign_array_unchanged": true,
+  "effective_edge_weights_preserved": true,
+  "neuron_excitatory_incoming_strength_preserved": true,
+  "neuron_inhibitory_incoming_strength_preserved": true,
+  "incoming_strength_max_abs_error": {
+    "excitatory": 0.0,
+    "inhibitory": 0.0
+  },
+  "weight_gain_strata_count": 1513,
+  "changed_target_edges": 6285839,
+  "changed_target_fraction": 0.9996962346938467,
+  "original_DNp15_afferent_edges": 187,
+  "original_DNp15_afferent_edges_reassigned": 187,
+  "self_loop_edges_after_shuffle": 116,
+  "duplicate_target_entries_within_source_rows": 14090,
+  "self_loops_and_parallel_entries_are_retained_as_generated_by_stub_matching": true,
+  "persistent_csr_files_modified": false,
+  "extra_target_copy_bytes_during_load": 25150996
+}

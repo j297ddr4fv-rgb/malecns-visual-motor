@@ -1,0 +1,178 @@
+{
+  "schema_version": "flygym-standardized-acceptance-v1",
+  "suite_id": "standardized-repair-20261007-v1",
+  "evidence_class": "digital_simulation",
+  "classification": "single-seed engineering regression screen",
+  "purpose": "Run one frozen, comparable visual-neural-mechanics regression suite after bounded repairs; do not promote it to biological or statistical validation.",
+  "expected_counts": {
+    "neural_cases": 20,
+    "mechanics_cases": 3,
+    "total_cases": 23
+  },
+  "neural_contract": {
+    "duration_s": 4.0,
+    "visual_frame_rate_hz": 200,
+    "visual_frame_count": 800,
+    "sample_dt_s": 0.005,
+    "seed": 1729,
+    "routing_label": "static",
+    "windows_s_half_open": {
+      "gray_0_1": [0.0, 1.0],
+      "early_1_1p5": [1.0, 1.5],
+      "late_2_4": [2.0, 4.0]
+    },
+    "gray_interval_s": [0.0, 1.0],
+    "stimulus_interval_s": [1.0, 4.0],
+    "expected_body_control_ticks": 4000,
+    "expected_neural_ticks": 8000,
+    "expected_body_physics_steps": 40000,
+    "expected_body_native_samples": 40001,
+    "stimulus_label_available_to_controller": false,
+    "closed_loop": false
+  },
+  "readout_contract": {
+    "raw_P_retained_before_static_gate": true,
+    "final_control_power_reported_separately": true,
+    "raw_DNp15_L_R_retained": true,
+    "raw_opponent_signal_retained": true,
+    "ungated_signed_d_retained": true,
+    "gated_signed_d_reported_separately": true,
+    "zero_gray_neutral_action": true,
+    "fixed_opponent_normalization_hz": 142.5,
+    "static_gate_threshold_must_be_reported": true,
+    "calibrate_parameters_from_this_suite": false
+  },
+  "mechanics_contract": {
+    "output_directory": "mechanics/mechanics_cases/<case_id>",
+    "independent_from_neural_cases": true,
+    "neural_input": false,
+    "vision_input": false,
+    "constant_P": 0.3,
+    "seed": 1729,
+    "duration_s": 3.0,
+    "expected_control_ticks": 3000,
+    "expected_physics_steps": 30000,
+    "expected_native_samples": 30001,
+    "analysis_window_s": [0.5, 3.0],
+    "initial_state_and_phase_matched": true,
+    "external_wrench_max_abs": 0.0,
+    "generalized_applied_force_max_abs": 0.0,
+    "root_state_writes_after_initialization": 0,
+    "conditions": [
+      {"case_id": "static_d0", "d": 0.0, "role": "mechanics baseline"},
+      {"case_id": "ap_dplus_0p20", "d": 0.2, "role": "paired AP endpoint perturbation"},
+      {"case_id": "ap_dminus_0p20", "d": -0.2, "role": "paired AP endpoint perturbation"}
+    ],
+    "windows_s_half_open": {
+      "startup_0_0p5": [0.0, 0.5],
+      "analysis_0p5_3": [0.5, 3.0]
+    },
+    "closed_loop": false
+  },
+  "historical_reference_only": {
+    "description": "Three earlier six-second fixed-body tethered-ball constant-P captures are background context only; they are not part of the 23 expected v1 cases.",
+    "duration_s": 6.0,
+    "constant_P": 0.3,
+    "d_values": [0.0, 0.2, -0.2],
+    "readout": "ball world angular velocity",
+    "not_comparable_to": "free-ground body-yaw mechanics cohort"
+  },
+  "hash_policy": {
+    "record_input_sha256": true,
+    "record_case_summary_sha256": true,
+    "record_run_record_sha256": true,
+    "record_integrity_sha256": true,
+    "record_trajectory_sha256": true,
+    "record_contacts_sha256": true,
+    "record_source_freeze_sha256": true,
+    "record_mechanics_protocol_file_sha256": true,
+    "record_mechanics_protocol_canonical_sha256": true,
+    "compare_input_hash_to_manifest": true,
+    "compare_artifact_hashes_to_run_record_when_available": true,
+    "compare_mechanics_source_hashes_when_available": true,
+    "compare_mechanics_protocol_file_hash_to_cohort_manifest": true,
+    "compare_mechanics_protocol_canonical_hash_to_source_freeze": true,
+    "do_not_compare_protocol_hashes_across_representations": true,
+    "preserve_old_sources_without_copying": true
+  },
+  "engineering_acceptance": {
+    "all_expected_cases_present": true,
+    "all_case_statuses_complete": true,
+    "neural_counts_match_contract": true,
+    "mechanics_counts_match_source_records": true,
+    "input_and_output_hashes_match_recorded_provenance": true,
+    "same_seed_and_frozen_source_identity": true,
+    "behavioral_outcome_thresholds": null,
+    "natural_behavior_success_claim_allowed": false,
+    "statistical_validation_claim_allowed": false
+  },
+  "comparison_policy": {
+    "report_within_case_gray_to_stimulus_changes": true,
+    "report_configured_control_case_differences": true,
+    "compare_only_same_window_names_and_units": true,
+    "do_not_pool_10s_historical_stripe_windows_with_4s_suite_windows": true,
+    "mechanics_remain_a_separate_group": true,
+    "mechanics_output_is_body_yaw_not_ball_omega": true
+  },
+  "comparisons": [
+    {
+      "assay_group": "binocular-flow",
+      "baseline_case_id": "stationary-texture-control",
+      "case_ids": ["rotation-plus-z-6degps", "rotation-minus-z-6degps", "bilateral-forward-translation-100mmps"]
+    },
+    {
+      "assay_group": "object-fixation",
+      "baseline_case_id": "target_head_azimuth_center0deg",
+      "case_ids": ["target_head_azimuth_minus60deg", "target_head_azimuth_plus60deg"]
+    },
+    {
+      "assay_group": "looming",
+      "baseline_case_id": "flicker_control_left",
+      "case_ids": ["loom_left"]
+    },
+    {
+      "assay_group": "looming",
+      "baseline_case_id": "flicker_control_right",
+      "case_ids": ["loom_right"]
+    },
+    {
+      "assay_group": "phototaxis",
+      "baseline_case_id": "equal_bilateral_illumination",
+      "case_ids": ["left_bright_right_dim", "right_bright_left_dim"]
+    },
+    {
+      "assay_group": "landmark-memory",
+      "baseline_case_id": "gray_control",
+      "case_ids": ["landmark_world_left", "landmark_world_right"]
+    },
+    {
+      "assay_group": "striped-optomotor",
+      "baseline_case_id": "stripes_static",
+      "case_ids": ["stripes_positive60", "stripes_negative60"]
+    },
+    {
+      "assay_group": "mechanics-yaw-calibration",
+      "baseline_case_id": "static_d0",
+      "case_ids": ["ap_dplus_0p20", "ap_dminus_0p20"]
+    }
+  ],
+  "repeatability_boundary": {
+    "interpretation": "A fixed seed and frozen hashes provide an engineering regression/reproduction record only.",
+    "replicate_seeds_required_for_statistics": true,
+    "minimum_replicates": null,
+    "claim": "No statistical sample size is asserted by this single-seed suite."
+  },
+  "optional_extension": {
+    "requires_new_protocol_version": true,
+    "calibration_and_holdout_must_be_separate": true,
+    "calibration_inputs_must_not_be_reused_as_confirmatory_holdout": true,
+    "candidate_axes": [
+      "held-out background luminance and texture",
+      "held-out contrast levels",
+      "opposite stripe directions and speeds",
+      "additional seeds with paired initial states",
+      "online body-to-retina feedback after separate mechanics acceptance"
+    ],
+    "parameter_selection_from_confirmatory_behavioral_outcomes": false
+  }
+}

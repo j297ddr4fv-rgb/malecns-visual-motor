@@ -1,0 +1,50 @@
+{
+  "schema_version": "flygym-gait-repair-protocol-1",
+  "evidence_class": "digital_simulation",
+  "purpose": "Calibrate mechanical stepping before evaluating visual stripe following",
+  "calibration": {
+    "seed": 1729,
+    "duration_s": 1.5,
+    "analysis_window_s": [0.5, 1.5],
+    "stimulus_used_for_parameter_selection": false,
+    "symmetric_drive_amplitudes": [0.3, 0.6, 0.8, 1.0],
+    "full_drive_adhesion_gains": [0.0, 5.0, 10.0, 40.0],
+    "conditional_engineered_swing_clearance_candidates": {
+      "clearance_mm": [0.15, 0.25],
+      "full_drive_legs": ["lh", "rh"],
+      "weak_drive_legs": ["lf", "lm", "lh", "rf", "rm", "rh"],
+      "method": "private forward/inverse kinematics changes position-actuator targets during CPG swing; no live root state writes",
+      "stance_marker_height_source": "same-floor constant_forward_1_1 loaded tarsus5 medians, locomotion-skepticism-20261006-v1/ablation/results-v2"
+    }
+  },
+  "verification": {
+    "seeds": [1729, 0, 42],
+    "duration_s": 3.0,
+    "analysis_window_s": [0.5, 3.0],
+    "zero_input_control_required": true,
+    "parameter_freeze_before_visual_comparison": true
+  },
+  "mechanical_acceptance": {
+    "legs": ["lf", "lm", "lh", "rf", "rm", "rh"],
+    "minimum_complete_measured_cycles_on_each_leg": 2,
+    "minimum_tarsus5_rise_above_loaded_stance_median_mm": 0.05,
+    "minimum_unloaded_lift_duration_s": 0.002,
+    "minimum_loaded_touchdown_duration_s": 0.002,
+    "loaded_force_threshold_body_weight_fraction": 0.01,
+    "minimum_fraction_samples_with_at_least_two_loaded_legs": 0.99,
+    "minimum_thorax_collision_clearance_mm_exclusive": 0.0,
+    "maximum_nonleg_ground_contact_samples": 0,
+    "maximum_root_state_writes_after_initialization": 0,
+    "maximum_external_body_wrench": 0.0,
+    "maximum_generalized_applied_force": 0.0
+  },
+  "required_descriptive_measures": [
+    "per_leg_lift_height_and_loaded_duty_fraction",
+    "commanded_swing_versus_actual_unloading",
+    "foot_motion_during_support_as_a_proxy_with_geometry_limitations",
+    "actual_touchdown_timing_between_legs",
+    "body_displacement_and_yaw",
+    "joint_tracking_error_and_actuator_saturation"
+  ],
+  "scope": "Passing establishes repeated stepping in this engineered body/controller. It does not establish neural generation of gait, normal biological walking, or visual stripe following."
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": "neural-intervention-schedule-1",
+  "name": "ttmn-single-frame-poisson-pulse-example",
+  "enabled": true,
+  "opt_in_required": true,
+  "intervention_type": "direct_neural_input_stimulation",
+  "classification": "neuron_stimulation_intervention",
+  "counts_as_autonomous_foraging": false,
+  "prohibited_outputs": [
+    "body_command",
+    "motor_command",
+    "target_goal",
+    "autopilot_decision"
+  ],
+  "bounds": {
+    "poisson_hz": [0.0, 2000.0],
+    "current_mV_per_ms": [-20.0, 20.0]
+  },
+  "entries": [
+    {
+      "selector": "TTMn",
+      "expected_match_count": 2,
+      "units": "poisson_hz",
+      "start_s": 0.0,
+      "end_s": 0.005,
+      "value": 200.0
+    }
+  ]
+}

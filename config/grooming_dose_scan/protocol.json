@@ -1,0 +1,81 @@
+{
+  "schema_version": "malecns-grooming-dose-scan-protocol-1",
+  "protocol_date": "2026-09-26",
+  "title": "Pre-registered narrow JO grooming-afferent dose screen",
+  "evidence_class": "digital_simulation",
+  "objective": "Screen narrowly selected JO-FV and JO-FD1 grooming-subclass populations for a selective antennal-grooming decoder response while excluding takeoff, flight, and jump responses.",
+  "design": {
+    "duration_s": 2.5,
+    "stimulus_window_s": [0.4, 1.0],
+    "window_convention": "half-open",
+    "frame_dt_s": 0.005,
+    "seeds": [1729, 1731],
+    "sham_runs": 2,
+    "sham_reuse": "one no-intervention sham per seed is paired to every candidate dose for that seed",
+    "total_planned_runs": 14,
+    "world": "calm sham_grounded, zero wind, no target contact",
+    "execution": "strict free-behavior; FlyVis CUDA; Warp CUDA; MaleCNS Triton CUDA; reduced body; MemoryMax=5G; LimitMEMLOCK=64M; RuntimeMaxSec=300; max_vram_gib=15.5",
+    "fallback_policy": "Fail closed. CPU, stub, or non-CUDA fallback invalidates the run and stops the scan."
+  },
+  "candidates": [
+    {
+      "name": "jo_fv_grooming_intersection",
+      "selector": "type:JO-FV&subclass:grooming",
+      "expected_match_count": 60,
+      "rates_hz_per_neuron": [10.0, 30.0, 60.0],
+      "config_files": ["jo_fv_grooming_10hz.json", "jo_fv_grooming_30hz.json", "jo_fv_grooming_60hz.json"]
+    },
+    {
+      "name": "jo_fd1_grooming_intersection",
+      "selector": "type:JO-FD1&subclass:grooming",
+      "expected_match_count": 4,
+      "rates_hz_per_neuron": [10.0, 30.0, 60.0],
+      "config_files": ["jo_fd1_grooming_10hz.json", "jo_fd1_grooming_30hz.json", "jo_fd1_grooming_60hz.json"]
+    }
+  ],
+  "selector_audit": {
+    "required_counts": {
+      "subclass:grooming": 65,
+      "type:JO-FV": 70,
+      "type:JO-FV&subclass:grooming": 60,
+      "type:JO-FD1": 4,
+      "type:JO-FD1&subclass:grooming": 4,
+      "DNg62": 2,
+      "DNge078": 2
+    },
+    "note": "The type-and-subclass intersections are used explicitly. JO-FV alone includes ten cells outside subclass:grooming and is not used as the stimulation cohort."
+  },
+  "recorded_readouts": {
+    "raw_population_spikes": ["DNg62", "DNge078", "type:JO-FV&subclass:grooming", "type:JO-FD1&subclass:grooming"],
+    "groom_channels": ["groom_antenna", "groom_head", "groom_leg", "groom_abdomen"],
+    "safety": ["grounded", "position_m", "ground_distance_m", "wing_drive_left", "wing_drive_right", "jump_actuator_active", "target_contact"]
+  },
+  "decision_rules": {
+    "specificity_and_target_gate": {
+      "required_in_each_seed": true,
+      "target_population_spikes": "During the intervention window, total DNg62 and DNge078 raw population spike counts must exceed the matched sham; at least one of the two populations must have a positive count and exceed its matched sham in each seed.",
+      "antennal_readout": "groom_antenna mean during the intervention window must be >0 and its matched mean delta must be >0 in each seed.",
+      "selectivity": "In each seed, the paired mean delta for groom_antenna during the intervention window must be strictly greater than the paired mean delta for each of groom_head, groom_leg, and groom_abdomen.",
+      "interpretation": "A pass establishes only a repeatable selective decoder response to direct neural stimulation at this dose. It is not natural touch, sensory transduction, an executed grooming movement, or autonomous grooming."
+    },
+    "safety_gate": {
+      "required_in_each_seed": true,
+      "grounding": "All intervention frames remain grounded and intervention airborne frame count is zero.",
+      "jump": "Intervention jump actuator frame count is zero.",
+      "wing_drive": "Maximum absolute value of each left/right wing drive is <=0.05 in every intervention run.",
+      "height": "Intervention peak center height is no more than 0.002 m above the matched sham peak center height."
+    },
+    "condition_pass": "Both specificity_and_target_gate and safety_gate pass in both seeds.",
+    "negative_result_classification": {
+      "safe_no_antenna_response": "If safety passes in both seeds and both seeds have groom_antenna intervention mean = 0 and paired mean delta <= 0, list the condition as a safe negative-result input, with per-seed safety metrics.",
+      "safe_no_reproducible_antenna_response": "If safety passes in both seeds but the antennal positive-mean-and-positive-delta rule does not reproduce in both seeds, list the condition separately as safe but without a replicated antennal response."
+    },
+    "stopping_rule": "Run only the six pre-registered subgroup-dose conditions. If none passes, report no qualifying candidate and stop; do not increase dose or broaden the stimulated population in this screen."
+  },
+  "analysis_limits": [
+    "Two matched seeds are a reproducibility screen, not an inferential statistical sample.",
+    "Spike counts are raw MaleCNS engine spike events aggregated over annotated population selectors, not individual-neuron raster files.",
+    "The grooming channels are normalized decoder outputs and do not actuate legs or remove particles.",
+    "No result from this screen alone establishes natural mechanosensation or autonomous grooming."
+  ]
+}

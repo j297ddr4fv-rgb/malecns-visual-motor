@@ -1,0 +1,98 @@
+[
+  {
+    "variant": "original",
+    "seed": 1729,
+    "condition": "positive60",
+    "opponent_hz_moving_minus_static": 82.5,
+    "ema_opponent_hz_moving_minus_static": 81.4669415706756,
+    "clip_fraction": 0.0375
+  },
+  {
+    "variant": "original",
+    "seed": 1729,
+    "condition": "negative60",
+    "opponent_hz_moving_minus_static": -62.33333333333334,
+    "ema_opponent_hz_moving_minus_static": -61.27322914455348,
+    "clip_fraction": 0.0
+  },
+  {
+    "variant": "original",
+    "seed": 1730,
+    "condition": "positive60",
+    "opponent_hz_moving_minus_static": 79.91666666666669,
+    "ema_opponent_hz_moving_minus_static": 78.88413351338693,
+    "clip_fraction": 0.04375
+  },
+  {
+    "variant": "original",
+    "seed": 1730,
+    "condition": "negative60",
+    "opponent_hz_moving_minus_static": -65.0,
+    "ema_opponent_hz_moving_minus_static": -63.849143918066886,
+    "clip_fraction": 0.0
+  },
+  {
+    "variant": "original",
+    "seed": 1731,
+    "condition": "positive60",
+    "opponent_hz_moving_minus_static": 75.58333333333334,
+    "ema_opponent_hz_moving_minus_static": 74.7567133763,
+    "clip_fraction": 0.027083333333333334
+  },
+  {
+    "variant": "original",
+    "seed": 1731,
+    "condition": "negative60",
+    "opponent_hz_moving_minus_static": -66.33333333333331,
+    "ema_opponent_hz_moving_minus_static": -65.844697659134,
+    "clip_fraction": 0.0
+  },
+  {
+    "variant": "degree_preserving_target_shuffle",
+    "seed": 1729,
+    "condition": "positive60",
+    "opponent_hz_moving_minus_static": -5.083333333333314,
+    "ema_opponent_hz_moving_minus_static": -5.155615766272064,
+    "clip_fraction": 0.9870833333333333
+  },
+  {
+    "variant": "degree_preserving_target_shuffle",
+    "seed": 1729,
+    "condition": "negative60",
+    "opponent_hz_moving_minus_static": -0.8333333333333144,
+    "ema_opponent_hz_moving_minus_static": -0.8724751110469811,
+    "clip_fraction": 0.9845833333333334
+  },
+  {
+    "variant": "degree_preserving_target_shuffle",
+    "seed": 1730,
+    "condition": "positive60",
+    "opponent_hz_moving_minus_static": -1.3333333333333144,
+    "ema_opponent_hz_moving_minus_static": -1.4756386292893922,
+    "clip_fraction": 0.98625
+  },
+  {
+    "variant": "degree_preserving_target_shuffle",
+    "seed": 1730,
+    "condition": "negative60",
+    "opponent_hz_moving_minus_static": -0.08333333333331439,
+    "ema_opponent_hz_moving_minus_static": -0.060532799431740614,
+    "clip_fraction": 0.9845833333333334
+  },
+  {
+    "variant": "degree_preserving_target_shuffle",
+    "seed": 1731,
+    "condition": "positive60",
+    "opponent_hz_moving_minus_static": 0.6666666666666572,
+    "ema_opponent_hz_moving_minus_static": 0.5900477085399132,
+    "clip_fraction": 0.98625
+  },
+  {
+    "variant": "degree_preserving_target_shuffle",
+    "seed": 1731,
+    "condition": "negative60",
+    "opponent_hz_moving_minus_static": -1.5,
+    "ema_opponent_hz_moving_minus_static": -1.3261059861245883,
+    "clip_fraction": 0.9858333333333333
+  }
+]

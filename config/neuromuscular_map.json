@@ -1,0 +1,897 @@
+{
+  "schema_version": 1,
+  "name": "malecns-neuromuscular-readout",
+  "description": "Named-population readout from the MaleCNS v1.0 CSR to normalized motor channels.",
+  "source": {
+    "dataset": "male-cns:v1.0",
+    "annotation_source": "FLYB v1 annotations.npz + tables.json",
+    "csr_default": "/data/cache/malecns-gpu/csr-flyb",
+    "mapping_source": "fly-brain-minecraft MotorMap.java and docs/research/dn-behavior.md",
+    "body_id_policy": "Population specifications use annotated neuron type and annotation fields only; no body ID is inferred or invented."
+  },
+  "contract_provenance": {
+    "neural_output": "connectome",
+    "normalized_readout": "connectome",
+    "motor_command": "fitted",
+    "note": "The population signal is graph-derived; conversion into SI MotorCommand uses caller-supplied calibration scales and is therefore a fitted/readout boundary."
+  },
+  "direction_convention": {
+    "left_right": "Signed steering channels use explicit right-minus-left semantics; bilateral activity channels do not invent a lateral sign.",
+    "physical_wing": "wing_motor_left and wing_motor_right use exact superclass:vnc_motor&subclass:wm/L and /R selectors; DNg02 flight_power remains a compatibility readout.",
+    "front_back": "Leg selectors retain front/middle/hind pools; DNp01/TTMn/DNp11/DNp02/DNp04 have no annotated front/back sign and are marked not_encoded.",
+    "escape_readout": "jump is the DNp01 decision/event compatibility channel; ttmn_activity and jump_motor are independent TTMn physical motor readouts; dnp11_activity, dnp02_activity, and dnp04_activity remain independent normalized activities.",
+    "behavior_policy": "No sensory trigger, behavioral state, or conditional activation is defined by this map."
+  },
+  "units": {
+    "rates_hz": "Hz per neuron (population mean)",
+    "spikes": "spike count per supplied tick",
+    "tick_ms": "ms",
+    "channel": "normalized drive",
+    "nonnegative_channel": "[0, 1]",
+    "signed_channel": "[-1, 1]",
+    "wing_drive": "normalized [0, 1] accepted by digital_body.BodyCommand"
+  },
+  "calibration": {
+    "id": "malecns-windowed-rate-v1",
+    "version": "2026-09-21",
+    "neural_window_ms": 5.0,
+    "input_semantics": {
+      "dense_rates_hz": "per-neuron mean rate over the supplied window; MaleCNS one-tick 0/1000-dt rates are accumulated before readout",
+      "dense_spikes": "per-neuron spike counts accumulated over the supplied window",
+      "population_rates_hz": "named population mean rate in Hz; an explicit population map takes precedence over a dense vector",
+      "population_spike_counts": "named population total count over the supplied window"
+    },
+    "readout": {
+      "flight_power_reference_hz": 50.0,
+      "flight_steering_reference_hz": 50.0,
+      "rate_clipping": "each term is baseline-subtracted, normalized by its explicit r_max_hz, then clipped to its channel bounds",
+      "signed_steering": "right-minus-left wing command, with DNg02 contralateral and DNp03 contraversive signs from MotorMap.java"
+    },
+    "wing": {
+      "steering_mix": 0.5,
+      "drive_bounds": [0.0, 1.0],
+      "steering_bounds": [-1.0, 1.0],
+      "wingbeat_frequency_hz": 190.0,
+      "bilateral_policy": "mean flight power plus/minus signed steering; each wing is independently clipped"
+    },
+    "provenance": {
+      "engine": "scripts/malecns_engine.py MaleCNSEngine emits instantaneous per-neuron rates from spikes",
+      "map": "FLYB v1 annotations.npz + tables.json; population selectors are resolved at construction",
+      "anchors": "r_max_hz values are explicit fitted/readout anchors, not in-vivo firing-rate claims",
+      "evidence": "docs/GPU_INTEGRATION_CHECKLIST.md §Other blocking or high-risk findings and docs/EXPERIMENT_LOG.md §六"
+    }
+  },
+  "defaults": {
+    "tick_ms": 50.0,
+    "neural_window_ms": 5.0,
+    "baseline_subtraction": true,
+    "saturation": "clip",
+    "wing_steering_mix": 0.5,
+    "wingbeat_frequency_hz": 190.0
+  },
+  "channels": {
+    "flight_power": {
+      "kind": "rate",
+      "tau_ms": 100.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized [0,1]",
+      "symmetry": "bilateral_mean",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "mean; no lateral sign",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "wing power"
+      },
+      "description": "Graded wingbeat power command from all annotated DNg02 wingbeat-power descending neurons.",
+      "provenance": "DNg02 population and wingbeat-power role are documented in MotorMap.java and dn-behavior.md §4.2/§2.2.",
+      "confidence": "high",
+      "rate_anchor_confidence": "unknown",
+      "terms": [
+        {
+          "spec": "prefix:DNg02",
+          "weight": 1.0,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "All CSR type names beginning DNg02; resolved from tables.json.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "flight_steering": {
+      "kind": "rate",
+      "tau_ms": 100.0,
+      "bounds": [-1.0, 1.0],
+      "units": "normalized [-1,1]",
+      "symmetry": "right_minus_left_with_contraversive_correction",
+      "direction": {
+        "laterality": "signed",
+        "left_right": "positive right-wing power",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "right_wing_more_power"
+      },
+      "positive_direction": "right_wing_more_power",
+      "description": "Signed lateral wing command; positive values increase right-wing drive in the digital-body convention.",
+      "provenance": "DNg02 is contralateral; DNp03 is contraversive. Signs follow MotorMap.java flightYaw and dn-behavior.md §4.2.",
+      "confidence": "medium",
+      "rate_anchor_confidence": "unknown",
+      "terms": [
+        {
+          "spec": "prefix:DNg02/L",
+          "weight": 0.5,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Annotated left-side DNg02 cells; side is read from tables.json.",
+          "confidence": "high"
+        },
+        {
+          "spec": "prefix:DNg02/R",
+          "weight": -0.5,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Annotated right-side DNg02 cells; side is read from tables.json.",
+          "confidence": "high"
+        },
+        {
+          "spec": "DNp03/L",
+          "weight": -0.5,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Named DNp03 left cell in CSR; contraversive sign from dn-behavior.md §2.2.",
+          "confidence": "medium"
+        },
+        {
+          "spec": "DNp03/R",
+          "weight": 0.5,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Named DNp03 right cell in CSR; contraversive sign from dn-behavior.md §2.2.",
+          "confidence": "medium"
+        }
+      ]
+    },
+    "wing_motor": {
+      "kind": "rate",
+      "tau_ms": 100.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized [0,1]",
+      "symmetry": "bilateral_mean",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "mean; no lateral sign",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "wing motor activity"
+      },
+      "description": "Diagnostic readout of the annotated wing motor-neuron pool; it does not gate flight power.",
+      "provenance": "superclass:vnc_motor & subclass:wm is the CSR wing motor pool (67 cells).",
+      "confidence": "high",
+      "rate_anchor_confidence": "medium",
+      "terms": [
+        {
+          "spec": "superclass:vnc_motor&subclass:wm",
+          "weight": 1.0,
+          "r_max_hz": 80.0,
+          "baseline_hz": 0.0,
+          "provenance": "CSR annotations: superclass vnc_motor, subclass wm; no body IDs used.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "wing_motor_left": {
+      "kind": "rate",
+      "mapping_policy": "exact",
+      "tau_ms": 100.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized activation [0,1]",
+      "symmetry": "left_only",
+      "direction": {
+        "laterality": "left",
+        "left_right": "left wing only",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "left wing activation"
+      },
+      "description": "Independent physical left-wing activation from the exact left VNC wing-motor pool.",
+      "provenance": "Exact annotation selector superclass:vnc_motor&subclass:wm/L; physical wing source is separate from DNg02 flight_power.",
+      "confidence": "high",
+      "source": "MaleCNS v1.0 CSR annotation",
+      "terms": [
+        {
+          "spec": "superclass:vnc_motor&subclass:wm/L",
+          "weight": 1.0,
+          "gain": 1.0,
+          "units": "Hz per neuron",
+          "sign": 1.0,
+          "r_max_hz": 80.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact left-side CSR wing motor selector; no aggregate or body ID is substituted.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "wing_motor_right": {
+      "kind": "rate",
+      "mapping_policy": "exact",
+      "tau_ms": 100.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized activation [0,1]",
+      "symmetry": "right_only",
+      "direction": {
+        "laterality": "right",
+        "left_right": "right wing only",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "right wing activation"
+      },
+      "description": "Independent physical right-wing activation from the exact right VNC wing-motor pool.",
+      "provenance": "Exact annotation selector superclass:vnc_motor&subclass:wm/R; physical wing source is separate from DNg02 flight_power.",
+      "confidence": "high",
+      "source": "MaleCNS v1.0 CSR annotation",
+      "terms": [
+        {
+          "spec": "superclass:vnc_motor&subclass:wm/R",
+          "weight": 1.0,
+          "gain": 1.0,
+          "units": "Hz per neuron",
+          "sign": 1.0,
+          "r_max_hz": 80.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact right-side CSR wing motor selector; no aggregate or body ID is substituted.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "leg_power": {
+      "kind": "rate",
+      "tau_ms": 150.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized [0,1]",
+      "symmetry": "bilateral_mean",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "mean; no lateral sign",
+        "anterior_posterior": "front/middle/hind pools retained in terms",
+        "front_back": "front-to-hind pools retained in terms",
+        "positive": "leg motor activity"
+      },
+      "description": "Mean drive of the front, middle, and hind VNC leg motor pools.",
+      "provenance": "Leg motor subclasses fl/ml/hl are verified in dn-behavior.md §2.3; superclass filter excludes descending neurons carrying a leg annotation.",
+      "confidence": "high",
+      "rate_anchor_confidence": "unknown",
+      "terms": [
+        {
+          "spec": "superclass:vnc_motor&subclass:fl",
+          "weight": 0.3333333333333333,
+          "r_max_hz": 30.0,
+          "baseline_hz": 0.0,
+          "provenance": "Annotated front-leg motor neurons only.",
+          "confidence": "high"
+        },
+        {
+          "spec": "superclass:vnc_motor&subclass:ml",
+          "weight": 0.3333333333333333,
+          "r_max_hz": 30.0,
+          "baseline_hz": 0.0,
+          "provenance": "Annotated middle-leg motor neurons only.",
+          "confidence": "high"
+        },
+        {
+          "spec": "superclass:vnc_motor&subclass:hl",
+          "weight": 0.3333333333333333,
+          "r_max_hz": 30.0,
+          "baseline_hz": 0.0,
+          "provenance": "Annotated hind-leg motor neurons only.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "leg_steering": {
+      "kind": "rate",
+      "tau_ms": 150.0,
+      "bounds": [-1.0, 1.0],
+      "units": "normalized [-1,1]",
+      "symmetry": "right_minus_left",
+      "direction": {
+        "laterality": "signed",
+        "left_right": "positive right-leg drive",
+        "anterior_posterior": "front/middle/hind pools retained in terms",
+        "front_back": "front-to-hind pools retained in terms",
+        "positive": "right_leg_more_drive"
+      },
+      "positive_direction": "right_leg_more_drive",
+      "description": "Right-minus-left leg motor drive, separately balanced across front/middle/hind pools.",
+      "provenance": "Motor-level asymmetry follows MotorMap.java legMotorAsym; each side is resolved from CSR side annotations.",
+      "confidence": "high",
+      "rate_anchor_confidence": "unknown",
+      "terms": [
+        {
+          "spec": "superclass:vnc_motor&subclass:fl/R",
+          "weight": 0.3333333333333333,
+          "r_max_hz": 30.0,
+          "baseline_hz": 0.0,
+          "provenance": "Right front-leg motor pool.",
+          "confidence": "high"
+        },
+        {
+          "spec": "superclass:vnc_motor&subclass:ml/R",
+          "weight": 0.3333333333333333,
+          "r_max_hz": 30.0,
+          "baseline_hz": 0.0,
+          "provenance": "Right middle-leg motor pool.",
+          "confidence": "high"
+        },
+        {
+          "spec": "superclass:vnc_motor&subclass:hl/R",
+          "weight": 0.3333333333333333,
+          "r_max_hz": 30.0,
+          "baseline_hz": 0.0,
+          "provenance": "Right hind-leg motor pool.",
+          "confidence": "high"
+        },
+        {
+          "spec": "superclass:vnc_motor&subclass:fl/L",
+          "weight": -0.3333333333333333,
+          "r_max_hz": 30.0,
+          "baseline_hz": 0.0,
+          "provenance": "Left front-leg motor pool.",
+          "confidence": "high"
+        },
+        {
+          "spec": "superclass:vnc_motor&subclass:ml/L",
+          "weight": -0.3333333333333333,
+          "r_max_hz": 30.0,
+          "baseline_hz": 0.0,
+          "provenance": "Left middle-leg motor pool.",
+          "confidence": "high"
+        },
+        {
+          "spec": "superclass:vnc_motor&subclass:hl/L",
+          "weight": -0.3333333333333333,
+          "r_max_hz": 30.0,
+          "baseline_hz": 0.0,
+          "provenance": "Left hind-leg motor pool.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "mouth": {
+      "kind": "rate",
+      "tau_ms": 100.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized [0,1]",
+      "symmetry": "bilateral_mean",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "mean; no lateral sign",
+        "anterior_posterior": "anterior mouth/proboscis",
+        "front_back": "front/anterior body region",
+        "positive": "mouth activity"
+      },
+      "description": "Proboscis/feeding drive led by MN9 with named feeding descending neurons as secondary evidence.",
+      "provenance": "MN9 is the validated rostrum-extension motor readout; DNg67, DNge080, DNge173 and DNge174 are named feeding DNs in dn-behavior.md §1.9.",
+      "confidence": "high",
+      "rate_anchor_confidence": "medium",
+      "terms": [
+        {
+          "spec": "MN9",
+          "weight": 0.6,
+          "r_max_hz": 60.0,
+          "baseline_hz": 0.0,
+          "provenance": "Two CSR MN9 motor neurons; model validation and literature support rostrum extension.",
+          "confidence": "high"
+        },
+        {
+          "spec": "DNg67",
+          "weight": 0.1,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Named Fudog feeding DN; exact type exists in CSR.",
+          "confidence": "medium"
+        },
+        {
+          "spec": "DNge080",
+          "weight": 0.1,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Named Rounddown feeding DN; exact type exists in CSR.",
+          "confidence": "medium"
+        },
+        {
+          "spec": "DNge173",
+          "weight": 0.1,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Named Bract feeding DN; exact type exists in CSR.",
+          "confidence": "medium"
+        },
+        {
+          "spec": "DNge174",
+          "weight": 0.1,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Named Bract feeding DN; exact type exists in CSR.",
+          "confidence": "medium"
+        }
+      ]
+    },
+    "groom_antenna": {
+      "kind": "rate",
+      "tau_ms": 300.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized [0,1]",
+      "symmetry": "bilateral_mean",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "mean; no lateral sign",
+        "anterior_posterior": "anterior head/antenna",
+        "front_back": "front/anterior body region",
+        "positive": "antenna grooming activity"
+      },
+      "description": "Antennal grooming drive.",
+      "provenance": "DNg62/aDN1 and DNge078/aDN2 are the named antennal-grooming command neurons in dn-behavior.md §1.8.",
+      "confidence": "high",
+      "rate_anchor_confidence": "medium",
+      "terms": [
+        {
+          "spec": "DNg62",
+          "weight": 0.5,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNg62; aDN1 synonym is not substituted for the real type name.",
+          "confidence": "high"
+        },
+        {
+          "spec": "DNge078",
+          "weight": 0.5,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNge078; aDN2 synonym is not substituted for the real type name.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "groom_head": {
+      "kind": "rate",
+      "tau_ms": 300.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized [0,1]",
+      "symmetry": "bilateral_mean",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "mean; no lateral sign",
+        "anterior_posterior": "anterior head",
+        "front_back": "front/anterior body region",
+        "positive": "head grooming activity"
+      },
+      "description": "Head-grooming descending-neuron drive.",
+      "provenance": "DNg12/DNg07/DNg08 head-grooming roles are documented in dn-behavior.md §1.8; all names are resolved from CSR tables.",
+      "confidence": "high",
+      "rate_anchor_confidence": "unknown",
+      "terms": [
+        {
+          "spec": "prefix:DNg12",
+          "weight": 0.6,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "All actual DNg12_a..h types in CSR.",
+          "confidence": "high"
+        },
+        {
+          "spec": "DNg07",
+          "weight": 0.2,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNg07.",
+          "confidence": "high"
+        },
+        {
+          "spec": "DNg08",
+          "weight": 0.2,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNg08.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "groom_leg": {
+      "kind": "rate",
+      "tau_ms": 300.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized [0,1]",
+      "symmetry": "bilateral_mean",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "mean; no lateral sign",
+        "anterior_posterior": "front leg",
+        "front_back": "front/anterior leg region",
+        "positive": "leg grooming activity"
+      },
+      "description": "Front-leg rubbing drive.",
+      "provenance": "DNg11 front-leg rubbing role from dn-behavior.md §1.8; exact CSR type used.",
+      "confidence": "high",
+      "rate_anchor_confidence": "unknown",
+      "terms": [
+        {
+          "spec": "DNg11",
+          "weight": 1.0,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNg11.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "groom_abdomen": {
+      "kind": "rate",
+      "tau_ms": 300.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized [0,1]",
+      "symmetry": "bilateral_mean",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "mean; no lateral sign",
+        "anterior_posterior": "posterior abdomen",
+        "front_back": "back/posterior body region",
+        "positive": "abdomen grooming activity"
+      },
+      "description": "Abdomen grooming drive.",
+      "provenance": "DNp29/NPF1 abdomen-grooming role from dn-behavior.md §1.8; exact CSR type used.",
+      "confidence": "medium",
+      "rate_anchor_confidence": "unknown",
+      "terms": [
+        {
+          "spec": "DNp29",
+          "weight": 1.0,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNp29; no nickname-only population is used.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "jump": {
+      "kind": "event",
+      "tau_ms": 0.0,
+      "bounds": [0.0, 1.0],
+      "units": "event [0,1]",
+      "symmetry": "bilateral_event",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "bilateral",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "event_present"
+      },
+      "description": "One-tick giant-fibre event.",
+      "provenance": "DNp01 is the named giant-fibre command population; event semantics follow MotorDecoder.java.",
+      "confidence": "high",
+      "terms": [
+        {
+          "spec": "DNp01",
+          "weight": 1.0,
+          "units": "spikes/tick",
+          "sign": 1.0,
+          "r_max_hz": 1.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNp01.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "ttmn_activity": {
+      "kind": "rate",
+      "mapping_policy": "exact",
+      "tau_ms": 0.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized activity [0,1]",
+      "symmetry": "bilateral_unsigned",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "bilateral",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "TTMn motor-neuron activity"
+      },
+      "event_semantics": "accepts named rates or spike counts; a positive TTMn rate is retained as activity",
+      "description": "Independent TTMn activity readout for the physical motor boundary.",
+      "provenance": "Exact CSR selector TTMn; TTMn is the motor-neuron source for the physical jump endpoint, distinct from DNp01 decision activity.",
+      "confidence": "high",
+      "source": "MaleCNS v1.0 CSR annotation",
+      "terms": [
+        {
+          "spec": "TTMn",
+          "weight": 1.0,
+          "gain": 1.0,
+          "units": "Hz per neuron",
+          "sign": 1.0,
+          "r_max_hz": 100.0,
+          "baseline_hz": 0.0,
+          "provenance": "Strict exact type TTMn; no prefix or synonym selector is used.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "jump_motor": {
+      "kind": "event",
+      "mapping_policy": "exact",
+      "tau_ms": 0.0,
+      "bounds": [0.0, 1.0],
+      "units": "event [0,1]",
+      "symmetry": "bilateral_event",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "bilateral",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "TTMn event_present"
+      },
+      "description": "Physical jump motor event sourced from TTMn activity.",
+      "provenance": "Exact CSR selector TTMn; this is the physical jump motor readout. DNp01 remains the separate legacy decision event.",
+      "confidence": "high",
+      "source": "MaleCNS v1.0 CSR annotation",
+      "terms": [
+        {
+          "spec": "TTMn",
+          "weight": 1.0,
+          "units": "spikes/tick",
+          "sign": 1.0,
+          "r_max_hz": 1.0,
+          "baseline_hz": 0.0,
+          "provenance": "Strict exact type TTMn; one positive event is exposed to the physical layer.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "dnp11_activity": {
+      "kind": "rate",
+      "tau_ms": 25.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized activity [0,1]",
+      "symmetry": "bilateral_unsigned",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "bilateral",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "DNp11 activity"
+      },
+      "description": "Independent normalized activity readout for the DNp11 population.",
+      "provenance": "Exact CSR type DNp11; this is a source-preserving rate readout, not a behavioral gate.",
+      "confidence": "high",
+      "source": "MaleCNS v1.0 CSR annotation",
+      "terms": [
+        {
+          "spec": "DNp11",
+          "weight": 1.0,
+          "gain": 1.0,
+          "units": "Hz per neuron",
+          "sign": 1.0,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNp11; population activity is retained independently.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "dnp02_activity": {
+      "kind": "rate",
+      "tau_ms": 25.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized activity [0,1]",
+      "symmetry": "bilateral_unsigned",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "bilateral",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "DNp02 activity"
+      },
+      "description": "Independent normalized activity readout for the DNp02 population.",
+      "provenance": "Exact CSR type DNp02; this is a source-preserving rate readout, not a behavioral gate.",
+      "confidence": "high",
+      "source": "MaleCNS v1.0 CSR annotation",
+      "terms": [
+        {
+          "spec": "DNp02",
+          "weight": 1.0,
+          "gain": 1.0,
+          "units": "Hz per neuron",
+          "sign": 1.0,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNp02; population activity is retained independently.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "dnp04_activity": {
+      "kind": "rate",
+      "tau_ms": 25.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized activity [0,1]",
+      "symmetry": "bilateral_unsigned",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "bilateral",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "DNp04 activity"
+      },
+      "description": "Independent normalized activity readout for the DNp04 population.",
+      "provenance": "Exact CSR type DNp04; this is a source-preserving rate readout, not a behavioral gate.",
+      "confidence": "high",
+      "source": "MaleCNS v1.0 CSR annotation",
+      "terms": [
+        {
+          "spec": "DNp04",
+          "weight": 1.0,
+          "gain": 1.0,
+          "units": "Hz per neuron",
+          "sign": 1.0,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNp04; population activity is retained independently.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "takeoff": {
+      "kind": "rate",
+      "tau_ms": 25.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized activity [0,1]",
+      "symmetry": "bilateral_mean",
+      "compatibility_only": true,
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "bilateral",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "weighted activity"
+      },
+      "description": "Takeoff descending-neuron drive.",
+      "provenance": "Legacy weighted compatibility readout; physical consumers should use dnp11_activity, dnp02_activity, and dnp04_activity independently.",
+      "confidence": "medium",
+      "rate_anchor_confidence": "unknown",
+      "terms": [
+        {
+          "spec": "DNp11",
+          "weight": 0.5,
+          "units": "Hz per neuron",
+          "sign": 1.0,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNp11.",
+          "confidence": "high"
+        },
+        {
+          "spec": "DNp02",
+          "weight": 0.25,
+          "units": "Hz per neuron",
+          "sign": 1.0,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNp02.",
+          "confidence": "high"
+        },
+        {
+          "spec": "DNp04",
+          "weight": 0.25,
+          "units": "Hz per neuron",
+          "sign": 1.0,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNp04.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "landing": {
+      "kind": "rate",
+      "tau_ms": 25.0,
+      "bounds": [0.0, 1.0],
+      "units": "normalized [0,1]",
+      "symmetry": "bilateral_mean",
+      "direction": {
+        "laterality": "bilateral",
+        "left_right": "mean; no lateral sign",
+        "anterior_posterior": "not_encoded",
+        "front_back": "not_encoded",
+        "positive": "landing-population activity"
+      },
+      "description": "Landing descending-neuron drive.",
+      "provenance": "Named DNp07/DNp10 landing populations from MotorMap.java; rates are model/readout anchors.",
+      "confidence": "medium",
+      "rate_anchor_confidence": "medium",
+      "terms": [
+        {
+          "spec": "DNp07",
+          "weight": 0.5,
+          "r_max_hz": 92.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNp07; 92 Hz is the documented flying-state anchor.",
+          "confidence": "medium"
+        },
+        {
+          "spec": "DNp10",
+          "weight": 0.5,
+          "r_max_hz": 50.0,
+          "baseline_hz": 0.0,
+          "provenance": "Exact CSR type DNp10; absolute anchor is not published.",
+          "confidence": "high"
+        }
+      ]
+    }
+  },
+  "aliases": {
+    "flightPower": "flight_power",
+    "flightYaw": "flight_steering",
+    "flight_yaw": "flight_steering",
+    "wingMotor": "wing_motor",
+    "left_wing_motor": "wing_motor_left",
+    "right_wing_motor": "wing_motor_right",
+    "left_wing_activation": "wing_motor_left",
+    "right_wing_activation": "wing_motor_right",
+    "wing_activation_left": "wing_motor_left",
+    "wing_activation_right": "wing_motor_right",
+    "wm_left": "wing_motor_left",
+    "wm_right": "wing_motor_right",
+    "wing_power": "flight_power",
+    "wing_steering": "flight_steering",
+    "legMotor": "leg_power",
+    "legMotorAsym": "leg_steering",
+    "leg_motor": "leg_power",
+    "leg_motor_asym": "leg_steering",
+    "feed": "mouth",
+    "proboscis": "mouth",
+    "groomAntenna": "groom_antenna",
+    "groomHead": "groom_head",
+    "groomLeg": "groom_leg",
+    "groomAbdomen": "groom_abdomen",
+    "jump_event": "jump",
+    "jumpEvent": "jump",
+    "jump_activation": "jump_motor",
+    "jump_motor_event": "jump_motor",
+    "physical_jump": "jump_motor",
+    "physical_jump_motor": "jump_motor",
+    "ttmn_motor": "jump_motor",
+    "TTMn": "ttmn_activity",
+    "TTMn_activity": "ttmn_activity",
+    "ttmn": "ttmn_activity",
+    "DNp11": "dnp11_activity",
+    "DNp02": "dnp02_activity",
+    "DNp04": "dnp04_activity",
+    "DNp11_activity": "dnp11_activity",
+    "DNp02_activity": "dnp02_activity",
+    "DNp04_activity": "dnp04_activity",
+    "DNp11Activity": "dnp11_activity",
+    "DNp02Activity": "dnp02_activity",
+    "DNp04Activity": "dnp04_activity",
+    "dnp11": "dnp11_activity",
+    "dnp02": "dnp02_activity",
+    "dnp04": "dnp04_activity"
+  },
+  "uncertainties": [
+    {
+      "item": "Absolute in-vivo firing-rate anchors for most DNg02, DNp03, and leg/grooming populations",
+      "provenance": "dn-behavior.md §4.1 and §4.5",
+      "confidence": "unknown",
+      "handling": "r_max_hz values are explicit readout calibration anchors, not claims of measured biology."
+    },
+    {
+      "item": "Exact biomechanics of how neural steering drive maps to wing forces",
+      "provenance": "digital_body.py is a reduced deterministic body model, not a validated CFD/multibody model",
+      "confidence": "unknown",
+      "handling": "adapter emits normalized left/right wing drives and does not invent SI forces or torques."
+    },
+    {
+      "item": "Population aliases such as aDN1/aDN2, Fudog, Rounddown, and Bract",
+      "provenance": "Literature nicknames in dn-behavior.md",
+      "confidence": "medium",
+      "handling": "only the actual CSR type names DNg62, DNge078, DNg67, DNge080, DNge173, and DNge174 are used."
+    }
+  ]
+}

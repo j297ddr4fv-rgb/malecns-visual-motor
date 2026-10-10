@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "dataset": "MaleCNS v1.0",
+  "gain_mV_per_ms": 0.5,
+  "gain_scale": 1.0,
+  "joint_displacement_scale_rad": 0.5,
+  "joint_speed_scale_rad_s": 20.0,
+  "per_leg_weight_reference_N": 1.7805e-6,
+  "legs": {
+    "LF": {"nerve": "ProLN", "side": "L", "chordotonal_expected_count": 23, "campaniform_expected_count": 2},
+    "RF": {"nerve": "ProLN", "side": "R", "chordotonal_expected_count": 13, "campaniform_expected_count": 2},
+    "LM": {"nerve": "MesoLN", "side": "L", "chordotonal_expected_count": 80, "campaniform_expected_count": 2},
+    "RM": {"nerve": "MesoLN", "side": "R", "chordotonal_expected_count": 83, "campaniform_expected_count": 2},
+    "LH": {"nerve": "MetaLN", "side": "L", "chordotonal_expected_count": 93, "campaniform_expected_count": 2},
+    "RH": {"nerve": "MetaLN", "side": "R", "chordotonal_expected_count": 100, "campaniform_expected_count": 2}
+  },
+  "provenance": {
+    "annotation_source": "/data/cache/malecns-gpu/csr-flyb/tables.json and annotations.npz",
+    "counts_verified_against": "/data/cache/malecns-gpu/csr-flyb; class:mechanosensory_proprioceptive intersections",
+    "selector_basis": "annotation-only class/subclass/nerve/side selectors; six chordotonal and six campaniform groups",
+    "mapping_uncertainty": "Counts are annotation-group counts, not individual neuron mappings. No per-cell polarity or body-to-afferent transfer function is available. Joint and load response laws are bounded engineering proxies; the default load reference approximates reduced-model body-plus-segment weight divided across six legs and is configurable.",
+    "neuron_ids_included": false,
+    "model_rest_rad": 0.0
+  }
+}

@@ -1,0 +1,543 @@
+{
+  "schema_version": "escape-experiment-protocol-1",
+  "protocol_id": "escape-e14-v1",
+  "lock_date": "2026-09-21",
+  "status": "preregistered",
+  "scope": {
+    "primary": "MaleCNS digital escape experiment",
+    "optional_translation": "real-fly timing experiment kept as a separate biological stratum",
+    "evidence_class": "digital_simulation",
+    "biological_decision_default": "NOT_VALIDATED",
+    "source_document": "docs/ESCAPE_EXPERIMENT.md"
+  },
+  "project_facts": {
+    "authoritative_graph": {
+      "path": "/data/cache/malecns-gpu/csr-flyb",
+      "neurons": 176422,
+      "edges": 6287749,
+      "synapses": 90296905
+    },
+    "neural_dt_ms": 0.5,
+    "neural_rate_hz": 2000.0,
+    "sensory_route": "measured eye map -> gap-2 L2/L3 OFF drive; L1 deliberately not driven",
+    "direct_photoreceptor_route": "not an allowed substitute; E12 found the signal dies before the medulla",
+    "selector_zero_policy": "a selector resolving to zero neurons invalidates the run; it is never a lesion or negative result"
+  },
+  "historical_e14_baseline": {
+    "status": "failure_baseline",
+    "palm": {
+      "width_cm": 9.0,
+      "initial_distance_m": 1.0,
+      "speed_mps": 10.0,
+      "impact_ms": 100.0,
+      "reported_azimuth_deg": 40.0,
+      "reported_frames": 130,
+      "reported_frame_ms": 1.0
+    },
+    "gain_1_2": {
+      "dn_p01_first_ms": 105.0,
+      "decision_relative_to_impact_ms": -5.0,
+      "decision_angle_deg": 88.7,
+      "dn_p01_peak_hz": 300.0,
+      "ttmn_first_ms": 115.0,
+      "ttmn_peak_hz": 100.0,
+      "peak_active_neurons": 4009,
+      "interpretation": "late decision after impact; no body escape evidence"
+    },
+    "gain_1_5": {
+      "dn_p01_first_ms": 75.0,
+      "decision_relative_to_impact_ms": 25.0,
+      "decision_angle_deg": 10.2,
+      "dn_p01_peak_hz": 200.0,
+      "ttmn": "silent",
+      "peak_active_neurons": 4935,
+      "interpretation": "timely decision but no TTMn action; not an autonomous rescue"
+    },
+    "current_script_default_mismatch": {
+      "script": "scripts/loom_to_lamina.py",
+      "default_ms": 1000.0,
+      "default_frame_ms": 5.0,
+      "default_azimuth_deg": 60.0,
+      "rule": "a new E14-report run must pass ms=130, frame-ms=1, and az=40 explicitly"
+    }
+  },
+  "stimulus": {
+    "tier": "core_behavior",
+    "kind": "physical_approaching_palm",
+    "width_m": 0.09,
+    "radius_m": 0.045,
+    "initial_distance_m": 1.0,
+    "speed_mps": 0.5,
+    "impact_ms": 2000.0,
+    "azimuth_deg": 40.0,
+    "elevation_deg": 0.0,
+    "frame_ms": 1.0,
+    "duration_ms": 2030.0,
+    "distance_formula": "max(1.0 - 0.5*t_s, 0.001)",
+    "angular_radius_formula": "degrees(atan(0.045 / max(1.0 - 0.5*t_s, 0.001)))",
+    "anchors_deg": {
+      "0": 2.6,
+      "1000": 5.1,
+      "1500": 10.2,
+      "1800": 24.2,
+      "1900": 42.0,
+      "1970": 71.6,
+      "1990": 83.7,
+      "2000": 88.7
+    },
+    "gap2_encoder": {
+      "target": "L2 and L3",
+      "exclude": ["L1"],
+      "r_max_hz": 200.0,
+      "tau_adapt_ms": 50.0,
+      "sustained_term": 0.30,
+      "definition": "rate = r_max * (dec + sustained_term*(1-L)); dec=clamp(Lf-L,0,1)"
+    },
+    "generator": {
+      "script": "scripts/loom_to_lamina.py",
+      "required_arguments": [
+        "--swat",
+        "--hand-cm 9",
+        "--speed 0.5",
+        "--distance 1",
+        "--az 40",
+        "--el 0",
+        "--ms 2030",
+        "--frame-ms 1",
+        "--r-max 200",
+        "--tau-adapt 50",
+        "--sustained 0.30"
+      ],
+      "metadata_required": [
+        "frame_ms",
+        "duration_ms",
+        "distance_m",
+        "speed_mps",
+        "azimuth_deg",
+        "radius_m",
+        "angle_deg",
+        "generator_sha256"
+      ],
+      "pressure_tier_override": {
+        "tier": "pressure_10mps",
+        "speed_mps": 10.0,
+        "impact_ms": 100.0,
+        "duration_ms": 130.0,
+        "distance_formula": "max(1.0 - 10.0*t_s, 0.001)",
+        "angular_radius_formula": "degrees(atan(0.045 / max(1.0 - 10.0*t_s, 0.001)))",
+        "anchors_deg": {
+          "0": 2.6,
+          "40": 4.3,
+          "60": 6.4,
+          "70": 8.5,
+          "80": 12.7,
+          "90": 24.2,
+          "95": 42.0,
+          "100": 88.7
+        },
+        "required_argument_overrides": ["--speed 10", "--ms 130"]
+      }
+    }
+  },
+  "conditions": [
+    {
+      "id": "true_right",
+      "family": "intact",
+      "stimulus": "primary",
+      "azimuth_deg": 40.0,
+      "expected_role": "primary threat"
+    },
+    {
+      "id": "true_left_mirror",
+      "family": "mirror",
+      "stimulus": "primary_reflected_at_sensor",
+      "azimuth_deg": -40.0,
+      "expected_role": "laterality and sign control"
+    },
+    {
+      "id": "blank_sham",
+      "family": "sham",
+      "stimulus": "no_object_same_background_duration_and_exposure",
+      "expected_role": "false-positive baseline"
+    },
+    {
+      "id": "static_matched",
+      "family": "matched_control",
+      "stimulus": "static_palm_at_initial_2_6_deg_radius",
+      "expected_role": "object, contrast, and footprint control"
+    },
+    {
+      "id": "lateral_matched",
+      "family": "matched_control",
+      "stimulus": "non_approaching_lateral_translation",
+      "expected_role": "motion-energy control"
+    },
+    {
+      "id": "receding_matched",
+      "family": "matched_control",
+      "stimulus": "same_early_sequence_then_monotonic_recession",
+      "expected_role": "collision/trajectory control"
+    }
+  ],
+  "speed_tiers": [
+    {
+      "id": "core_behavior",
+      "primary": true,
+      "speed_mps": 0.5,
+      "impact_ms": 2000.0,
+      "duration_ms": 2030.0,
+      "nominal_jump_time_ms": 30.0,
+      "latest_decision_ms": 1970.0,
+      "latest_decision_angle_deg": 71.6
+    },
+    {
+      "id": "pressure_10mps",
+      "primary": false,
+      "speed_mps": 10.0,
+      "impact_ms": 100.0,
+      "duration_ms": 130.0,
+      "nominal_jump_time_ms": 30.0,
+      "latest_decision_ms": 70.0,
+      "latest_decision_angle_deg": 8.5,
+      "purpose": "secondary E14 pressure test; cannot replace core tier"
+    }
+  ],
+  "matching": {
+    "locked_before_first_trial": true,
+    "tolerances": {
+      "frame_count_fraction": 0.0,
+      "background_luminance_fraction": 0.02,
+      "object_luminance_fraction": 0.02,
+      "edge_energy_fraction": 0.02,
+      "integrated_optic_flow_fraction": 0.05,
+      "timing_ms": 0.5,
+      "angle_deg": 0.1
+    },
+    "failure_policy": "matching failure is protocol_invalid, not a neural negative"
+  },
+  "randomization": {
+    "master_seed": 20260921,
+    "seed_derivation": "uint32(SHA256('escape-e14-v1'||master_seed||opaque_trial_id)[0:4])",
+    "design": "randomized_complete_blocks",
+    "digital_replicates_per_intact_condition_per_speed_tier": 20,
+    "exact_e14_baseline_replays": 3,
+    "mirror_balance": "equal left and right blocks",
+    "lesion_blocks": "separate matched-seed blocks; never substituted for intact trials",
+    "order_lock": "condition table and seeds saved before the first neural run",
+    "rerun_policy": "retain all attempts; no outcome-driven rerun or seed selection"
+  },
+  "blinding": {
+    "opaque_trial_ids": true,
+    "analyst_blind_fields": ["condition", "gain_tier", "lesion", "assistance_tier"],
+    "video_scoring": "clean render without condition labels or neural overlays",
+    "audit_render": "retained separately with time, provenance, and safety overlays",
+    "unblind": "only after artifact-integrity and primary-endpoint tables are frozen",
+    "real_fly_translation": {
+      "scorer_blind_to": ["condition", "side", "treatment"],
+      "timing": "IR gate or pressure sensor is the collision clock; nominal video frame count is not the clock"
+    }
+  },
+  "tracks": {
+    "pure_autonomous": {
+      "label": "pure_autonomous",
+      "primary": true,
+      "gain": 1.2,
+      "neural_backend": "malecns",
+      "visual_backend": "declared_sensor_or_frozen_flyvis_mapping",
+      "state_drive": false,
+      "visual_tonic_state_inputs": false,
+      "body_stabilizer": false,
+      "manual_or_scripted_actuator": false,
+      "direct_motor_population_injection": false,
+      "safety_policy": "monitor_and_abort_only; any actuator contribution reclassifies as assisted",
+      "target_or_collision_signal_to_controller": false,
+      "allowed_autopilot_boundary": "state/mode bookkeeping only; no target-derived actuator synthesis"
+    },
+    "assisted": {
+      "label": "assisted",
+      "primary": false,
+      "allowed_components": [
+        "config/flight_state_drive.json",
+        "config/flight_body_stabilizer.json",
+        "safety-handbuilt autopilot contribution"
+      ],
+      "body_stabilizer_max_contribution_fraction": 0.35,
+      "body_stabilizer_max_collective_trim": 0.30,
+      "preserves_channels": ["yaw", "left_right_steering_difference", "brake"],
+      "classification_rule": "any nonzero state-drive, stabilizer, manual, or safety contribution is assisted",
+      "reporting_rule": "assisted GO cannot upgrade pure-autonomous NO-GO"
+    }
+  },
+  "forbidden_signals": [
+    "collision_time",
+    "time_to_collision",
+    "palm_range",
+    "palm_velocity",
+    "palm_angle_ground_truth",
+    "future_frames",
+    "post_impact_flag",
+    "target_distance",
+    "target_bearing",
+    "target_visibility",
+    "desired_trajectory",
+    "escape_label",
+    "reward_or_success_bit",
+    "condition_specific_gain_or_rate",
+    "direct_DNp01_injection",
+    "direct_TTMn_injection",
+    "direct_DNg02_or_DNp11_injection",
+    "flight_state_drive_in_pure_track",
+    "visual_tonic_state_inputs_in_pure_track",
+    "body_stabilizer_in_pure_track",
+    "manual_or_open_loop_actuator",
+    "posthoc_output_mirror",
+    "posthoc_frame_deletion_or_time_stretch",
+    "silent_stub_or_backend_fallback"
+  ],
+  "allowed_scaffolding": {
+    "sensory": [
+      "measured_eye_geometry",
+      "stereo_rendering_and_frame_sync",
+      "frozen_FlyVis_or_visual_calibration_mapping",
+      "gap2_L2_L3_OFF_drive_with_L1_excluded"
+    ],
+    "neural": [
+      "MaleCNS_csr_flyb",
+      "fixed_synaptic_signs_and_dt",
+      "one_preregistered_global_gain",
+      "sensor_boundary_poisson_encoder"
+    ],
+    "neuromuscular": [
+      "config/neuromuscular_map.json",
+      "frozen_population_readout_with_raw_and_converted_outputs"
+    ],
+    "physical": [
+      "causal_reduced_6dof_body",
+      "virtual_world_and_renderer",
+      "actuator_bounds",
+      "contact_and_collision_monitor",
+      "resource_guard_and_emergency_abort"
+    ],
+    "feedback": [
+      "sensory_feedback_from_current_or_past_body_state_only"
+    ],
+    "provenance": "connectome, fitted, handbuilt, handbuilt/reduced, and digital_simulation labels remain explicit"
+  },
+  "lesions": [
+    {
+      "id": "loom_input",
+      "operator": "zero_declared_L2_L3_drive_after_sensor_artifact_is_frozen",
+      "target": "L2,L3 sensory drive",
+      "expected": "blank-like DNp01 and TTMn output",
+      "current_cli_support": false
+    },
+    {
+      "id": "dnp01_silence",
+      "operator": "silence_all_resolved_DNp01_neurons_from_t0",
+      "target": "DNp01",
+      "expected": "DNp01 exactly silent; no DNp01-mediated decision",
+      "current_cli_support": false
+    },
+    {
+      "id": "ttmn_silence",
+      "operator": "silence_all_resolved_TTMn_neurons_from_t0",
+      "target": "TTMn",
+      "expected": "DNp01 timing retained; TTMn action absent",
+      "current_cli_support": false
+    },
+    {
+      "id": "motor_readout_lesion",
+      "operator": "disconnect_declared_TTMn_to_action_readout_only",
+      "target": "TTMn motor readout boundary",
+      "expected": "neural event may remain; body/motor endpoint is not credited",
+      "current_cli_support": false
+    }
+  ],
+  "endpoints": {
+    "decision": {
+      "name": "t_decision",
+      "definition": "first nonzero DNp01 spike after stimulus onset",
+      "source": "raw_spikes_trace",
+      "precision_rule": "report frame/tick interval; never invent sub-tick precision"
+    },
+    "decision_angle": {
+      "name": "theta_decision",
+      "definition": "analytic palm angle at t_decision",
+      "post_impact_events": "cannot count as pre-impact decisions"
+    },
+    "motor_event": {
+      "name": "t_motor_event",
+      "definition": "first nonzero TTMn spike",
+      "single_tick_rule": "event is reported; it is not called sustained action"
+    },
+    "motor_sustained": {
+      "definition": "TTMn nonzero in at least two consecutive 1 ms bins or a separately locked duration criterion"
+    },
+    "body_escape": {
+      "definition": "causal body motion before deadline with no collision",
+      "required_for_physical_claim": true,
+      "cns_movie_substitute": false
+    },
+    "stability": [
+      "active_neuron_trajectory",
+      "peak_active_neurons",
+      "end_active_neurons",
+      "backend_and_device",
+      "gain",
+      "safety_active_and_blend"
+    ]
+  },
+  "timing_deadlines": {
+    "primary_tier": "core_behavior",
+    "primary_jump_time_ms": 30.0,
+    "primary_latest_decision_ms": 1970.0,
+    "primary_latest_angle_deg": 71.6,
+    "by_tier": {
+      "core_behavior": {
+        "speed_mps": 0.5,
+        "impact_ms": 2000.0,
+        "jump_time_ms": {
+          "10": {"latest_decision_ms": 1990.0, "latest_angle_deg": 83.7},
+          "30": {"latest_decision_ms": 1970.0, "latest_angle_deg": 71.6},
+          "50": {"latest_decision_ms": 1950.0, "latest_angle_deg": 61.0}
+        }
+      },
+      "pressure_10mps": {
+        "speed_mps": 10.0,
+        "impact_ms": 100.0,
+        "jump_time_ms": {
+          "10": {"latest_decision_ms": 90.0, "latest_angle_deg": 24.2},
+          "30": {"latest_decision_ms": 70.0, "latest_angle_deg": 8.5},
+          "50": {"latest_decision_ms": 50.0, "latest_angle_deg": 5.1}
+        }
+      }
+    },
+    "mirror_latency_tolerance_ms": 5.0,
+    "mirror_direction_reversal_fraction": 0.70
+  },
+  "go_no_go": {
+    "GO_0_integrity": [
+      "locked_json_command_and_hashes",
+      "explicit_tier_time_grid_plus40deg_stimulus",
+      "all_resolved_populations_nonzero",
+      "finite_trace",
+      "no_forbidden_signal"
+    ],
+    "GO_1_sensory": {
+      "angle_tolerance_deg": 0.1,
+      "timing_tolerance_ms": 0.5,
+      "matched_controls_pass_pre_run_matching": true,
+      "mirror_is_input_side_reflection": true
+    },
+    "GO_2_e14_audit": {
+      "gain": 1.2,
+      "dn_p01_tolerance_ms": 5.0,
+      "ttmn_tolerance_ms": 5.0,
+      "failure_class_if_missed": "baseline_drift"
+    },
+    "GO_3_pure_decision": {
+      "tier": "core_behavior",
+      "t_decision_max_ms": 1970.0,
+      "theta_decision_max_deg": 71.6,
+      "true_condition_must_exceed_controls": true,
+      "assist_disqualifies_pure": true
+    },
+    "GO_4_pure_motor": {
+      "tier": "core_behavior",
+      "t_motor_event_max_ms": 1970.0,
+      "sustained_status_reported_separately": true,
+      "ttmn_lesion_dissociation_required": true,
+      "dnp01_lesion_dissociation_required": true
+    },
+    "GO_5_physical_escape": {
+      "tier": "core_behavior",
+      "body_required": true,
+      "latest_escape_ms": 1970.0,
+      "impact_ms": 2000.0,
+      "preimpact_motion_required": true,
+      "collision_free": true,
+      "safety_takeover_allowed": false
+    },
+    "GO_pressure_10mps": {
+      "tier": "pressure_10mps",
+      "t_decision_max_ms": 70.0,
+      "theta_decision_max_deg": 8.5,
+      "t_motor_event_max_ms": 70.0,
+      "primary_core_gate_precedes_pressure": true,
+      "failure_does_not_erase_core_result": true
+    },
+    "control_rule": {
+      "default_sham_false_positive_fraction_max": 0.05,
+      "mirror_median_latency_difference_max_ms": 5.0,
+      "mirror_signed_response_fraction_min": 0.70,
+      "assisted_go_does_not_upgrade_pure": true
+    }
+  },
+  "failure_reporting": {
+    "retain_all_attempts": true,
+    "required_artifacts": [
+      "trial_manifest.json",
+      "stimulus.npz",
+      "stimulus_preview.png",
+      "summary.json",
+      "spikes.npz",
+      "active_neuron_trace",
+      "exact_command.txt",
+      "config_and_script_hashes.json",
+      "resource_and_kernel_log",
+      "body_trace_if_present"
+    ],
+    "required_ledger_fields": [
+      "trial_id",
+      "opaque_condition",
+      "speed_tier",
+      "speed_mps",
+      "impact_ms",
+      "seed",
+      "backend",
+      "device",
+      "gain",
+      "dt_ms",
+      "tick_ms",
+      "frame_ms",
+      "resolved_population_counts",
+      "safety_active",
+      "assist_contribution",
+      "failure_class",
+      "unblind_timestamp"
+    ],
+    "failure_classes": [
+      "valid_negative",
+      "baseline_drift",
+      "nonconvergent",
+      "assist_or_safety",
+      "protocol_invalid",
+      "technical_abort"
+    ],
+    "classification_rules": {
+      "zero_population_selector": "protocol_invalid",
+      "forbidden_signal": "protocol_invalid",
+      "valid_no_spike_or_late_spike": "valid_negative",
+      "cuda_or_resource_failure_before_valid_endpoint": "technical_abort",
+      "active_set_growth_or_numeric_divergence": "nonconvergent",
+      "any_nonzero_assist_or_safety_contribution": "assist_or_safety"
+    },
+    "final_labels": {
+      "evidence_class": "digital_simulation",
+      "biological_decision": "NOT_VALIDATED",
+      "pure_autonomous_decision_values": ["GO", "NO-GO", "INVALID", "NOT_RUN"],
+      "assisted_decision_values": ["GO", "NO-GO", "INVALID", "NOT_RUN"]
+    }
+  },
+  "current_implementation_boundary": {
+    "historical_e14_runner": "scripts/lif_flyb.py plus scripts/loom_to_lamina.py",
+    "current_end_to_end_launcher": "scripts/run_digital_fly.py",
+    "current_launcher_escape_scene": false,
+    "current_launcher_has_generic_lesion_operator": false,
+    "current_launcher_optional_assists": [
+      "--flight-state-drive",
+      "--flight-body-stabilizer"
+    ],
+    "rule": "do not claim an E14 body escape from the current one-frame GPU smoke or from a CNS activity movie"
+  }
+}

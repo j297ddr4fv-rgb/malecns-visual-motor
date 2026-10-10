@@ -1,0 +1,60 @@
+{
+  "schema_version": "optomotor-ground-crawl-experiment-1",
+  "units": "SI",
+  "seed": 1729,
+  "stimulus_config": "optomotor_pilot_stimuli.json",
+  "stimulus_name": "stripe_static",
+  "experiment": {
+    "name": "strict-optomotor-ground-crawl-assay",
+    "description": "World-anchored moving grating with wing/jump body actuation suppressed and direct leg-readout ground traction; no behavioral steering rule.",
+    "resting_start": true,
+    "neural_gain": 1.2,
+    "allow_legacy_wing_fallback": false,
+    "ground_walking": {
+      "enabled": true,
+      "ground_only": true,
+      "max_ground_traction_N": 7.5e-8,
+      "max_ground_yaw_torque_Nm": 1.0e-10,
+      "ground_horizontal_braking_N_s_m": 1.25e-5,
+      "ground_lateral_braking_N_s_m": 1.0e-4,
+      "max_ground_speed_mps": 0.012
+    },
+    "stimulus_interaction": "visual_only_non_interacting",
+    "visual_report_populations": ["LC4", "LPLC2", "DNp01", "TTMn"],
+    "camera": {"eye_separation_m": 0.0007, "near_m": 0.0003, "far_m": 0.5},
+    "visual_baseline": {
+      "mode": "initial_scene_adapted", "duration_s": 1.0,
+      "timestamp_s": 0.0, "feed_malecns": false, "advance_body": false
+    }
+  },
+  "escape_channels": {
+    "required": true, "dynamic_stimulus": null,
+    "jump_channel": null, "posture_channel": null
+  },
+  "world": {
+    "ground_z_m": 0.0, "body_radius_m": 0.0012,
+    "bounds_xy_m": [-0.12, 0.12, -0.12, 0.12], "wall_height_m": 0.05,
+    "target": {
+      "id": "scene_marker_record_only", "position_m": [10.0, 10.0, 0.0],
+      "size_m": [0.001, 0.001, 0.001], "texture": "matte"
+    },
+    "obstacles": [],
+    "light": {"ambient": 0.28, "direction_m": [-0.45, 0.35, 0.82],
+              "intensity": 0.72, "sky_brightness": 0.10},
+    "texture": {"ground_cell_m": 0.006, "wall_cell_m": 0.012,
+                "contrast": 0.30},
+    "wind": {"base_mps": [0.0, 0.0, 0.0],
+             "spatial_amplitude_mps": 0.0, "spatial_wavelength_m": 0.1,
+             "gusts": []}
+  },
+  "scenarios": {
+    "optomotor": {
+      "duration_s": 2.5, "dt_s": 0.005,
+      "initial_pose": {
+        "position_m": [0.0, 0.0, 0.0012],
+        "yaw_rad": 0.0, "pitch_rad": 0.0, "roll_rad": 0.0,
+        "velocity_mps": [0.0, 0.0, 0.0]
+      }
+    }
+  }
+}

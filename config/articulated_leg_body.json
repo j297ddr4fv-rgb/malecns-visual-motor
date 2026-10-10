@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "units": "SI",
+  "description": "CPU MuJoCo reduced six-leg free-root model. Segment sizes, fixed muscle moment arms, and passive joint support are engineering hypotheses, not measured fly anatomy or a validated natural standing mechanism.",
+  "physics": {
+    "timestep_s": 0.0001,
+    "gravity_mps2": 9.81,
+    "friction_coefficient": 0.8,
+    "body_height_m": 0.001275,
+    "body_mass_kg": 6.75e-7,
+    "body_inertia_kg_m2": [3.94875e-14, 1.215e-13, 1.366875e-13],
+    "joint_armature_kg_m2": 3.375e-17,
+    "passive_support": {
+      "enabled": true,
+      "classification": "ENGINEERING",
+      "stiffness_Nm_rad": 3e-8,
+      "damping_Nms_rad": 2e-11,
+      "spring_reference_rad": 0.0,
+      "evidence_label": "engineering_assumption_not_measured_biology",
+      "notes": "Numerical support term on the 42 articulated hinge joints. This is not measured fly joint stiffness and does not represent neural tonus. A 2025 preprint reports that passive elasticity alone is insufficient to explain natural standing.",
+      "context_source": "https://doi.org/10.1101/2025.04.29.651225"
+    },
+    "contact_solver": {
+      "time_constant_s": 0.0005,
+      "damping_ratio": 1.0
+    }
+  },
+  "geometry": {
+    "legs": ["LF", "LM", "LH", "RF", "RM", "RH"],
+    "thorax_ellipsoid_semiaxes_m": [0.0009, 0.00045, 0.0003],
+    "thorax_notes": "Hypothesized 1.8 mm long shell; inertia is that of a uniform ellipsoid at the declared body mass. This is not measured anatomical geometry.",
+    "anchors_m": {
+      "front_x": 0.000225,
+      "middle_x": 0.0,
+      "hind_x": -0.000225,
+      "left_y": 0.00015,
+      "right_y": -0.00015
+    },
+    "segment_vectors_local_m": {
+      "coxa": [0.0003, 0.0, -0.000015],
+      "femur": [0.000375, 0.0, -0.00015],
+      "tibia": [0.00045, 0.0, -0.000675],
+      "tarsus": [0.000225, 0.0, -0.00036]
+    },
+    "segment_masses_kg": {
+      "coxa": 1.2e-8,
+      "femur": 2.7e-8,
+      "tibia": 2.25e-8,
+      "tarsus": 7.5e-9
+    },
+    "segment_radii_m": {
+      "coxa": 0.000015,
+      "femur": 0.0000195,
+      "tibia": 0.000015,
+      "tarsus": 0.00000975
+    },
+    "foot_radius_m": 0.000075
+  },
+  "muscles": {
+    "optimal_length_m": 0.00018,
+    "groups": {
+      "tibia_flexor": {
+        "joint_moment_arms_m": {"tibia_pitch": 0.0000675},
+        "notes": "Positive tibia_pitch flexion sign is an engineering convention."
+      },
+      "tibia_extensor": {
+        "joint_moment_arms_m": {"tibia_pitch": -0.0000675},
+        "notes": "Opposing tibia_pitch sign to tibia_flexor."
+      },
+      "trochanter_flexor": {
+        "joint_moment_arms_m": {"femur_pitch": 0.000063},
+        "notes": "Reduced trochanter/femur flexion axis hypothesis."
+      },
+      "trochanter_extensor": {
+        "joint_moment_arms_m": {"femur_pitch": -0.000063},
+        "notes": "Opposing femur_pitch sign to trochanter_flexor."
+      },
+      "tarsus_levator": {
+        "joint_moment_arms_m": {"tarsus_pitch": 0.000045},
+        "notes": "Positive tarsus_pitch lift sign is an engineering convention."
+      },
+      "tarsus_depressor": {
+        "joint_moment_arms_m": {"tarsus_pitch": -0.000045},
+        "notes": "Opposing tarsus_pitch sign to tarsus_levator."
+      },
+      "sternal_anterior_rotator": {
+        "joint_moment_arms_m": {"coxa_yaw": 0.00003},
+        "notes": "Yaw direction convention; not calibrated to attachment anatomy."
+      },
+      "sternal_posterior_rotator": {
+        "joint_moment_arms_m": {"coxa_yaw": -0.00003},
+        "notes": "Opposing coxa_yaw sign to sternal_anterior_rotator."
+      },
+      "sternal_adductor": {
+        "joint_moment_arms_m": {"coxa_roll": -0.000027},
+        "notes": "Reduced coxa_roll adduction hypothesis; direction is an engineering convention."
+      },
+      "pleural_remotor_abductor": {
+        "joint_moment_arms_m": {"coxa_pitch": -0.000027, "coxa_roll": 0.000027},
+        "notes": "Reduced retraction plus abduction hypothesis across coxa_pitch and coxa_roll."
+      },
+      "tergopleural_promotor": {
+        "joint_moment_arms_m": {"coxa_pitch": 0.00003},
+        "notes": "Reduced protraction hypothesis on coxa_pitch."
+      },
+      "sternotrochanter": {
+        "joint_moment_arms_m": {"femur_pitch": -0.000063},
+        "anatomical_action": "trochanter extension/depression via the trochanter extensor tendon",
+        "action_evidence": ["https://faculty.washington.edu/tuthill/docs/azevedo24_appendix.pdf", "https://www.nature.com/articles/s41586-024-07600-z"],
+        "moment_arm_evidence": "engineering_proxy_not_measured",
+        "numerical_proxy": "Same fixed 63 micrometre magnitude as the reduced trochanter_extensor; sign follows the model's extension convention. Not a geometry-derived or measured arm.",
+        "omitted_route": "The biological biarticular path crosses body-coxa; its secondary moment arms are not represented without attachment/routing geometry.",
+        "notes": "Action-backed reduced femur_pitch extension surrogate. Fixed magnitude shared across legs is uncalibrated; the distinct trochanter link and biarticular routing are omitted."
+      },
+      "femur_reductor": {
+        "joint_moment_arms_m": {"femur_roll": -0.000024},
+        "notes": "Reduced femur adduction/reduction hypothesis on femur_roll."
+      },
+      "tergotrochanter": {
+        "joint_moment_arms_m": {"femur_pitch": -0.000063},
+        "anatomical_action": "trochanter extension/depression via the shared trochanter extensor tendon",
+        "action_evidence": ["https://faculty.washington.edu/tuthill/docs/azevedo24_appendix.pdf"],
+        "moment_arm_evidence": "engineering_proxy_not_measured",
+        "numerical_proxy": "Same fixed magnitude as reduced trochanter_extensor; no isolated measured arm is claimed.",
+        "notes": "Corrected from an unsupported femur_roll action to a reduced femur_pitch extension surrogate. Magnitude and mapping across legs remain uncalibrated."
+      },
+      "accessory_tibia_flexor": {
+        "joint_moment_arms_m": {"tibia_pitch": 0.000033},
+        "notes": "Reduced accessory tibia flexor hypothesis."
+      },
+      "accessory_trochanter_flexor": {
+        "joint_moment_arms_m": {"femur_pitch": 0.000033},
+        "notes": "Reduced accessory trochanter/femur flexor hypothesis."
+      },
+      "long_tendon": {
+        "joint_moment_arms_m": {"tarsus_pitch": 0.000018},
+        "notes": "Distal tendon action collapsed to the tarsus_pitch axis."
+      },
+      "long_tendon_tibia": {
+        "joint_moment_arms_m": {"tibia_pitch": 0.000018},
+        "anatomical_alias": "LTM1",
+        "notes": "LTM1 channel label; simplified tibia_pitch path hypothesis."
+      },
+      "long_tendon_femur": {
+        "joint_moment_arms_m": {"femur_pitch": 0.000018},
+        "anatomical_alias": "LTM2",
+        "notes": "LTM2 channel label; simplified femur_pitch path hypothesis."
+      }
+    }
+  }
+}

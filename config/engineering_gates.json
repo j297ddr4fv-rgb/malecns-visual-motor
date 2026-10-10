@@ -1,0 +1,324 @@
+{
+  "schema_version": "engineering-gates-1",
+  "name": "malecns-reproducibility-performance",
+  "description": "Read-only reproducibility and performance audit for future benchmark artifacts.",
+  "manifest": {
+    "schema_version": "engineering-manifest-1",
+    "required_fields": [
+      "schema_version",
+      "run_id",
+      "seed",
+      "config",
+      "unit_tests",
+      "preflight",
+      "authority",
+      "resources",
+      "artifact_budget",
+      "column_hashes",
+      "equivalence",
+      "benchmark"
+    ],
+    "run_id_pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+    "hash_algorithm": "sha256"
+  },
+  "unit_tests": {
+    "required_command": "python3 -m unittest discover -s tests -p 'test_*.py' -v",
+    "required_status": "PASS",
+    "required_fields": [
+      "command",
+      "status",
+      "passed",
+      "failed",
+      "errors",
+      "skipped"
+    ],
+    "minimum_passed": 1
+  },
+  "preflight": {
+    "required_fields": [
+      "gpu_requested",
+      "cuda_gate",
+      "uvm_disable_hmm",
+      "nvidia_smi",
+      "cgroup"
+    ],
+    "required_cgroup_fields": [
+      "memory_max_bytes",
+      "cpu_max"
+    ],
+    "gpu_gate_open_value": "open",
+    "cpu_gate_value": "not_requested",
+    "require_cgroup_memory_ceiling": true,
+    "require_gpu_identity": true
+  },
+  "authority": {
+    "required_fields": [
+      "controller_authority",
+      "writes_body_state",
+      "writes_motor_command"
+    ],
+    "controller_authority": "none"
+  },
+  "determinism": {
+    "require_integer_seed": true,
+    "require_config_seed_match": true,
+    "require_config_sha256": true,
+    "require_explicit_deterministic": true
+  },
+  "column_hashes": {
+    "algorithm": "sha256-canonical-json-lines-v1",
+    "required": [
+      {
+        "file": "trajectory.json",
+        "columns": [
+          "time_s",
+          "position_m",
+          "velocity_mps"
+        ]
+      },
+      {
+        "file": "telemetry.jsonl",
+        "columns": [
+          "time_s"
+        ]
+      }
+    ]
+  },
+  "resources": {
+    "required_limit_fields": [
+      "cgroup_memory_max_bytes",
+      "host_rss_max_bytes"
+    ],
+    "required_usage_fields": [
+      "peak_host_rss_bytes"
+    ],
+    "gpu_limit_fields": [
+      "cuda_allocated_max_bytes",
+      "cuda_reserved_max_bytes"
+    ],
+    "gpu_usage_fields": [
+      "peak_cuda_allocated_bytes",
+      "peak_cuda_reserved_bytes"
+    ],
+    "ceilings": {
+      "cgroup_memory_max_bytes": 5368709120,
+      "host_rss_max_bytes": 5368709120,
+      "cuda_allocated_max_bytes": 16642998272,
+      "cuda_reserved_max_bytes": 16642998272
+    }
+  },
+  "artifact_budget": {
+    "max_total_bytes": 536870912,
+    "max_file_bytes": {
+      "manifest.json": 2097152,
+      "trajectory.json": 268435456,
+      "telemetry.jsonl": 268435456,
+      "benchmark.json": 16777216,
+      "equivalence.json": 16777216
+    }
+  },
+  "equivalence": {
+    "required_reference": true,
+    "metrics": [
+      "max_abs",
+      "max_rel",
+      "rmse"
+    ],
+    "tolerances": {
+      "max_abs": 1.0e-5,
+      "max_rel": 1.0e-4,
+      "rmse": 1.0e-5
+    }
+  },
+  "benchmark": {
+    "required_fields": [
+      "name",
+      "version",
+      "backend",
+      "device",
+      "dtype",
+      "warmup_iterations",
+      "measurement_iterations",
+      "sample_count",
+      "simulated_duration_s",
+      "wall_time_s",
+      "throughput",
+      "synchronization",
+      "timestamp_utc",
+      "command"
+    ],
+    "minimum_warmup_iterations": 1,
+    "minimum_measurement_iterations": 3,
+    "require_synchronization_metadata": true,
+    "require_gpu_synchronization": true
+  },
+  "performance_acceptance": {
+    "record_keys": [
+      "performance_acceptance",
+      "acceptance"
+    ],
+    "record_types": [
+      "full_run_performance_acceptance",
+      "production_full_run",
+      "production_acceptance",
+      "full_run"
+    ],
+    "required_fields": [
+      "simulated_duration_s",
+      "wall_time_s",
+      "real_time_factor",
+      "wall_time_scope"
+    ],
+    "minimum_simulated_duration_s": 10.0,
+    "minimum_real_time_factor": 0.5,
+    "wall_time_scope": "startup+simulation+output",
+    "allowed_wall_time_scopes": [
+      "startup+simulation+output",
+      "resident-runner simulation+output"
+    ],
+    "production": {
+      "required_execution": {
+        "renderer_backend": "warp_cuda",
+        "neural_backend": "triton",
+        "neural_device": "cuda",
+        "neural_cuda_graph": true,
+        "vision_backend": "flyvis",
+        "vision_device": "cuda:0"
+      },
+      "execution_locations": {
+        "requested": [
+          "requested_execution",
+          "requested_backends"
+        ],
+        "effective": [
+          "effective_execution",
+          "effective_backends"
+        ]
+      },
+      "required_components": [
+        "world",
+        "vision",
+        "neural",
+        "body"
+      ],
+      "stub_field": "is_stub"
+    }
+  },
+  "backend_consistency": {
+    "direct_pairs": [
+      [
+        "requested_backend",
+        "effective_backend"
+      ],
+      [
+        "requested_renderer_backend",
+        "effective_renderer_backend"
+      ],
+      [
+        "renderer_backend_requested",
+        "renderer_backend_effective"
+      ],
+      [
+        "requested",
+        "effective"
+      ]
+    ],
+    "renderer_pairs": [
+      [
+        "requested_renderer_backend",
+        "effective_renderer_backend"
+      ],
+      [
+        "renderer_backend_requested",
+        "renderer_backend_effective"
+      ]
+    ],
+    "nested_renderer_pairs": [
+      [
+        "requested_backend",
+        "effective_backend"
+      ],
+      [
+        "requested",
+        "effective"
+      ]
+    ],
+    "forbid_mismatch": true
+  },
+  "warp_cuda": {
+    "renderer_backend": "warp_cuda",
+    "required_manifest_fields": [
+      "renderer_backend",
+      "requested_renderer_backend",
+      "effective_renderer_backend"
+    ],
+    "required_warp_fields": [
+      "version",
+      "gpu",
+      "config",
+      "scene",
+      "exact_columns",
+      "benchmarks",
+      "analytic_reference",
+      "resources"
+    ],
+    "required_gpu_fields": [
+      "name",
+      "arch",
+      "compute_capability"
+    ],
+    "required_hash_algorithm": "sha256-canonical-json-lines-v1",
+    "required_scene_fields": [
+      "path",
+      "sha256"
+    ],
+    "required_config_fields": [
+      "path",
+      "sha256"
+    ],
+    "required_exact_column_fields": [
+      "file",
+      "shape_column",
+      "direction_column",
+      "shape_hash",
+      "direction_hash",
+      "algorithm"
+    ],
+    "benchmark_fields": [
+      "cold_jit",
+      "steady"
+    ],
+    "cold_jit_marker": {
+      "field": "includes_jit",
+      "value": true
+    },
+    "steady_marker": {
+      "field": "includes_jit",
+      "value": false
+    },
+    "minimum_steady_measurements": 3,
+    "analytic_reference_fields": [
+      "reference_id",
+      "max_abs",
+      "mean_abs",
+      "mismatch_count",
+      "tolerance"
+    ],
+    "analytic_reference_metrics": [
+      "max_abs",
+      "mean_abs",
+      "mismatch_count"
+    ],
+    "analytic_reference_tolerances": {
+      "max_abs": 1.0e-5,
+      "mean_abs": 1.0e-6,
+      "mismatch_count": 0
+    },
+    "analytic_reference_status": "PASS",
+    "required_resource_usage_fields": [
+      "peak_host_rss_bytes",
+      "peak_cuda_allocated_bytes",
+      "peak_cuda_reserved_bytes"
+    ]
+  }
+}

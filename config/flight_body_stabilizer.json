@@ -1,0 +1,59 @@
+{
+  "schema_version": "flight-body-stabilizer-1",
+  "name": "malecns-flight-body-stabilizer-v1",
+  "enabled": true,
+  "authority": {
+    "max_contribution_fraction": 0.35,
+    "max_collective_trim": 0.30,
+    "controlled_channels": ["pitch", "roll", "equal_left_right_collective_trim"],
+    "preserves_channels": ["yaw", "left_right_steering_difference", "brake"],
+    "writes_body_state": false
+  },
+  "max_contribution_fraction": 0.35,
+  "safety_contribution_cap": 0.35,
+  "max_collective_trim": 0.30,
+  "max_pitch_command": 0.50,
+  "max_roll_command": 0.50,
+  "gains": {
+    "pitch_forward_error": 0.55,
+    "pitch_forward_velocity": -0.45,
+    "pitch_attitude_error": 1.70,
+    "pitch_rate": -0.25,
+    "roll_lateral_error": -0.55,
+    "roll_lateral_velocity": 0.50,
+    "roll_attitude_error": 1.70,
+    "roll_rate": -0.25,
+    "collective_altitude_error": 0.80,
+    "collective_vertical_speed": -0.50
+  },
+  "phase_gains": {
+    "grounded": 0.0,
+    "takeoff": 1.0,
+    "forward": 1.0,
+    "turn": 1.0,
+    "hover": 1.0,
+    "gust-recovery": 1.0,
+    "approach": 1.0,
+    "landing": 0.85,
+    "settle": 0.50
+  },
+  "actuator_bounds": {
+    "left_wing": [0.0, 1.0],
+    "right_wing": [0.0, 1.0],
+    "thrust": [0.0, 1.0],
+    "yaw": [-1.0, 1.0],
+    "pitch": [-1.0, 1.0],
+    "roll": [-1.0, 1.0],
+    "brake": [0.0, 1.0]
+  },
+  "provenance": {
+    "source": "handbuilt",
+    "biological_status": "hypothesis",
+    "status": "hypothesis",
+    "calibration": "calibration",
+    "confidence": "low",
+    "biological_claim": false,
+    "research_reference": "docs/research/embodied-precedents.md",
+    "rationale": "Optional low-level proxy for the documented low-confidence flight pitch/altitude-control gap; fitted neural wing power and left/right steering remain primary."
+  }
+}

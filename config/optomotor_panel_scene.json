@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "scene_id": "optomotor_stripe_panel_v1",
+  "units": "m",
+  "description": "World-anchored binocular black-white stripe panel; visual-only stimulus.",
+  "coordinate_system": {
+    "handedness": "right",
+    "up_axis": "+Z",
+    "forward_axis": "+X"
+  },
+  "asset_root": "/data/models/3d/malecns-gpu/optomotor-panel",
+  "materials": {
+    "black": {
+      "base_color_rgba": [
+        0.04,
+        0.04,
+        0.04,
+        1
+      ]
+    },
+    "white": {
+      "base_color_rgba": [
+        0.96,
+        0.96,
+        0.96,
+        1
+      ]
+    }
+  },
+  "assets": [
+    {
+      "object_id": "stripe_panel_model",
+      "path": "stripe_panel.gltf",
+      "role": "visual",
+      "semantic_role": "optomotor_grating",
+      "asset_unit_scale_to_m": 1.0,
+      "transform": {
+        "translation_m": [
+          0,
+          0,
+          0
+        ],
+        "rotation_xyzw": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": 1
+      },
+      "integrity": {
+        "sha256": "ad214cf3fe9aeb9c8508b3ec648ee4d67b1026604e564867b8d86e0481649b9b"
+      },
+      "material_refs": {
+        "black": "black",
+        "white": "white"
+      },
+      "provenance": {
+        "source": "procedurally authored alternating flat bands",
+        "license": "CC0-1.0",
+        "exporter": "scripts/prepare_optomotor_panel.py"
+      }
+    }
+  ],
+  "simulation": {
+    "stimulus_object_ids": {
+      "stripe_panel": "stripe_panel_model"
+    }
+  }
+}

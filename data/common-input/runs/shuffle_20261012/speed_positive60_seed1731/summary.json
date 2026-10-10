@@ -1,0 +1,19 @@
+{
+  "variant": "shuffle_20261012",
+  "case_id": "speed_positive60_seed1731",
+  "condition": "positive60",
+  "initialization_seed": 1731,
+  "rewiring_seed": 20261012,
+  "frames": 2600,
+  "retinal_movie_sha256": "e6e805328b6e1596865442ee15f15267d1610f76420604a24cf87fdd977fb2e8",
+  "fitted_drive_stream_sha256": "49eb8bbd53eeaec143963623d102db477da91b54cf02af369401bd8ebfe806cd",
+  "matched_retina_and_fitted_drive": true,
+  "DNp15_L_hz": 328.1666666666667,
+  "DNp15_R_hz": 3.25,
+  "DNp15_opponent_hz": 324.9166666666667,
+  "mean_raw_P": 0.3527494687317967,
+  "mean_network_spikes_per_5ms": 6493.43625,
+  "wall_s": 17.823038763999648,
+  "neural_worker_stopped": true,
+  "no_body_simulation_or_feedback": true
+}

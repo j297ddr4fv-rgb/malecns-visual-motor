@@ -1,0 +1,197 @@
+{
+  "asset_root": "/data/models/3d/malecns-gpu/female-fly",
+  "assets": [
+    {
+      "asset_unit_scale_to_m": 1.0,
+      "integrity": {
+        "sha256": "05cd4d05e554bebf4e984a84099d8152012e27c92a810ee03c99ba489755fe8d"
+      },
+      "material_refs": {
+        "abdomen12345": "abdomen12345",
+        "abdomen6": "abdomen6",
+        "antennaproboscis": "antennaproboscis",
+        "arista": "arista",
+        "coxa": "coxa",
+        "eye": "eye",
+        "haltere": "haltere",
+        "headthorax": "headthorax",
+        "tarsus": "tarsus",
+        "tibia": "tibia",
+        "trochanterfemur": "trochanterfemur",
+        "wing": "wing"
+      },
+      "object_id": "female_fly_model",
+      "path": "female_fly.glb",
+      "provenance": {
+        "export_settings": {
+          "body_length_m": 0.0028,
+          "format": "glTF 2.0 GLB",
+          "material_mode": "flat PBR palette approximations from source visuals.yaml",
+          "neutral_pose": "pitch_roll_yaw",
+          "pose_note": "Right leg angles mirror the source left-side neutral values. Both source wings are present; the official neutral wing rigging folds them rearward with overlapping dorsal projection.",
+          "units": "metres"
+        },
+        "exporter": "scripts/prepare_courtship_female_asset.py",
+        "license": "Apache-2.0",
+        "source": "FlyGym / NeuroMechFly v2.1.0 adult-female micro-CT-derived model",
+        "source_revision": "ca65a510c2afe6ac61c51df4f274c8d190c2f95f",
+        "source_url": "https://github.com/NeLy-EPFL/flygym/tree/v2.1.0/src/flygym/assets/model/neuromechfly"
+      },
+      "role": "visual",
+      "semantic_role": "adult_female_drosophila_visual_target",
+      "transform": {
+        "rotation_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": 1.0,
+        "translation_m": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    }
+  ],
+  "coordinate_system": {
+    "forward_axis": "+X",
+    "handedness": "right",
+    "up_axis": "+Z"
+  },
+  "description": "Static neutral-pose adult-female NeuroMechFly mesh for a visual-only courtship target. Source meshes are the licensed, micro-CT-derived FlyGym model.",
+  "materials": {
+    "abdomen12345": {
+      "base_color_rgba": [
+        0.705,
+        0.53,
+        0.295,
+        1.0
+      ],
+      "description": "FlyGym visuals.yaml abdomen12345 source colors (gradient texture averaged to a flat color); procedural markings are not rasterized."
+    },
+    "abdomen6": {
+      "base_color_rgba": [
+        0.605,
+        0.43500000000000005,
+        0.235,
+        1.0
+      ],
+      "description": "FlyGym visuals.yaml abdomen6 source colors (gradient texture averaged to a flat color); procedural markings are not rasterized."
+    },
+    "antennaproboscis": {
+      "base_color_rgba": [
+        0.59,
+        0.39,
+        0.12,
+        1.0
+      ],
+      "description": "FlyGym visuals.yaml antennaproboscis source colors (flat texture averaged to a flat color); procedural markings are not rasterized."
+    },
+    "arista": {
+      "base_color_rgba": [
+        0.26,
+        0.2,
+        0.16,
+        1.0
+      ],
+      "description": "FlyGym visuals.yaml arista source colors (flat texture averaged to a flat color); procedural markings are not rasterized."
+    },
+    "coxa": {
+      "base_color_rgba": [
+        0.59,
+        0.39,
+        0.12,
+        1.0
+      ],
+      "description": "FlyGym visuals.yaml coxa source colors (flat texture averaged to a flat color); procedural markings are not rasterized."
+    },
+    "eye": {
+      "base_color_rgba": [
+        0.67,
+        0.21,
+        0.12,
+        1.0
+      ],
+      "description": "FlyGym visuals.yaml eye source colors (flat texture averaged to a flat color); procedural markings are not rasterized."
+    },
+    "haltere": {
+      "base_color_rgba": [
+        0.59,
+        0.43,
+        0.24,
+        1.0
+      ],
+      "description": "FlyGym visuals.yaml haltere source colors (flat texture averaged to a flat color); procedural markings are not rasterized."
+    },
+    "headthorax": {
+      "base_color_rgba": [
+        0.59,
+        0.39,
+        0.12,
+        1.0
+      ],
+      "description": "FlyGym visuals.yaml headthorax source colors (flat texture averaged to a flat color); procedural markings are not rasterized."
+    },
+    "tarsus": {
+      "base_color_rgba": [
+        0.71,
+        0.51,
+        0.24,
+        1.0
+      ],
+      "description": "FlyGym visuals.yaml tarsus source colors (flat texture averaged to a flat color); procedural markings are not rasterized."
+    },
+    "tibia": {
+      "base_color_rgba": [
+        0.67,
+        0.47,
+        0.2,
+        1.0
+      ],
+      "description": "FlyGym visuals.yaml tibia source colors (flat texture averaged to a flat color); procedural markings are not rasterized."
+    },
+    "trochanterfemur": {
+      "base_color_rgba": [
+        0.63,
+        0.43,
+        0.16,
+        1.0
+      ],
+      "description": "FlyGym visuals.yaml trochanterfemur source colors (flat texture averaged to a flat color); procedural markings are not rasterized."
+    },
+    "wing": {
+      "base_color_rgba": [
+        0.8,
+        0.8,
+        0.9,
+        0.3
+      ],
+      "description": "FlyGym visuals.yaml wing source colors (flat texture averaged to a flat color); procedural markings are not rasterized."
+    }
+  },
+  "replay": {
+    "bindings": {
+      "fly_object_id": null,
+      "stimulus_object_ids": {
+        "female_fly": "female_fly_model"
+      }
+    },
+    "camera": {
+      "focal_length_mm": 85,
+      "follow_distance_m": 0.02,
+      "height_m": 0.03,
+      "look_ahead_m": 0.06,
+      "mode": "chase"
+    }
+  },
+  "scene_id": "courtship_adult_female_neuromechfly_v2_1_0",
+  "schema_version": 1,
+  "simulation": {
+    "stimulus_object_ids": {
+      "female_fly": "female_fly_model"
+    }
+  },
+  "units": "m"
+}

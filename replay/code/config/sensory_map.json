@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "dataset": "MaleCNS v1.0",
+  "description": "Annotation-backed mechanosensory map for the body feedback adapter and reusable MaleCNS drive contract. Counts are resolved from the local CSR when available; no neuron/body IDs are stored.",
+  "provenance": [
+    "data/cache/malecns-gpu/csr-flyb/tables.json",
+    "data/cache/malecns-gpu/csr-flyb/annotations.npz",
+    "Projects/fly-brain-minecraft/docs/research/sensory-mapping.md (mechanosensation inventory)",
+    "Projects/malecns-gpu/docs/EXPERIMENT_LOG.md (E15 flight pathway)"
+  ],
+  "drive_mapping": {
+    "schema_version": 1,
+    "input_units": "normalized",
+    "output_units": "current_mV_per_ms",
+    "input_range": [-1.0, 1.0],
+    "max_gain_mV_per_ms": 0.5,
+    "description": "Explicit hand-built population drives for the reusable MaleCNS adapter. Values are signed normalized drives; gains are bounded current injections, not neuron or body-ID mappings.",
+    "entries": {
+      "jo": {
+        "sources": ["jo", "jo_wind_gravity", "wind_gravity"],
+        "target_population": "jo_wind_gravity",
+        "gain_mV_per_ms": 0.4,
+        "max_abs_current_mV_per_ms": 0.4,
+        "priority": 100,
+        "provenance": "Bounded JO wind/gravity proxy; annotation selectors resolve the population, but no per-afferent or body-ID tuning is asserted."
+      },
+      "haltere": {
+        "sources": ["haltere"],
+        "target_population": "haltere",
+        "gain_mV_per_ms": 0.35,
+        "max_abs_current_mV_per_ms": 0.35,
+        "priority": 100,
+        "provenance": "Bounded angular-rate haltere proxy; no per-afferent or body-ID tuning is asserted."
+      },
+      "wing": {
+        "sources": ["wing", "wing_mechanosensory"],
+        "target_population": "wing",
+        "gain_mV_per_ms": 0.3,
+        "max_abs_current_mV_per_ms": 0.3,
+        "priority": 100,
+        "overlap_group": "wing",
+        "provenance": "Bounded aggregate wing tactile/proprioceptive proxy; aggregate input takes precedence over component aliases."
+      },
+      "wing_tactile": {
+        "sources": ["wing_tactile"],
+        "target_population": "wing_tactile",
+        "gain_mV_per_ms": 0.3,
+        "max_abs_current_mV_per_ms": 0.3,
+        "priority": 10,
+        "overlap_group": "wing",
+        "provenance": "Bounded wing tactile proxy used only when the aggregate wing drive is absent."
+      },
+      "wing_proprioceptive": {
+        "sources": ["wing_proprioceptive"],
+        "target_population": "wing_proprioceptive",
+        "gain_mV_per_ms": 0.3,
+        "max_abs_current_mV_per_ms": 0.3,
+        "priority": 10,
+        "overlap_group": "wing",
+        "provenance": "Bounded wing proprioceptive proxy used only when the aggregate wing drive is absent."
+      },
+      "leg": {
+        "sources": ["leg", "leg_mechanosensory"],
+        "target_population": "leg",
+        "gain_mV_per_ms": 0.25,
+        "max_abs_current_mV_per_ms": 0.25,
+        "priority": 100,
+        "overlap_group": "leg",
+        "provenance": "Bounded aggregate leg tactile/proprioceptive proxy; aggregate input takes precedence over component aliases."
+      },
+      "leg_tactile": {
+        "sources": ["leg_tactile"],
+        "target_population": "leg_tactile",
+        "gain_mV_per_ms": 0.25,
+        "max_abs_current_mV_per_ms": 0.25,
+        "priority": 10,
+        "overlap_group": "leg",
+        "provenance": "Bounded leg tactile proxy used only when the aggregate leg drive is absent."
+      },
+      "leg_proprioceptive": {
+        "sources": ["leg_proprioceptive"],
+        "target_population": "leg_proprioceptive",
+        "gain_mV_per_ms": 0.25,
+        "max_abs_current_mV_per_ms": 0.25,
+        "priority": 10,
+        "overlap_group": "leg",
+        "provenance": "Bounded leg proprioceptive proxy used only when the aggregate leg drive is absent."
+      }
+    },
+    "body_id_mapping": "not provided"
+  },
+  "populations": {
+    "jo_wind_gravity": {
+      "selectors": ["class:mechanosensory&subclass:wind_gravity"],
+      "expected_count": 475,
+      "confidence": "high",
+      "provenance": "MaleCNS labels subclass:wind_gravity as Johnston's-organ wind/gravity afferents; class/subclass intersection resolves 475 in the local CSR.",
+      "role": "Johnston's organ wind/gravity",
+      "mapping_confidence": "low",
+      "mapping_provenance": "Wind projection and body-tilt law is a hand-built adapter; the connectome annotation does not supply a one-to-one body-to-afferent tuning map."
+    },
+    "jo": {
+      "alias_of": "jo_wind_gravity",
+      "role": "JO compatibility alias",
+      "confidence": "medium",
+      "provenance": "Alias of the verified JO wind/gravity selector; no additional population is claimed."
+    },
+    "wind_gravity": {
+      "alias_of": "jo_wind_gravity",
+      "role": "JO wind compatibility alias",
+      "confidence": "high",
+      "provenance": "Alias of the verified JO wind/gravity selector; no additional population is claimed."
+    },
+    "haltere": {
+      "selectors": ["class:mechanosensory_proprioceptive&subclass:haltere"],
+      "expected_count": 201,
+      "confidence": "high",
+      "provenance": "MaleCNS class/subclass intersection resolves 201 mechanosensory proprioceptive haltere cells in the local CSR; the four other subclass:haltere records are annotated unknown_sensory and are excluded.",
+      "role": "haltere proprioception",
+      "mapping_confidence": "low",
+      "mapping_provenance": "Angular-rate law is a hand-built proxy for haltere feedback; no body IDs or per-cell tuning are asserted."
+    },
+    "wing_tactile": {
+      "selectors": ["class:mechanosensory_tactile&nerve:ADMN"],
+      "expected_count": 352,
+      "confidence": "high",
+      "provenance": "The verified tactile wing selector used by the reference SensoryEncoders is class:mechanosensory_tactile&nerve:ADMN; it resolves 352 in the local CSR.",
+      "role": "wing tactile mechanosensation",
+      "mapping_confidence": "low",
+      "mapping_provenance": "Wing phase/imbalance law is a hand-built population proxy, not a measured per-neuron transfer function."
+    },
+    "wing_proprioceptive": {
+      "selectors": ["class:mechanosensory_proprioceptive&subclass:wing"],
+      "expected_count": 19,
+      "confidence": "high",
+      "provenance": "MaleCNS class/subclass intersection resolves the annotated wing proprioceptive group (19 cells) in the local CSR.",
+      "role": "wing proprioception",
+      "mapping_confidence": "low",
+      "mapping_provenance": "Wing phase law is synthetic and carries no body-ID correspondence."
+    },
+    "wing": {
+      "selectors": [
+        "class:mechanosensory_tactile&nerve:ADMN",
+        "class:mechanosensory_proprioceptive&subclass:wing"
+      ],
+      "expected_count": 371,
+      "role": "wing mechanosensory aggregate",
+      "confidence": "medium",
+      "provenance": "Union of the verified wing tactile ADMN group (352) and wing proprioceptive group (19); no broader nerve:ADMN count is treated as a pure mechanosensory population.",
+      "mapping_confidence": "low",
+      "mapping_provenance": "Wing phase/imbalance law is a hand-built population proxy, not a measured per-neuron transfer function."
+    },
+    "wing_mechanosensory": {
+      "alias_of": "wing",
+      "role": "wing compatibility alias",
+      "confidence": "medium",
+      "provenance": "Alias for the verified mechanosensory_tactile ADMN group; the broader nerve:ADMN count is not treated as a pure mechanosensory population."
+    },
+    "leg_tactile": {
+      "selectors": [
+        "class:mechanosensory_tactile&nerve:ProLN",
+        "class:mechanosensory_tactile&nerve:MesoLN",
+        "class:mechanosensory_tactile&nerve:MetaLN"
+      ],
+      "expected_count": 1877,
+      "confidence": "high",
+      "provenance": "MaleCNS reference mapping identifies ProLN/MesoLN/MetaLN as the three leg nerves; the class-filtered union resolves 1877 tactile cells in the local CSR.",
+      "role": "leg tactile mechanosensation",
+      "mapping_confidence": "low",
+      "mapping_provenance": "Ground-contact law is a hand-built bilateral proxy; it does not identify individual legs or body IDs."
+    },
+    "leg_proprioceptive": {
+      "selectors": ["class:mechanosensory_proprioceptive&subclass:leg"],
+      "expected_count": 190,
+      "confidence": "high",
+      "provenance": "MaleCNS class/subclass intersection resolves the annotated leg proprioceptive group (190 cells) in the local CSR.",
+      "role": "leg proprioception",
+      "mapping_confidence": "low",
+      "mapping_provenance": "Ground-contact law is synthetic; no one-to-one leg or body-ID mapping is asserted."
+    },
+    "leg": {
+      "selectors": [
+        "class:mechanosensory_tactile&nerve:ProLN",
+        "class:mechanosensory_tactile&nerve:MesoLN",
+        "class:mechanosensory_tactile&nerve:MetaLN",
+        "class:mechanosensory_proprioceptive&subclass:leg"
+      ],
+      "expected_count": 2067,
+      "role": "leg mechanosensory aggregate",
+      "confidence": "medium",
+      "provenance": "Union of the verified leg tactile group (1877) and leg proprioceptive group (190); generic subclass:leg counts are not used.",
+      "mapping_confidence": "low",
+      "mapping_provenance": "Ground-contact law is a hand-built bilateral proxy; it does not identify individual legs or body IDs."
+    },
+    "leg_mechanosensory": {
+      "alias_of": "leg",
+      "role": "leg compatibility alias",
+      "confidence": "medium",
+      "provenance": "Alias for the class-filtered leg tactile selector; generic subclass:leg counts are not used because they include unknown and chemosensory records."
+    }
+  },
+  "excluded_annotations": [
+    {
+      "selector": "subclass:wing bristle",
+      "reason": "The local MaleCNS records are class:gustatory, not mechanosensory_tactile; omitted from this mechanosensory-only map."
+    },
+    {
+      "selector": "subclass:leg bristle",
+      "reason": "The local MaleCNS records are class:gustatory, not mechanosensory_tactile; omitted from this mechanosensory-only map."
+    },
+    {
+      "selector": "subclass:leg",
+      "reason": "The unfiltered subclass includes unknown_sensory and chemosensory records; class-filtered tactile/proprioceptive groups are used instead."
+    }
+  ]
+}
