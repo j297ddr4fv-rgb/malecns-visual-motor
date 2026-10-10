@@ -56,7 +56,11 @@ def arguments():
     p.add_argument("--graph-helper", type=Path, default=PROJECT / "helpers/bootstrap_retina_extension_bc.py")
     p.add_argument("--pixel-adapter", type=Path, default=PROJECT / "helpers/pixel_illusion_adapter.py")
     p.add_argument("--variant", choices=("original", "shuffle_20261010", "shuffle_20261011", "shuffle_20261012"))
-    return p.parse_args()
+    p.add_argument("--case-id", help="run one named case; requires --variant")
+    a = p.parse_args()
+    if a.case_id and not a.variant:
+        p.error("--case-id requires --variant")
+    return a
 
 
 def cases(a):
@@ -77,6 +81,10 @@ def cases(a):
         ):
             if sha256(a.common_inputs / row[field]) != expected:
                 raise ValueError(f"{field} hash mismatch: {row['case_id']}")
+    if a.case_id:
+        rows = [row for row in rows if row["case_id"] == a.case_id]
+        if not rows:
+            raise ValueError(f"unknown case: {a.case_id}")
     return doc, rows
 
 
@@ -122,7 +130,12 @@ def child(a):
         "publication_neural_worker",
         a.project / "scripts/flygym_online_neural_worker_eye_parity_state_v2.py",
     )
+    worker_module.ARTIFACT_ROOT = a.out
     manifest, selected = cases(a)
+    if a.case_id and not (a.out / "state.json").exists():
+        a.out.mkdir(parents=True, exist_ok=True)
+        write(a.out / "state.json", {"status": "running", "completed_runs": 0,
+              "total_runs": 1, "current_run": None, "runs": []})
     previous = None
     frame_count = int(manifest["frames"])
     for case in selected:
@@ -217,6 +230,10 @@ def child(a):
         write(a.out / "state.json", state)
         print(json.dumps({"completed": state["completed_runs"], "summary": summary}), flush=True)
         previous = worker
+    if a.case_id:
+        state = read(a.out / "state.json")
+        state.update(status="complete", current_run=None)
+        write(a.out / "state.json", state)
 
 
 def parent(a):

@@ -3,31 +3,91 @@
   "seed": 1729,
   "stimuli": {
     "stripe_left": {
-      "id": "stripe_panel", "mode": "translation",
-      "start_position_m": [0.02, 0.0, 0.012],
-      "velocity_mps": [0.0, 0.004, 0.0],
-      "direction_m": [-1.0, 0.0, 0.0],
-      "size_m": [0.0002, 0.14, 0.04],
-      "texture": "matte", "renderable": true, "collidable": false,
-      "visual_only": true, "non_interacting": true
+      "id": "stripe_panel",
+      "mode": "translation",
+      "start_position_m": [
+        0.02,
+        0.0,
+        0.012
+      ],
+      "velocity_mps": [
+        0.0,
+        0.004,
+        0.0
+      ],
+      "direction_m": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "size_m": [
+        0.0002,
+        0.14,
+        0.04
+      ],
+      "texture": "matte",
+      "renderable": true,
+      "collidable": false,
+      "visual_only": true,
+      "non_interacting": true
     },
     "stripe_right": {
-      "id": "stripe_panel", "mode": "translation",
-      "start_position_m": [0.02, 0.0, 0.012],
-      "velocity_mps": [0.0, -0.004, 0.0],
-      "direction_m": [-1.0, 0.0, 0.0],
-      "size_m": [0.0002, 0.14, 0.04],
-      "texture": "matte", "renderable": true, "collidable": false,
-      "visual_only": true, "non_interacting": true
+      "id": "stripe_panel",
+      "mode": "translation",
+      "start_position_m": [
+        0.02,
+        0.0,
+        0.012
+      ],
+      "velocity_mps": [
+        0.0,
+        -0.004,
+        0.0
+      ],
+      "direction_m": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "size_m": [
+        0.0002,
+        0.14,
+        0.04
+      ],
+      "texture": "matte",
+      "renderable": true,
+      "collidable": false,
+      "visual_only": true,
+      "non_interacting": true
     },
     "stripe_static": {
-      "id": "stripe_panel", "mode": "static",
-      "start_position_m": [0.02, 0.0, 0.012],
-      "velocity_mps": [0.0, 0.0, 0.0],
-      "direction_m": [-1.0, 0.0, 0.0],
-      "size_m": [0.0002, 0.14, 0.04],
-      "texture": "matte", "renderable": true, "collidable": false,
-      "visual_only": true, "non_interacting": true
+      "id": "stripe_panel",
+      "mode": "static",
+      "start_position_m": [
+        0.02,
+        0.0,
+        0.012
+      ],
+      "velocity_mps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "direction_m": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "size_m": [
+        0.0002,
+        0.14,
+        0.04
+      ],
+      "texture": "matte",
+      "renderable": true,
+      "collidable": false,
+      "visual_only": true,
+      "non_interacting": true
     }
   }
 }

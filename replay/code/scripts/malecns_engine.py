@@ -33,6 +33,7 @@ real CSR is only inspected by ``preflight_csr`` unless a caller explicitly
 constructs an engine and steps it.
 """
 from __future__ import annotations
+import os
 
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field, replace
