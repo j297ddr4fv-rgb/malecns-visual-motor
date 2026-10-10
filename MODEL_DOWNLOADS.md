@@ -31,7 +31,7 @@ Package code licensing and checkpoint redistribution rights are distinct. Follow
 - Original flat-table object prefix: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/
 - Project graph size after transformation: 176,422 neurons and 6,287,749 directed connections.
 
-The downloadable original tables are not the project's derived CSR arrays. SOURCE_ASSETS.md documents the threshold, autapse removal, index order, sign conventions and graph-file checksums. `scripts/flyb_to_csr.py` converts the intermediate FLYB format; obtaining the raw tables alone does not recreate every transformation automatically. The project-specific T4/T5 target map also remains a separate required asset for fresh simulation.
+The downloadable original tables are not the project's derived CSR arrays. SOURCE_ASSETS.md documents the threshold, autapse removal, index order, sign conventions and graph-file checksums. The historical intermediate FLYB-to-CSR conversion utility is not included in this release; obtaining the raw tables alone does not recreate every transformation automatically. The project-specific T4/T5 target map also remains a separate required asset for fresh simulation.
 
 ## Six-legged body model
 

@@ -28,9 +28,10 @@ Use a Python environment with NumPy and Matplotlib (recorded versions in `requir
 
 ```sh
 python scripts/analyze_publication_common_input.py --root data/common-input --figures outputs/common-input
+python scripts/render_complex_stimulus_figure.py --data data/per_run_results.csv --out outputs/Fig12_illusions.pdf
 ```
 
-This command reconstructs each run's means from its neural trace, checks the recorded input identities across network arms and writes paired/group summaries and figures. It does not launch a simulation or require a GPU.
+The first command reconstructs each run's means from its neural trace, checks the recorded input identities across network arms and writes paired/group summaries and figures. The second command regenerates the complex-stimulus panel. Neither command launches a simulation or requires a GPU.
 
 ## Run new simulations
 
@@ -45,3 +46,9 @@ The portable replay entry point has not been independently executed as a validat
 Original code: **MIT** (`LICENSE`). Original experimental data and figures: **CC BY 4.0** (`DATA_LICENSE.md`). Third-party terms and attribution are listed in `THIRD_PARTY.md`. Use `CITATION.cff` to cite this work; it is an unpublished manuscript and no journal DOI is assigned.
 
 Computing hardware was personally funded and privately owned by the author. Contact: 21620242202487@stu.xmu.edu.cn.
+
+## Reanalysis verification and recording consistency
+
+The trace analyzer was executed from a fresh checkout of the public repository with Python 3.12, NumPy 2.4.4 and Matplotlib 3.11.1. It reconstructed all 36 neural-run summaries and eight moving-versus-static group contrasts from CSV traces. The original-network contrasts are +81.1667 and -64.3333 Hz; the three null networks reproduce the reported large reductions. This check used an existing analysis environment; it was not an independent clean installation or a fresh neural/body simulation. Installing the pinned analysis requirements in a suitable Python environment avoids mixing the system Matplotlib binary with NumPy 2.
+
+`data/mechanism/recapture_comparison.csv` compares the nine original-network synchronized recordings with their behavioral-batch counterparts. Eight yaw values agree at stored precision. Positive motion, seed 1730, gives 34.047248 degrees in the behavioral batch and 31.135036 degrees in the synchronized recapture. The corresponding three-seed summaries are +36.98 ± 3.01 and +36.01 ± 4.52 degrees. Their configurations and recorded initial states match; the source of the numerical difference has not been isolated. The two cohorts are retained separately and are not pooled as independent replicates.
